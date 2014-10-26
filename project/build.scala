@@ -23,8 +23,16 @@ object build extends Build {
 		settings = sharedSettings ++ commonDependencies ++ List(
 			libraryDependencies += Dependencies.scalahost
 		)
-	)
+	) dependsOn(model)
 
+	lazy val model = Project(
+		id = "model", 
+		base = file("model"), 
+		settings = sharedSettings ++ commonDependencies ++ List(
+			libraryDependencies += Dependencies.scalahost
+		)
+	)
+	
 	lazy val tests = Project(
 		id = "tests", 
 		base = file("tests"), 
