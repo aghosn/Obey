@@ -15,5 +15,10 @@ class Plugin(val global: Global) extends NscPlugin {
 	http://github.com/aghosn/Obey for more informations."""
 	val components: List[NscPluginComponent] = Nil
 
+	/*TODO 
+		Define the NscPluginComponent for the plugin
+		How do I make sure that scalahost is ran before ?
+		*/
+
 
 }
