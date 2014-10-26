@@ -8,9 +8,9 @@ object Settings {
 	lazy val languageVersion = "2.11.2"
 	lazy val metaVersion = "0.1.0-SNAPSHOT"
 
-	lazy val sharedSettings: Seq[sbt.Def.Settings[_]] = Defaults.defaultSettings ++ Seq(
+	lazy val sharedSettings: Seq[sbt.Def.Setting[_]] = Defaults.defaultSettings ++ Seq(
 		scalaVersion := languageVersion, 
-		crossVersion := crossVersion.full, 
+		crossVersion := CrossVersion.full, 
 		version := metaVersion, 
 		organization := "org.scalameta",
 		description := "Code Health compiler plugin for scalameta trees",
