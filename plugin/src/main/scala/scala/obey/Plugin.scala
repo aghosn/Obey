@@ -11,7 +11,7 @@ import scala.tools.nsc.plugins.{ Plugin => NscPlugin, PluginComponent => NscPlug
 class Plugin(val global: Global) extends NscPlugin {
 	import global._
 
-	val name = "Obey"
+	val name = "scalameta.obey"
 	val description = """Compiler plugin that checks defined rules against scalameta trees.
 	http://github.com/aghosn/Obey for more informations."""
 	val components: List[NscPluginComponent] = List(ObeyPluginComponent)
