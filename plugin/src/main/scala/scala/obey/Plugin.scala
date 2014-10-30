@@ -1,12 +1,14 @@
 /**
- * Main component of the compiler plugin.
+ *	Main component of the compiler plugin.
  *
- *@author Adrien Ghosn
+ *	@author Adrien Ghosn
 **/
 package scala.obey 
 
 import scala.tools.nsc.{ Global, Phase, SubComponent }
 import scala.tools.nsc.plugins.{ Plugin => NscPlugin, PluginComponent => NscPluginComponent }
+import scala.meta.internal.hosts.scalacompiler.{Plugin => PalladiumPlugin}
+import scala.meta.internal.hosts.scalacompiler.scalahost.Scalahost
 
 class Plugin(val global: Global) extends NscPlugin {
 	import global._
@@ -22,6 +24,7 @@ class Plugin(val global: Global) extends NscPlugin {
 
 		val global = Plugin.this.global
 		val phaseName: String = "obey"
+		//implicit val h = Scalahost[global.type](global)
 		/** TODO check that this is correct*/
 		val runsAfter: List[String] = List("persist")
 		

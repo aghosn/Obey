@@ -21,7 +21,7 @@ object Settings {
     parallelExecution in Test := false, // hello, reflection sync!!
     logBuffered := false,
 		scalaHome := {
-      val scalaHome = System.getProperty("scalahost.scala.home")
+      val scalaHome = System.getProperty("scalahost.scala.home") //TODO Change this maybe 
       if (scalaHome != null) {
         println(s"Going for custom scala home at $scalaHome")
         Some(file(scalaHome))

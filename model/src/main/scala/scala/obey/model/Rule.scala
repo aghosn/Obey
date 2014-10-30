@@ -1,7 +1,7 @@
 /**
- *
- *
- *@author Adrien Ghosn	
+ *	Model for a Rule. 
+ *	TODO continue implementation
+ *	@author Adrien Ghosn	
 **/
 /*Abandon the context thing for the moment*/
 package scala.obey.model
