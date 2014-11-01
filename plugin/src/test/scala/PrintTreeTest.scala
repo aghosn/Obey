@@ -1,5 +1,4 @@
 import org.scalatest.FunSuite
-import tqlscalameta._
 import scala.meta._
 import syntactic._
 
@@ -9,12 +8,14 @@ class PrintTreeTest extends FunSuite {
 
   val x: Tree =
     q"""
-					if (1 == 1) 1
-					else 2
-					5
+    			var a = 5
+					if (1 == 1) a = 1
+					else a = 2
+					
 				"""
   test("Simply printing a tree") {
     println(showTree(x));
   }
+
 
 }

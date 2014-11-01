@@ -4,6 +4,7 @@
  *	@author Adrien Ghosn	
 **/
 /*TODO Abandon the context thing for the moment*/
+/*TODO what would be the best way to enforce a method to apply the rule ?*/
 package scala.obey.model
 
 object Rule {

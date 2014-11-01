@@ -22,7 +22,7 @@ object build extends Build {
 		id = "plugin", 
 		base = file("plugin"), 
 		settings = sharedSettings ++ commonDependencies ++ List(
-			libraryDependencies ++= Seq(Dependencies.scalahost, Dependencies.tql, Dependencies.scalatest)
+			libraryDependencies ++= Seq(Dependencies.scalahost, Dependencies.scalatest)
 		)
 	) dependsOn(model)
 
