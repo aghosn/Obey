@@ -19,7 +19,11 @@ class VarInsteadOfVal(tree: Tree) extends Rule {
 	}
 
 	/*TODO make that work*/
-	val vars = down(
+	/*val vars = down(
 				collect({case a: Defn.Var => a})
 			)
+
+	val warn = down(
+
+		)*/
 }
