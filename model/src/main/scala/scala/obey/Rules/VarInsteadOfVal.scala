@@ -2,7 +2,8 @@ package scala.obey.Rules
 
 import scala.obey.model.Rule
 import scala.meta._
-import tqlscalameta._
+import tql._
+import tqlscalameta.ScalaMetaTraverser._
 
 class VarInsteadOfVal(tree: Tree) extends Rule {
 	val name: String = "Var Instead of Val"
@@ -18,7 +19,7 @@ class VarInsteadOfVal(tree: Tree) extends Rule {
 	}
 
 	/*TODO make that work*/
-	/*val vars: List[Defn.Var] = down(
+	val vars = down(
 				collect({case a: Defn.Var => a})
-			)*/
+			)
 }
