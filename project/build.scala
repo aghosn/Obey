@@ -30,7 +30,7 @@ object build extends Build {
 		id = "model", 
 		base = file("model"), 
 		settings = sharedSettings ++ commonDependencies ++ List(
-			libraryDependencies += Dependencies.scalahost
+			libraryDependencies ++= Seq(Dependencies.scalahost, Dependencies.tql)
 		)
 	)
 	

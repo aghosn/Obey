@@ -3,7 +3,7 @@
  *	TODO continue implementation
  *	@author Adrien Ghosn	
 **/
-/*Abandon the context thing for the moment*/
+/*TODO Abandon the context thing for the moment*/
 package scala.obey.model
 
 object Rule {
