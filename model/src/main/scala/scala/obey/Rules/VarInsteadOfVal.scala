@@ -2,8 +2,8 @@ package scala.obey.Rules
 
 import scala.obey.model.Rule
 import scala.meta._
-import tql._
 import tqlscalameta.ScalaMetaTraverser._
+import tql.Monoids._
 
 class VarInsteadOfVal(tree: Tree) extends Rule {
 	val name: String = "Var Instead of Val"
@@ -18,12 +18,11 @@ class VarInsteadOfVal(tree: Tree) extends Rule {
 		def addWarning(w: Warning) = warningsList ::= w
 	}
 
-	/*TODO make that work*/
-	/*val vars = down(
+	val vars = down(
 				collect({case a: Defn.Var => a})
 			)
 
-	val warn = down(
+	/*val warn = down(
 
 		)*/
 }

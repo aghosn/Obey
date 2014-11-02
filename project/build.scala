@@ -14,8 +14,8 @@ object build extends Build {
 			reflect(sv) % "provided",
 			compiler(sv) % "provided"
 		)), 
-		addCompilerPlugin(paradise),
-		addCompilerPlugin(scalahost)
+		addCompilerPlugin(paradise)
+		//addCompilerPlugin(scalahost)
 	)
 
 	lazy val plugin = Project(
@@ -38,7 +38,7 @@ object build extends Build {
 		id = "tests", 
 		base = file("tests"), 
 		settings = sharedSettings ++ commonDependencies ++ List(
-			libraryDependencies += Dependencies.scalahost
+			libraryDependencies ++= Seq(Dependencies.scalahost, Dependencies.scalatest, Dependencies.tql)
 		) ++ exposeClasspaths("tests")
 	) dependsOn(plugin, model) 
 }

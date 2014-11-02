@@ -12,7 +12,7 @@ object Rule {
 
 /*TODO*/
 trait Rule {
-
+	/*TODO implicit rule to translate Option[List] into List*/	
 	trait RuleState {
 		def warnings: List[Warning]
 	}
