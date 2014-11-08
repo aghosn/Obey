@@ -17,5 +17,4 @@ class PrintTreeTest extends FunSuite {
     println(showTree(x));
   }
 
-
 }

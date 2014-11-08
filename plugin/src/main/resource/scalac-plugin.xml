@@ -1,4 +1,4 @@
 <plugin>
 	<name>scalameta.obey</name>
-	<classname>scala.obey.Plugin</classname>
+	<classname>scala.obey.ObeyPlugin</classname>
 </plugin>

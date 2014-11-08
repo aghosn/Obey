@@ -7,4 +7,5 @@ trait Tag extends StaticAnnotation {
 	val name: String
 }
 
+case class VarTag(val name: String = "Var Rule") extends Tag
 /*TODO encapsulate the case class implementing this into objects*/

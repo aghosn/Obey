@@ -31,7 +31,7 @@ object build extends Build {
 		id = "model", 
 		base = file("model"), 
 		settings = sharedSettings ++ commonDependencies ++ List(
-			libraryDependencies ++= Seq(Dependencies.scalahost)
+			libraryDependencies ++= Seq(Dependencies.scalahost, Dependencies.scalatest)
 		)
 	)
 	

@@ -3,6 +3,7 @@ package scala.obey
 import scala.tools.nsc.{ Global, Phase, SubComponent }
 import scala.tools.nsc.plugins.{ Plugin => NscPlugin, PluginComponent => NscPluginComponent }
 import scala.meta.internal.hosts.scalacompiler.scalahost.Scalahost
+import scala.obey.model._
 
 trait ObeyPhase {
   self: ObeyPlugin =>
@@ -20,6 +21,8 @@ trait ObeyPhase {
     def newPhase(prev: Phase): Phase = new StdPhase(prev) {
       def apply(unit: CompilationUnit) {
         /** TODO implement the meat here*/
+        //val punit = h.toPalladium(unit.body, classOf[Aux.CompUnit])
+        //val toApply = Keeper.warners.reduce((r1, r2) => r1 compose r2)
       }
     }
   }

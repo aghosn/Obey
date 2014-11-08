@@ -1,30 +1,49 @@
 /**
- *	Model for a Rule. 
- *	TODO continue implementation
- *	@author Adrien Ghosn	
-**/
+ * 	Model for a Rule.
+ * 	TODO continue implementation
+ * 	@author Adrien Ghosn
+ */
 /*TODO Abandon the context thing for the moment*/
 /*TODO what would be the best way to enforce a method to apply the rule ?*/
 package scala.obey.model
 
+import scala.meta._
+
 object Rule {
 }
 
-/*TODO*/
+/*TODO def warning instead of vla */
 trait Rule {
-	/*TODO implicit rule to translate Option[List] into List*/	
-	trait RuleState {
-		def warnings: List[Warning]
-	}
+  /** Identifier to pretty print and identity the rule*/
+  val name: String
+}
 
-	type State <: RuleState
+trait Msg {
+  val message: String
+}
 
-	trait RuleWarning extends scala.obey.model.Warning {
-		val rule: Rule = Rule.this
-	}
+trait RuleWarning extends Rule {
+  Keeper.warners :+= this
+  
+  def warning(t: Tree): Warning
 
-	type Warning <: RuleWarning
+  case class Warning(message: String) extends Msg {
+    val rule = this
+  }
 
-	/** Identifier to pretty print and identity the rule*/
-	val name: String
+  def apply(t: Tree): List[Warning]
+}
+
+trait RuleError extends Rule {
+  /*TODO change this*/
+  def error(t: Tree): Error
+
+  case class Error(message: String) extends Msg {
+    val rule = this
+    /*TODO maybe exception here or something*/
+  }
+}
+
+trait RuleFormat extends Rule {
+  Keeper.formatters :+= this
 }
