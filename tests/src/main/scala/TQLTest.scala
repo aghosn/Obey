@@ -2,7 +2,6 @@ import tql._
 import tqlscalameta.ScalaMetaTraverser._
 import scala.meta._
 import syntactic._
-import tql.Monoids._
 import tql.CombinatorsSugar._
 
 object TQLTest {

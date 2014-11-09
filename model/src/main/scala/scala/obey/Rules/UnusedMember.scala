@@ -8,6 +8,7 @@ import scala.obey.Tools.Enrichment._
 object UnusedMember extends RuleWarning {
 	import scala.obey.Tools.Enrichment._
 	
+	Keeper.warners :+=(this)
 	val name: String = "Unused Member"
 
 	def warning(t: Tree): Warning = Warning(s"${t} is not used")

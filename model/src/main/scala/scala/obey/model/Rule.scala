@@ -1,33 +1,26 @@
 /**
- * 	Model for a Rule.
- * 	TODO continue implementation
+ * 	Models for a Rule.
  * 	@author Adrien Ghosn
  */
-/*TODO Abandon the context thing for the moment*/
-/*TODO what would be the best way to enforce a method to apply the rule ?*/
 package scala.obey.model
 
 import scala.meta.syntactic.ast._
+import Tag._
 import scala.reflect.runtime.{universe => ru}
 
-object Rule /*extends Rule*/ {
-  /*val name: String = "Rule"
-  def annotations = ru.typeOf[this.type].termSymbol.annotations*/
-}
-
+/*TODO look at how to extend enums*/
 trait Rule {
-  /** Identifier to pretty print and identity the rule*/
+  /* Identifier to pretty print and identity the rule*/
   val name: String
-
-  def annotations = {
-    ru.typeOf[this.type].termSymbol.annotations
-  }
+  /* Tags associated with the rule. Default is empty, override to add new tags */
+  val tags: Set[Tag] = Set()
 }
 
 trait Msg {
   val message: String
 }
 
+/* Rules that simply generate warnings*/
 trait RuleWarning extends Rule {
   Keeper.warners :+= this
   
@@ -40,6 +33,8 @@ trait RuleWarning extends Rule {
   def apply(t: Tree): List[Warning]
 }
 
+/* Rules that will stop the execution
+   TODO enforce stop*/
 trait RuleError extends Rule {
   /*TODO change this*/
   def error(t: Tree): Error
