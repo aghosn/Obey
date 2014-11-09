@@ -21,7 +21,7 @@ trait ObeyPhase {
     def newPhase(prev: Phase): Phase = new StdPhase(prev) {
       def apply(unit: CompilationUnit) {
         /** TODO implement the meat here*/
-        //val punit = h.toPalladium(unit.body, classOf[Aux.CompUnit])
+        //val punit = h.toPalladium(unit.body, classOf[CompUnit])
         //val toApply = Keeper.warners.reduce((r1, r2) => r1 compose r2)
       }
     }

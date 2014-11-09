@@ -7,15 +7,21 @@
 /*TODO what would be the best way to enforce a method to apply the rule ?*/
 package scala.obey.model
 
-import scala.meta._
+import scala.meta.syntactic.ast._
+import scala.reflect.runtime.{universe => ru}
 
-object Rule {
+object Rule /*extends Rule*/ {
+  /*val name: String = "Rule"
+  def annotations = ru.typeOf[this.type].termSymbol.annotations*/
 }
 
-/*TODO def warning instead of vla */
 trait Rule {
   /** Identifier to pretty print and identity the rule*/
   val name: String
+
+  def annotations = {
+    ru.typeOf[this.type].termSymbol.annotations
+  }
 }
 
 trait Msg {

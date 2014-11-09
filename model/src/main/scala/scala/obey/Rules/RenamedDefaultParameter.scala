@@ -1,8 +1,7 @@
 package scala.obey.Rules
 
-import scala.meta._
+import scala.meta.syntactic.ast._
 import tqlscalameta.ScalaMetaTraverser._
-import tql.Monoids._
 import scala.obey.model._
 
 object RenamedDefaultParameter extends RuleWarning {

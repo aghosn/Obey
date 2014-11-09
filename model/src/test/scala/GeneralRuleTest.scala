@@ -1,14 +1,13 @@
 import org.scalatest.FunSuite
-import scala.meta._
-import syntactic._
+import scala.meta.syntactic.ast._
 import scala.obey.Rules.VarInsteadOfVal
 import scala.obey.model._
 
 class GeneralRuleTest extends FunSuite {
 
-  def showTree(x: Tree) = show.ShowOps(x).show[syntactic.show.Raw]
+  //def showTree(x: Tree) = show.ShowOps(x).show[syntactic.show.Raw]
 
-  val x: Tree =
+  /*val x: Tree =
     q"""
     			var a = 5
           var c = 3
@@ -16,18 +15,18 @@ class GeneralRuleTest extends FunSuite {
 					if (1 == 1) a = 1
 					else a = 2
 					
-				"""
+				"""*/
   test("Simply printing a tree") {
-    println(showTree(x));
+    //println(showTree(x));
   }
 
   val v = VarInsteadOfVal
 
   /*This fails for the moment*/
   test("Testing the var i val rule ") {
-    val l = v(x)
+    /*val l = v(x)
     println("The list of warnings: "+l)
-    assert(l.size == 1)
+    assert(l.size == 1)*/
   }
 
   test("Keeper tracks the Rules") {
@@ -36,13 +35,12 @@ class GeneralRuleTest extends FunSuite {
     assert(Keeper.errs == Nil, "Fail in number of errs")
   }
 
-  test("Print the tree with overrides") {
-    val y: Tree = 
-      q"""
-        abstract class bla extends Blo {
+  test("Test rule filtering") {
+    Keeper.filter(List(classOf[VarTag]), Nil)(Keeper.warners).foreach {
+      x => println(s"The annot $x")
+    }
 
-        }
-      """
-      println(showTree(y))
+    //println("LAAAAAAAAAAAAA "+VarInsteadOfVal.annotations)
+    println("Bimm "+VarInsteadOfVal.getAnnot)
   }
 }

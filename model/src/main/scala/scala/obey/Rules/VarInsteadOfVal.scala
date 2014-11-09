@@ -1,15 +1,14 @@
 package scala.obey.Rules
 
-import scala.meta._
+import scala.meta.syntactic.ast._
 import tqlscalameta.ScalaMetaTraverser._
-import tql.Monoids._
 import scala.obey.model._
+import scala.reflect.runtime.{universe => ru}
 
-@VarTag
-object VarInsteadOfVal extends RuleWarning {
+@VarTag object VarInsteadOfVal extends RuleWarning {
   val name: String = "Var Instead of Val"
 
-  def warning(tree: Tree): Warning = Warning(s"The 'var' $tree was never reassigned and should therefore be a 'val'")  
+  def warning(t: Tree): Warning = Warning(s"The 'var' $t was never reassigned and should therefore be a 'val'")  
 
   private val vars = down(
     collect({
@@ -21,9 +20,14 @@ object VarInsteadOfVal extends RuleWarning {
   	})
 
   def apply(t: Tree): List[Warning] = {
-  	val res = vars(t).result.get.toSet
-  	val assigns = assign(t).result.get.toSet
+  	val res = vars(t).result.toSet
+  	val assigns = assign(t).result.toSet
 
   	res.filter(x => !assigns.contains(x._1)).map(x => warning(x._2)).toList
+  }
+
+  def getAnnot: List[reflect.runtime.universe.Annotation] = {
+    //ICI je voudrais faire ensuite un .filter(x => x étend Tag)
+   ru.typeOf[this.type].termSymbol.annotations.filter(_.tree.tpe <:< ru.typeOf[Tag]) 
   }
 }
