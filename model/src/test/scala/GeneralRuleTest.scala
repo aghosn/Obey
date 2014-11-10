@@ -27,11 +27,11 @@ class GeneralRuleTest extends FunSuite {
   /*This fails for the moment*/
   test("Testing VarInsteadOfVal rule") {
     val rule = VarInsteadOfVal
-    println(VarInsteadOfVal(x))
+    //println(VarInsteadOfVal(x))
   }
 
   test("Annotations") {
-    Keeper.filterTag(Set(new VarTag()), Set())
+    (Keeper.filterTag(Set(new ATag("Var")), Set())).contains(VarInsteadOfVal)
   }
 
   test("Test rule filtering") {

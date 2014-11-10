@@ -7,6 +7,7 @@ package scala.obey.model
 import scala.meta.syntactic.ast._
 import Tag._
 import scala.reflect.runtime.{universe => ru}
+import scala.obey.Tools.Enrichment._
 
 /*TODO look at how to extend enums*/
 trait Rule {
@@ -14,6 +15,7 @@ trait Rule {
   val name: String
   /* Tags associated with the rule. Default is empty, override to add new tags */
   val tags: Set[Tag] = Set()
+
 }
 
 trait Msg {
