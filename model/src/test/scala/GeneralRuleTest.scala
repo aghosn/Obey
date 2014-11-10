@@ -12,14 +12,16 @@ class GeneralRuleTest extends FunSuite {
   def showTree(x: scala.meta.Tree) = scala.meta.syntactic.show.ShowOps(x).show[syntactic.show.Raw]
   val x =
     q"""
-    		def main(args: Array[String]) = {
-          var a = "a"
-          args
-        }	
+    		val a = List(1,2,3,4).toSet
 					
 				"""
+  val y = 
+    q"""
+      val l = Set(1,2,3,4)
+      """
   test("Print the tree") {
     println(showTree(x))
+    println("\n"+showTree(y))
   }
 
 
