@@ -5,8 +5,9 @@ import tqlscalameta.ScalaMetaTraverser._
 import scala.obey.model._
 import scala.reflect.runtime.{universe => ru}
 import scala.obey.model.Tag._
+import scala.obey.Tools.Enrichment._
 
-object VarInsteadOfVal extends RuleWarning {
+@VarTag object VarInsteadOfVal extends RuleWarning {
   val name: String = "Var Instead of Val"
   override val tags: Set[Tag] = Set(Var)
 
