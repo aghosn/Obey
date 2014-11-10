@@ -24,6 +24,4 @@ object Enrichment {
 
 	case class FilterResult(warners: List[RuleWarning], errs: List[RuleError], formatters: List[RuleFormat])
 
-	case class ATag(tag: String) extends StaticAnnotation 
-
 }

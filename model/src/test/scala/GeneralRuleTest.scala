@@ -31,14 +31,7 @@ class GeneralRuleTest extends FunSuite {
   }
 
   test("Annotations") {
-    (Keeper.filterTag(Set(new ATag("Var")), Set())).contains(VarInsteadOfVal)
+    assert((Keeper.filterT(Set(new ATag("Var")), Set())).warners.contains(VarInsteadOfVal))
   }
 
-  test("Test rule filtering") {
-    val res = Keeper.filter(Set(akka, Var), Set(Var))
-    assert(res.warners.isEmpty && res.errs.isEmpty && res.formatters.isEmpty)
-
-    val res2 = Keeper.filter(Set(Var), Set(akka))
-    assert(!res2.warners.isEmpty)
-  }
 }

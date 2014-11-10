@@ -5,7 +5,6 @@
 package scala.obey.model
 
 import scala.meta.syntactic.ast._
-import Tag._
 import scala.reflect.runtime.{universe => ru}
 import scala.obey.Tools.Enrichment._
 
@@ -13,8 +12,6 @@ import scala.obey.Tools.Enrichment._
 trait Rule {
   /* Identifier to pretty print and identity the rule*/
   val name: String
-  /* Tags associated with the rule. Default is empty, override to add new tags */
-  val tags: Set[Tag] = Set()
 
 }
 

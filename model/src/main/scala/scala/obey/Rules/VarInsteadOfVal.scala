@@ -3,13 +3,9 @@ package scala.obey.Rules
 import scala.meta.syntactic.ast._
 import tqlscalameta.ScalaMetaTraverser._
 import scala.obey.model._
-import scala.reflect.runtime.{universe => ru}
-import scala.obey.model.Tag._
-import scala.obey.Tools.Enrichment._
 
-@ATag("Var") object VarInsteadOfVal extends RuleWarning {
+@Tag("Var") object VarInsteadOfVal extends RuleWarning {
   val name: String = "Var Instead of Val"
-  override val tags: Set[Tag] = Set(Var)
 
   def warning(t: Tree): Warning = Warning(s"The 'var' $t was never reassigned and should therefore be a 'val'")  
 
