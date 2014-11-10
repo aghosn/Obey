@@ -4,6 +4,8 @@ import scala.meta.syntactic.ast._
 import scala.obey.model._
 import scala.language.implicitConversions
 
+import scala.annotation.StaticAnnotation
+
 object Enrichment {
 	implicit class DefnExtractor(tree: Defn) {
 
@@ -22,4 +24,9 @@ object Enrichment {
 
 	case class FilterResult(warners: List[RuleWarning], errs: List[RuleError], formatters: List[RuleFormat])
 
+	abstract class ATag extends StaticAnnotation {
+		val tag: String
+	}
+
+	case class VarTag(tag:String = "Var") extends ATag
 }

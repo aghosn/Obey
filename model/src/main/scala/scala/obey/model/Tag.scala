@@ -1,6 +1,5 @@
 package scala.obey.model
 
-import scala.annotation.StaticAnnotation
 
 /*TODO maybe add a description too, and a rule to assign this annotation to in the class impl*/
 /*abstract class Tag extends StaticAnnotation {
@@ -14,3 +13,4 @@ object Tag extends Enumeration {
 	type Tag = Value
 	val Var, DCE, Play, akka = Value
 }
+

@@ -21,9 +21,7 @@ trait Msg {
 }
 
 /* Rules that simply generate warnings*/
-trait RuleWarning extends Rule {
-  Keeper.warners :+= this
-  
+trait RuleWarning extends Rule { 
   def warning(t: Tree): Warning
 
   case class Warning(message: String) extends Msg {
@@ -46,5 +44,4 @@ trait RuleError extends Rule {
 }
 
 trait RuleFormat extends Rule {
-  Keeper.formatters :+= this
 }

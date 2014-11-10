@@ -5,14 +5,9 @@ import scala.obey.Tools.Enrichment._
 import scala.obey.Rules._
 
 object Keeper {
-	var warners: List[RuleWarning] = Nil 
-	var errs: List[RuleError] = Nil
-	var formatters: List[RuleFormat] = Nil
-
-	//run.typeOf[Object.type].termSymbol.annotations
-	def getAnnotation(sym: ru.Symbol): List[ru.Annotation] = {
-		sym.annotations
-	}
+	val warners: List[RuleWarning] = List(VarInsteadOfVal, UnusedMember, RenamedDefaultParameter)
+	val errs: List[RuleError] = Nil
+	val formatters: List[RuleFormat] = Nil
 
 	private def filter[T <: Rule](pos: Set[Tag], neg: Set[Tag])(l: List[T]): List[T] = {
 		l.filter(x => !(x.tags & pos).isEmpty && (x.tags & neg).isEmpty)
@@ -25,4 +20,15 @@ object Keeper {
 		FilterResult(l1, l2, l3)
 	}
 
+	def filterTag(pos: Set[_ <: ATag], neg: Set[_ <: ATag]): List[RuleWarning] = {
+		val tagType = ru.typeOf[ATag]
+		warners.filter{
+			x => 
+				val annot = ru.typeOf[x.type].typeSymbol.annotations
+				println(s"The annotation for $x $annot")
+				val msgs = annot.filter(a => a.tree.tpe <:< tagType)
+				true
+		}
+		Nil
+	}
 }
