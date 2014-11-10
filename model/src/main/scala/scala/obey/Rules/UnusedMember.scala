@@ -10,22 +10,30 @@ object UnusedMember extends RuleWarning {
 	
 	val name: String = "Unused Member"
 
-	def warning(t: Tree): Warning = Warning(s"${t} is not used")
+	def warning(t: Term.Name): Warning = Warning(s"${t} is not used")
 
+	def ignore(d: Defn): Boolean = {
 
+		d.isMain && d.isValueParameter && d.isConstructorArg
+	}
 	//Need to know if it is Main, + Difference between Decl and Defn
 	private val collectDef = down(
 		collect({
-			case _ => "a"
-			//case x: Defn if !x.isAbstract => x.getName
+			case t: Defn.Def if(!ignore(t)) => t.getName 
 		}))
+ 
 		
 		
 	//TODO finish this	 
 	def apply(t: Tree): List[Warning] = {
+		val defs = collectDef(t).result.toSet
 
-
-		Nil
+		val bads = down(
+			collect({
+				case Term.Assign(b: Term.Name, _) if(defs.contains(b)) => b 
+			}))
+			
+		bads(t).result.map(x => warning(x)).toList
 	}
 }
 

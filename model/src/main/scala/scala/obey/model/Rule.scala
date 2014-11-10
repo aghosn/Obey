@@ -21,7 +21,7 @@ trait Msg {
 
 /* Rules that simply generate warnings*/
 trait RuleWarning extends Rule { 
-  def warning(t: Tree): Warning
+  //def warning(t: Tree): Warning
 
   case class Warning(message: String) extends Msg {
     val rule = this
