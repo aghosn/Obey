@@ -12,6 +12,6 @@ object RenamedDefaultParameter extends Rule {
 
   //TODO 
   def report = ???
-  def abort{}
-  def format{}
+  def abort = ???
+  def format = ???
 }

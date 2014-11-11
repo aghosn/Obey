@@ -15,7 +15,7 @@ trait Rule {
   val name: String
 
   def report: TreeMapper[List[Warning]]
-  def abort: Unit 
-  def format: Unit
+  def abort: TreeMapper[Unit] 
+  def format: TreeMapper[Unit]
 
 }

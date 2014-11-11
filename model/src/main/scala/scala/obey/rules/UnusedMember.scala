@@ -23,7 +23,7 @@ import scala.obey.tools.Utils._
     }
   }
 
-  def abort {}
-  def format {}
+  def abort = ???
+  def format = ???
 }
 

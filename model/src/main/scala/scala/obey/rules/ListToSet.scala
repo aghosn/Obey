@@ -11,7 +11,7 @@ import scala.obey.tools.Utils._
   implicit val f = new tql.AllowedTransformation[scala.meta.syntactic.ast.Defn.Val, scala.meta.syntactic.ast.Defn.Val] {}
 
   def report = ???
-  def abort {}
+  def abort = ???
   
   def format = downBreak(
     transform[Defn.Val, Defn.Val] {

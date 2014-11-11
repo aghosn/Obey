@@ -20,7 +20,7 @@ import scala.obey.tools.Utils._
     }
   }
 
-  def abort {}
+  def abort = ???
   
   implicit val f = new tql.AllowedTransformation[scala.meta.syntactic.ast.Defn.Var, scala.meta.syntactic.ast.Defn.Val] {}
 
