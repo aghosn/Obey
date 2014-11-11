@@ -3,7 +3,7 @@ package scala.obey.utils
 import scala.util.parsing.combinator.syntactical.StandardTokenParsers
 import scala.util.parsing.input._
 import java.io.StringReader
-import scala.obey.model.Tag
+import scala.obey.tools.Utils._
 import scala.language.implicitConversions
 
 object OptionParser extends StandardTokenParsers {

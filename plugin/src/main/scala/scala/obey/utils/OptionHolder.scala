@@ -1,6 +1,6 @@
 package scala.obey.utils
 
-import scala.obey.model.Tag
+import scala.obey.tools.Utils._
 
 object OptionHolder {
 

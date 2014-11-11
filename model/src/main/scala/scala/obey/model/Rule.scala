@@ -10,12 +10,12 @@ import scala.obey.tools.Enrichment._
 import tqlscalameta.ScalaMetaTraverser._
 
 trait Rule {
-  import scala.obey.tools.Wrapper._
+  import scala.obey.tools.Utils._
   /* Identifier to pretty print and identity the rule*/
   val name: String
 
   def report: TreeMapper[List[Warning]]
-  def abort(t: Tree): Unit 
-  def format(t: Tree): Unit
+  def abort: Unit 
+  def format: Unit
 
 }

@@ -3,7 +3,7 @@ package scala.obey.rules
 import scala.meta.syntactic.ast._
 import tqlscalameta.ScalaMetaTraverser._
 import scala.obey.model._
-import scala.obey.tools.Wrapper._
+import scala.obey.tools.Utils._
 
 @Tag("Var") object VarInsteadOfVal extends Rule {
   val name = "Var Instead of Val"
@@ -20,9 +20,9 @@ import scala.obey.tools.Wrapper._
     }
   }
 
-  def abort(t: Tree) {}
+  def abort {}
   
-  def format(t: Tree) = {
+  def format = {
     collectIn[Set] {
       case Term.Assign(b: Term.Name, _) => b
     }.down feed { assign =>

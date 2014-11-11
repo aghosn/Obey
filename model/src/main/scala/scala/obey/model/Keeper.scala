@@ -4,10 +4,12 @@ import scala.reflect.runtime.{ universe => ru }
 import scala.reflect.runtime.{ currentMirror => cm }
 import scala.obey.rules._
 import scala.obey.tools.Enrichment._
+import scala.obey.tools.Utils._
 
 object Keeper {
   val rules: List[Rule] = List(VarInsteadOfVal, UnusedMember, RenamedDefaultParameter)
 
+  //TODO can now change the comparison since we have case class for Tag
   def filter[T <: Rule](pos: Set[Tag], neg: Set[Tag])(l: List[T]): List[T] = {
     l.filter {
       x =>
