@@ -42,8 +42,4 @@ object Enrichment {
 
   }
 
-  implicit def applyRule(r: Rule): (Tree => List[Msg]) = r.apply
-
-  case class FilterResult(warners: List[RuleWarning], errs: List[RuleError], formatters: List[RuleFormat])
-
 }

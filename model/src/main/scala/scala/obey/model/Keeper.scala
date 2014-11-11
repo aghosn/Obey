@@ -6,9 +6,7 @@ import scala.obey.Rules._
 import scala.obey.Tools.Enrichment._
 
 object Keeper {
-  val warners: List[RuleWarning] = List(VarInsteadOfVal, UnusedMember, RenamedDefaultParameter)
-  val errs: List[RuleError] = Nil
-  val formatters: List[RuleFormat] = Nil
+  val rules: List[Rule] = List(VarInsteadOfVal, UnusedMember, RenamedDefaultParameter)
 
   def filter[T <: Rule](pos: Set[Tag], neg: Set[Tag])(l: List[T]): List[T] = {
     l.filter {
@@ -21,10 +19,7 @@ object Keeper {
     }
   }
 
-  def filterT(pos: Set[Tag], neg: Set[Tag]): FilterResult = {
-    val l1 = filter(pos, neg)(warners)
-    val l2 = filter(pos, neg)(errs)
-    val l3 = filter(pos, neg)(formatters)
-    FilterResult(l1, l2, l3)
+  def filterT(pos: Set[Tag], neg: Set[Tag]): List[Rule] = {
+    filter(pos, neg)(rules)
   }
 }

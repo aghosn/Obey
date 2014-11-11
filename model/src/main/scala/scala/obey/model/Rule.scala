@@ -7,40 +7,15 @@ package scala.obey.model
 import scala.meta.syntactic.ast._
 import scala.reflect.runtime.{ universe => ru }
 import scala.obey.Tools.Enrichment._
+import tqlscalameta.ScalaMetaTraverser._
 
-/*TODO look at how to extend enums*/
 trait Rule {
+  import scala.obey.Tools.Wrapper._
   /* Identifier to pretty print and identity the rule*/
   val name: String
 
-}
+  def report(t: Tree): List[Warning]
+  def abort(t: Tree): Unit 
+  def format(t: Tree): Unit
 
-trait Msg {
-  val message: String
-}
-
-/* Rules that simply generate warnings*/
-trait RuleWarning extends Rule {
-  //def warning(t: Tree): Warning
-
-  case class Warning(message: String) extends Msg {
-    val rule = this
-  }
-
-  def apply(t: Tree): List[Warning]
-}
-
-/* Rules that will stop the execution
-   TODO enforce stop*/
-trait RuleError extends Rule {
-  /*TODO change this*/
-  def error(t: Tree): Error
-
-  case class Error(message: String) extends Msg {
-    val rule = this
-    /*TODO maybe exception here or something*/
-  }
-}
-
-trait RuleFormat extends Rule {
 }
