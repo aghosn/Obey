@@ -5,7 +5,7 @@ import tqlscalameta.ScalaMetaTraverser._
 import scala.obey.model._
 
 @Tag("Var") object VarInsteadOfVal extends RuleWarning {
-  val name: String = "Var Instead of Val"
+  val name = "Var Instead of Val"
 
   def warning(t: Tree): Warning = Warning(s"The 'var' $t was never reassigned and should therefore be a 'val'")
 

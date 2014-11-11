@@ -8,7 +8,7 @@ import scala.obey.Tools.Enrichment._
 object UnusedMember extends RuleWarning {
   import scala.obey.Tools.Enrichment._
 
-  val name: String = "Unused Member"
+  val name = "Unused Member"
 
   def warning(t: Term.Name): Warning = Warning(s"${t} is not used")
 

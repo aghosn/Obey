@@ -11,7 +11,6 @@ object Enrichment {
 
     //TODO implement that once we know how to use Member._
     def getName: Term.Name = tree match {
-      //case Defn.Def(_, n, _,_,_,_) => n
       case t: Defn.Def => t.name
       case t: Defn.Procedure => t.name
       case t: Defn.Macro => t.name
