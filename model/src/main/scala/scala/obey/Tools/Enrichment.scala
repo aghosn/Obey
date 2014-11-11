@@ -19,21 +19,20 @@ object Enrichment {
 			case _ => Term.Name("")
 		}
 		
-		def isAbstract: Boolean = true //tree.mods.contains(Mod.Abstract)
+		def isAbstract: Boolean = true//tree.mods.contains(Mod.Abstract)
 		
 		def isMain: Boolean = tree match {
 			case Defn.Def(_, Term.Name("main"), _ , _, _, _) => true
 			case _ => false
 		}
 
-		//TODO ask about that
 		def isValueParameter: Boolean = tree.parent match {
 			case Some(t) => 
-				/*t match {
+				t match {
 					case d: Defn.Def => true
 					case d: Defn.Procedure => true
 					case _ => false
-				}*/ true
+				} 
 			case None => false
 		}
 

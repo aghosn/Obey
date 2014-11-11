@@ -1,4 +1,5 @@
 package scala.obey.model
+
 import scala.reflect.runtime.{ universe => ru }
 import scala.reflect.runtime.{ currentMirror => cm }
 import scala.obey.Rules._
