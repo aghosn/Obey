@@ -12,7 +12,7 @@ import scala.obey.utils._
 class ObeyPlugin(val global: Global) extends NscPlugin with ObeyPhase {
   import global._
 
-  val name = "scalameta.obey"
+  val name = "obey"
   val description = """Compiler plugin that checks defined rules against scalameta trees.
   http://github.com/aghosn/Obey for more informations."""
   val components: List[NscPluginComponent] = List[NscPluginComponent](ObeyComponent)

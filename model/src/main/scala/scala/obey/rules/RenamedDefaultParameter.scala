@@ -1,9 +1,9 @@
-package scala.obey.Rules
+package scala.obey.rules
 
 import scala.meta.syntactic.ast._
 import tqlscalameta.ScalaMetaTraverser._
 import scala.obey.model._
-import scala.obey.Tools.Wrapper._
+import scala.obey.tools.Wrapper._
 
 object RenamedDefaultParameter extends Rule {
   val name = "Renamed Default Parameter"
@@ -11,7 +11,7 @@ object RenamedDefaultParameter extends Rule {
   def warning(t: Tree): Warning = Warning(s"Renaming parameters $t can lead to unexpected behavior")
 
   //TODO 
-  def report(t: Tree): List[Warning] = Nil
+  def report = ???
   def abort(t: Tree){}
   def format(t: Tree){}
 }

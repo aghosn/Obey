@@ -1,11 +1,11 @@
 import org.scalatest.FunSuite
 import scala.meta.syntactic.ast._
 import scala.meta._
-import scala.obey.Rules._
+import scala.obey.rules._
 import scala.obey.model._
 import scala.reflect.runtime.{ universe => ru }
 import scala.obey.model.Tag
-import scala.obey.Tools.Enrichment._
+import scala.obey.tools.Enrichment._
 
 class GeneralRuleTest extends FunSuite {
 
