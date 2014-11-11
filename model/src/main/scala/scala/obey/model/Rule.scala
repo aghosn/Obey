@@ -5,7 +5,7 @@
 package scala.obey.model
 
 import scala.meta.syntactic.ast._
-import scala.reflect.runtime.{universe => ru}
+import scala.reflect.runtime.{ universe => ru }
 import scala.obey.Tools.Enrichment._
 
 /*TODO look at how to extend enums*/
@@ -20,7 +20,7 @@ trait Msg {
 }
 
 /* Rules that simply generate warnings*/
-trait RuleWarning extends Rule { 
+trait RuleWarning extends Rule {
   //def warning(t: Tree): Warning
 
   case class Warning(message: String) extends Msg {

@@ -3,7 +3,7 @@ import scala.meta.syntactic.ast._
 import scala.meta._
 import scala.obey.Rules._
 import scala.obey.model._
-import scala.reflect.runtime.{universe => ru}
+import scala.reflect.runtime.{ universe => ru }
 import scala.obey.model.Tag
 import scala.obey.Tools.Enrichment._
 
@@ -15,15 +15,14 @@ class GeneralRuleTest extends FunSuite {
     		val a = List(1,2,3,4).toSet
 					
 				"""
-  val y = 
+  val y =
     q"""
       val l = Set(1,2,3,4)
       """
   test("Print the tree") {
     println(showTree(x))
-    println("\n"+showTree(y))
+    println("\n" + showTree(y))
   }
-
 
   /*This fails for the moment*/
   test("Testing VarInsteadOfVal rule") {

@@ -14,19 +14,19 @@ class ObeyPlugin(val global: Global) extends NscPlugin with ObeyPhase {
 
   val name = "scalameta.obey"
   val description = """Compiler plugin that checks defined rules against scalameta trees.
-	http://github.com/aghosn/Obey for more informations."""
+  http://github.com/aghosn/Obey for more informations."""
   val components: List[NscPluginComponent] = List[NscPluginComponent](ObeyComponent)
 
   override def processOptions(options: List[String], error: String => Unit) {
-  	options.foreach{
-  		o => 
-  			if(o.startsWith("pos:")) {
-  				val tags = o.substring("pos:".length)
+    options.foreach {
+      o =>
+        if (o.startsWith("pos:")) {
+          val tags = o.substring("pos:".length)
           OptionHolder.addPos(OptionParser.parse(tags))
-  			} else if(o.startsWith("neg:")) {
+        } else if (o.startsWith("neg:")) {
           val tags = o.substring("neg:".length)
           OptionHolder.addNeg(OptionParser.parse(tags))
         }
-  	}
+    }
   }
 }

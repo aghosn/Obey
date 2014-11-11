@@ -13,7 +13,7 @@ object Keeper {
   def filter[T <: Rule](pos: Set[Tag], neg: Set[Tag])(l: List[T]): List[T] = {
     l.filter {
       x =>
-        val annot = cm.classSymbol(x.getClass).annotations 
+        val annot = cm.classSymbol(x.getClass).annotations
         val trees = annot.filter(a => a.tree.tpe == ru.typeOf[Tag]).flatMap(_.tree.children.tail)
         val c: Set[String] = trees.map(y => ru.show(y).toString).map(_.replaceAll("\"", "")).toSet
 
