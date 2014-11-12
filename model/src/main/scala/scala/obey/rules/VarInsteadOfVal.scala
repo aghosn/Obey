@@ -21,15 +21,12 @@ import scala.obey.tools.Utils._
   }
 
   def abort = ???
-  
-  implicit val f = new tql.AllowedTransformation[scala.meta.syntactic.ast.Defn.Var, scala.meta.syntactic.ast.Defn.Val] {}
-
 
   def format = {
     collectIn[Set] {
       case Term.Assign(b: Term.Name, _) => b
     }.down feed { assign =>
-      transform[Defn.Var, Defn.Val] {
+      update {
         case Defn.Var(a, (b: Term.Name)::Nil, c, Some(d)) if (!assign.contains(b)) => 
           Defn.Val(a, b::Nil, c, d)
       }.down
