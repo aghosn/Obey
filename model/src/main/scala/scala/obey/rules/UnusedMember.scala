@@ -13,7 +13,7 @@ import scala.obey.tools.Utils._
 
   def ignore(d: Defn): Boolean = d.isMain && d.isValueParameter && d.isConstructorArg
 
-  def report = {
+  def apply = {
     collectIn[Set] {
       case t: Defn.Def if (!ignore(t)) => t.name
     }.down feed { defs =>
@@ -22,8 +22,5 @@ import scala.obey.tools.Utils._
       }.down
     }
   }
-
-  def abort = ???
-  def format = ???
 }
 

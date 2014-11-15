@@ -11,7 +11,5 @@ import scala.obey.tools.Utils._
   def warning(t: Tree): Warning = Warning(s"Renaming parameters $t can lead to unexpected behavior")
 
   //TODO 
-  def report = ???
-  def abort = ???
-  def format = ???
+  def apply = ???
 }
