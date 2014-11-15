@@ -4,6 +4,7 @@ import scala.meta.syntactic.ast._
 import tqlscalameta.ScalaMetaTraverser._
 import scala.obey.model._
 import scala.obey.tools.Utils._
+import scala.language.reflectiveCalls
 
 @Tag("Var") @Tag("format") object VarInsteadOfVal extends Rule {
   val name = "Var Instead of Val"

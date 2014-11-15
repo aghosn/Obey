@@ -5,6 +5,7 @@ import tqlscalameta.ScalaMetaTraverser._
 import scala.obey.model._
 import scala.obey.tools.Enrichment._
 import scala.obey.tools.Utils._
+import scala.language.reflectiveCalls
 
 @Tag("DCE") @Tag("Var") object UnusedMember extends Rule {
   val name = "Unused Member"
