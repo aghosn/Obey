@@ -15,7 +15,7 @@ import scala.obey.tools.Utils._
 
   def report = {
     collectIn[Set] {
-      case t: Defn.Def if (!ignore(t)) => t.getName
+      case t: Defn.Def if (!ignore(t)) => t.name
     }.down feed { defs =>
       collect {
         case Term.Assign(b: Term.Name, _) if (defs.contains(b)) => warning(b)

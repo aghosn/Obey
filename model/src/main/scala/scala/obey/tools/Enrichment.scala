@@ -7,14 +7,8 @@ import scala.language.implicitConversions
 import scala.annotation.StaticAnnotation
 
 object Enrichment {
-  implicit class DefnExtractor(tree: Defn) {
 
-    //TODO implement that once we know how to use Member._
-    def getName: Term.Name = tree match {
-      case t: Defn.Def => t.name
-      case t: Defn.Procedure => t.name
-      case t: Defn.Macro => t.name
-    }
+  implicit class DefnExtractor(tree: Defn) {
 
     def isAbstract: Boolean = true //tree.mods.contains(Mod.Abstract)
 
@@ -23,10 +17,10 @@ object Enrichment {
       case _ => false
     }
 
-    def isValueParameter: Boolean = tree.parent.isInstanceOf[Member.Method]
+    def isValueParameter: Boolean = tree.parent.map(p => p.isInstanceOf[Member.Method]).getOrElse(false)
 
     /*TODO find how to do that*/
-    def isConstructorArg: Boolean = true //tree.parent.isInstanceOf[Member.Ctor]
+    def isConstructorArg: Boolean = true //tree.parent.map(p => p.isInstanceOf[Member.Ctor]).getOrElse(false)
 
   }
 

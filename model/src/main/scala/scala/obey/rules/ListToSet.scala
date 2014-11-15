@@ -5,7 +5,7 @@ import tqlscalameta.ScalaMetaTraverser._
 import scala.obey.model._
 import scala.obey.tools.Utils._
 
-@Tag("ReWrite") @Tag("List") object ListToSet extends Rule {
+@Tag("format") @Tag("List") @Tag("Set") object ListToSet extends Rule {
   val name: String = "List to Set"
 
   def report = ???

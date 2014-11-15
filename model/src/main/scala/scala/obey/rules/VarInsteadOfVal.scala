@@ -5,7 +5,7 @@ import tqlscalameta.ScalaMetaTraverser._
 import scala.obey.model._
 import scala.obey.tools.Utils._
 
-@Tag("Var") object VarInsteadOfVal extends Rule {
+@Tag("Var") @Tag("format") object VarInsteadOfVal extends Rule {
   val name = "Var Instead of Val"
 
   def warning(t: Tree): Warning = Warning(s"The 'var' $t was never reassigned and should therefore be a 'val'")
