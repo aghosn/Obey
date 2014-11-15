@@ -20,13 +20,7 @@ class ObeyPlugin(val global: Global) extends NscPlugin with ObeyPhase {
   override def processOptions(options: List[String], error: String => Unit) {
     options.foreach {
       o =>
-        if (o.startsWith("pos:")) {
-          val tags = o.substring("pos:".length)
-          UserOption.all.pos ++= OptionParser.parse(tags)
-        } else if (o.startsWith("neg:")) {
-          val tags = o.substring("neg:".length)
-          UserOption.all.neg ++=OptionParser.parse(tags)
-        }
+    
     }
   }
 }
