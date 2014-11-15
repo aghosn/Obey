@@ -22,10 +22,10 @@ class ObeyPlugin(val global: Global) extends NscPlugin with ObeyPhase {
       o =>
         if (o.startsWith("pos:")) {
           val tags = o.substring("pos:".length)
-          OptionHolder.addPos(OptionParser.parse(tags))
+          UserOption.all.pos ++= OptionParser.parse(tags)
         } else if (o.startsWith("neg:")) {
           val tags = o.substring("neg:".length)
-          OptionHolder.addNeg(OptionParser.parse(tags))
+          UserOption.all.neg ++=OptionParser.parse(tags)
         }
     }
   }

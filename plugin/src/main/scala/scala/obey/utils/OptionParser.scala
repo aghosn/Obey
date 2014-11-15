@@ -6,25 +6,38 @@ import java.io.StringReader
 import scala.obey.tools.Utils._
 import scala.language.implicitConversions
 
-object OptionParser extends StandardTokenParsers {
-  lexical.delimiters ++= List("(", ",", ")")
+object OptParser extends StandardTokenParsers {
+  lexical.delimiters ++= List("+", "-")
 
   implicit def trad(s: String): Tag = new Tag(s)
 
-  def tag: Parser[Tag] = (
-    ident ^^ { case e => e })
+  object Op extends Enumeration {
+    type Op = Value
+    val PLUS, MINUS  = Value
+  }
 
-  def list: Parser[List[Tag]] = (
-    "(" ~> tag ~ ("," ~> tag).* <~ ")" ^^ {
-      case e1 ~ Nil => List(e1)
-      case e1 ~ e2 => e1 :: e2
+  import Op._
+
+  case class Element(o: Op, t: Tag)
+
+  def tag: Parser[Tag] = (
+    ident ^^ {case e => e})
+
+  def elem: Parser[Element] = (
+    ("+" | "-") ~ tag ^^ {
+      case "+" ~ tag => Element(PLUS, tag)
+      case "-" ~ tag => Element(MINUS, tag)
     })
 
-  def parse(str: String): Set[Tag] = {
+  def list: Parser[List[Element]] = elem.*
+
+  def parse(str: String): (Set[Tag], Set[Tag]) = {
     val tokens = new lexical.Scanner(StreamReader(new StringReader(str)))
     phrase(list)(tokens) match {
-      case Success(t, _) => t.toSet
-      case e => println(e); Set()
+      case Success(t, _) => 
+        val part = t.partition(_.o == PLUS)
+        (part._1.map(_.t).toSet, part._2.map(_.t).toSet)
+      case e => println(e); (Set(), Set())
     }
   }
 }
