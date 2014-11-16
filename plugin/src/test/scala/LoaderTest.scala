@@ -2,19 +2,23 @@ import org.scalatest.FunSuite
 import scala.obey.utils._
 import scala.obey.tools.Utils._
 import scala.tools.nsc._
+import scala.tools.nsc.reporters.ConsoleReporter
 
 class LoaderTest extends FunSuite {
 
   val settings = new Settings
   val scalaLibraryPath = "/home/aghosn/.ivy2/cache/org.scala-lang/scala-library/jars/scala-library-2.11.2.jar"
   settings.bootclasspath.append(scalaLibraryPath)
+  val outputDir = "/home/aghosn/Documents/Programs/Scala/Rules/targ"
+  new java.io.File(outputDir).mkdir
+  settings.outputDirs.setSingleOutput(outputDir)
   settings.classpath.append(scalaLibraryPath)
-  //val reporter = new ConsoleReporter(settings)
+  val reporter = new ConsoleReporter(settings)
 
-  val global = new Global(settings/*, reporter, "testing"*/)
+  val global = new Global(settings, reporter)
   
   test("Extract names from files") {
-    val loader = new Loader(global, "bitching")
+    val loader = new Loader(global, "f")
     val res: String = loader.getNames(List("/home/aghosn/Programs/Scala/Obey/Rule.scala")).head  
     assert(res.equals("Rule"), s"What we get: ${res}")
     val res1: String = loader.getNames(List("/home.scala/aghosn/Rule.scala")).head

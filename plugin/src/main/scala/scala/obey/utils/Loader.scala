@@ -8,7 +8,7 @@ class Loader(val global: Global, val folder: String) {
 
   lazy val files: Array[java.io.File] = new java.io.File(folder).listFiles.filter(_.getName.endsWith(".scala"))
   lazy val classLoader = new java.net.URLClassLoader(files.map(_.toURI.toURL), getClass.getClassLoader)
-
+  
   //private lazy val mirror = ru.runtimeMirror(classLoader)
   lazy val run = new global.Run 
 
