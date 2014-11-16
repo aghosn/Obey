@@ -1,10 +1,9 @@
 package scala.obey.utils
 
 import scala.obey.tools.Utils._
+import scala.obey.model.Keeper._
+import scala.obey.model.Rule
 
-/** 
- * Change this
-*/
 object UserOption {
 
   case class holder(var pos: Set[Tag], var neg: Set[Tag])
@@ -12,13 +11,11 @@ object UserOption {
   val all: holder = holder(Set(), Set())
   val format: holder = holder(Set(), Set())
   val report: holder = holder(Set(), Set())
-  val abort: holder = holder(Set(), Set()) 
+  val abort: holder = holder(Set(), Set())
+
+  def filterFormat: Set[Rule] = filterT(all.pos ++ format.pos, all.neg ++ format.neg)
+
+  def filterReport: Set[Rule] = filterT(all.pos ++ report.pos, all.neg ++ report.neg)
+
+  def filterAbort: Set[Rule] = filterT(all.pos ++ abort.pos, all.neg ++ abort.neg)
 }
-
-/*
-
-  The new idea : Rules have a unified interface, we apply all of them and they return (Tree, Warnings)
-  Then the User Option will be used to see if we should abort, warn or rewrite the code according to user specified
-  options.
-
-*/
