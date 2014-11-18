@@ -6,6 +6,8 @@ import scala.obey.model._
 import scala.reflect.runtime.{ universe => ru }
 import scala.obey.tools.Utils._
 import scala.obey.tools.Enrichment._
+import tqlscalameta.ScalaMetaTraverser._
+
 
 class GeneralRuleTest extends FunSuite {
 

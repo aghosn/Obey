@@ -3,8 +3,10 @@ package scala.obey
 import scala.tools.nsc.{ Global, Phase, SubComponent }
 import scala.tools.nsc.plugins.{ Plugin => NscPlugin, PluginComponent => NscPluginComponent }
 import scala.meta.internal.hosts.scalacompiler.scalahost.Scalahost
-import scala.reflect.io.AbstractFile
 import scala.obey.model._
+import scala.obey.utils.UserOption
+import tqlscalameta.ScalaMetaTraverser._
+import scala.obey.tools.Utils._
 
 trait ObeyPhase {
   self: ObeyPlugin =>
@@ -23,7 +25,11 @@ trait ObeyPhase {
       def apply(unit: CompilationUnit) {
         /** TODO implement the meat here*/
         val punit = h.toPalladium(unit.body, classOf[scala.meta.Source])
-        //val toApply = Keeper.warners.reduce((r1, r2) => r1 compose r2)
+        val formattingRules = UserOption.getFormat.map(_.apply).reduce((r1, r2) => r1 + r2)
+        val messageRules = UserOption.getReport.map(_.apply).reduce((r1, r2) => r1 +> r2)
+        val resultTree = formattingRules(punit)
+        val messages: List[Message] = resultTree.result ++ messageRules(punit)
+        
       }
     }
   }

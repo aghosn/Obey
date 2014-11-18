@@ -8,6 +8,7 @@ package scala.obey
 import scala.tools.nsc.{ Global, Phase, SubComponent }
 import scala.tools.nsc.plugins.{ Plugin => NscPlugin, PluginComponent => NscPluginComponent }
 import scala.obey.utils._
+import scala.obey.model.Keeper
 
 class ObeyPlugin(val global: Global) extends NscPlugin with ObeyPhase {
   import global._
@@ -38,24 +39,24 @@ class ObeyPlugin(val global: Global) extends NscPlugin with ObeyPhase {
       o =>
         /* We process the all attributes
          * The user can use -- to prevent its use*/
-        if (o.startsWith("all")) {
-          val opts = o.substring("all".length)
+        if (o.startsWith("all:")) {
+          val opts = o.substring("all:".length)
           val tags = OptParser.parse(opts)
           UserOption.all.pos ++= tags._1
           UserOption.all.neg ++= tags._2
 
-        } else if (o.startsWith("format")) {
-          val opts = o.substring("format".length)
+        } else if (o.startsWith("format:")) {
+          val opts = o.substring("format:".length)
           if (!opts.isEmpty && !opts.contains("--")) {
             val tags = OptParser.parse(opts.replace("++", ""))
             UserOption.format.pos ++= tags._1
             UserOption.format.neg ++= tags._2
             UserOption.format.use = true
           }
-        } else if (o.startsWith("report")) {
+        } else if (o.startsWith("report:")) {
           if (!o.contains("--")) {
-            val opts = o.substring("report".length).replace("++", "")
-            val tags = OptParser.parse(o.substring("report".length))
+            val opts = o.substring("report:".length).replace("++", "")
+            val tags = OptParser.parse(opts)
             UserOption.report.pos ++= tags._1
             UserOption.report.neg ++= tags._2
           } else {
@@ -63,6 +64,9 @@ class ObeyPlugin(val global: Global) extends NscPlugin with ObeyPhase {
           }
         } else if (o.equals("-Xfatal-Messages")) {
             /*TODO Report messages*/
+        } else if (o.startsWith("addRules:")) {
+          val opts = o.substring("addRules:".length)
+          Keeper.rules ++= (new Loader(opts)).rules
         }
     }
   }

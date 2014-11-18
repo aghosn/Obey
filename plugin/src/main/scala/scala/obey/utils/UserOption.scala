@@ -26,5 +26,6 @@ object UserOption {
 
   /* All methods to get the correct rules to apply*/
   def getFormat: Set[Rule] = getRules(format)
-  def getReport: Set[Rule] = getRules(report)
+  /* Avoids traversing the tree twice for format and warnings*/
+  def getReport: Set[Rule] = getRules(report) -- getFormat
 }
