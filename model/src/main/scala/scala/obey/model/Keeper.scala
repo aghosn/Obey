@@ -17,14 +17,14 @@ object Keeper {
    * This enables to lazilly ask for all the rules 
    * or to only define the ones we don't want 
    **/
-  private def filter[T <: Rule](pos: Set[Tag], neg: Set[Tag])(l: Set[T]): Set[T] = {
+  def filter[T <: Rule](pos: Set[Tag], neg: Set[Tag])(l: Set[T]): Set[T] = {
     val posSet: Set[String] = pos.map(_.tag)
     val negSet: Set[String] = neg.map(_.tag)
     l.filter {
       x =>
         val annot = cm.classSymbol(x.getClass).annotations.filter(a => a.tree.tpe =:= ru.typeOf[Tag]).flatMap(_.tree.children.tail)
         val annotSet: Set[String] = annot.map(y => ru.show(y).toString).map(_.replaceAll("\"", "")).toSet
-        (!(annotSet & posSet).isEmpty || posSet.isEmpty) && (annotSet & negSet).isEmpty 
+        (!(annotSet & posSet).isEmpty || posSet.isEmpty) && (annotSet & negSet).isEmpty
     }
   }
 
@@ -32,5 +32,4 @@ object Keeper {
     filter(pos, neg)(rules)
   }
 
-  
 }
