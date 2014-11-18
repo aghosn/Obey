@@ -1,6 +1,6 @@
 import scala.obey.model._
 
-object MyRule extends Rule {
+class MyRule extends Rule {
 
   val name = "My Rule"
 
