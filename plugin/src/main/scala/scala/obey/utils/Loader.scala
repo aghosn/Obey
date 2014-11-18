@@ -1,35 +1,34 @@
 package scala.obey.utils
 
-import scala.tools.nsc.{ Global}
-import scala.reflect.runtime.{universe => ru}
+import java.io._
+import java.net._
 import scala.obey.model.Rule
 
-class Loader(val global: Global, val folder: String) {
+class Loader(val folder: String) {
 
-  lazy val files: Array[java.io.File] = new java.io.File(folder).listFiles.filter(_.getName.endsWith(".scala"))
-  lazy val classLoader = new java.net.URLClassLoader(files.map(_.toURI.toURL), getClass.getClassLoader)
-  
-  //private lazy val mirror = ru.runtimeMirror(classLoader)
-  lazy val run = new global.Run 
+  // TODO Try to pass the folder as System var okay ? 
+  //Using System.setProperty("path", "/.../") ?
+  val root = new File(folder)
+  val cl = new URLClassLoader(Array(root.toURI.toURL), getClass.getClassLoader)
 
-  def loadUserRules: List[Any] = {
-    run.compile(files.map(_.getName).toList)
-    val names: List[String] = getNames(files.map(_.getName).toList)
-    names.map(classLoader.loadClass(_).newInstance)
-  }
+  def getClasses(dir: File): List[Class[_]] = {
 
-  /* Extracts the names from the files*/
-  def getNames(l: List[String]): List[String] = {
-    l.map{
-      name => 
-        val start = name.lastIndexOf("/") + 1
-
-        val end = name.lastIndexOf(".scala") 
-
-        if(start >= end )
-          ""
-        else 
-          name.substring(start, end)
+    val dirs = dir.listFiles.filter(_.isDirectory).toList
+    val classFiles = dir.listFiles.filter(f => f.isFile && f.getName.endsWith(".class")).toList
+    dirs.flatMap(getClasses) ++ classFiles.map {
+      cf =>
+        val className = {
+          if (root.getCanonicalPath == dir.getCanonicalPath) {
+            cf.getName.stripSuffix(".class")
+          } else {
+            val packagePath = dir.getCanonicalPath.substring(root.getCanonicalPath.length + 1)
+            val packageName = packagePath.replace(File.separator, ".")
+            packageName + "." + cf.getName.stripSuffix(".class")
+          }
+        }
+         cl.loadClass(className)
     }
   }
+
+  val rules = getClasses(root).filter(c => classOf[Rule].isAssignableFrom(c)).map(_.newInstance.asInstanceOf[Rule])
 }
