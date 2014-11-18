@@ -30,5 +30,14 @@ class Loader(val folder: String) {
     }
   }
 
-  val rules = getClasses(root).filter(c => classOf[Rule].isAssignableFrom(c)).map(_.newInstance.asInstanceOf[Rule])
+  val ruleClasses = getClasses(root).filter(c => classOf[Rule].isAssignableFrom(c))
+  
+  /*Rules can be defined as object or classes*/
+  val rules = ruleClasses.map{ c => 
+    val instance = {
+      try c.getDeclaredField("MODULE$").get(null)
+      catch{ case ex: NoSuchFieldException => c.newInstance }
+    }
+    instance.asInstanceOf[Rule]
+  }
 }

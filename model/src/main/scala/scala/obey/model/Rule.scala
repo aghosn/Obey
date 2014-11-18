@@ -15,5 +15,7 @@ trait Rule {
   val name: String
 
   def apply: Matcher[List[Warning]]
+
+  override def toString: String = name
   
 }
