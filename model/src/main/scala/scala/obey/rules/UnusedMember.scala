@@ -10,7 +10,7 @@ import scala.language.reflectiveCalls
 @Tag("DCE") @Tag("Var") object UnusedMember extends Rule {
   val name = "Unused Member"
 
-  def warning(t: Term.Name): Warning = Warning(s"${t} is not used")
+  def message(t: Term.Name): Message = Message(s"${t} is not used")
 
   def ignore(d: Defn): Boolean = d.isMain && d.isValueParameter && d.isConstructorArg
 
@@ -19,7 +19,7 @@ import scala.language.reflectiveCalls
       case t: Defn.Def if (!ignore(t)) => t.name
     }.down feed { defs =>
       collect {
-        case Term.Assign(b: Term.Name, _) if (defs.contains(b)) => warning(b)
+        case Term.Assign(b: Term.Name, _) if (defs.contains(b)) => message(b)
       }.down
     }
   }

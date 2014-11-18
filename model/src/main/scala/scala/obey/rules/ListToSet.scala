@@ -8,12 +8,12 @@ import scala.obey.tools.Utils._
 @Tag("format") @Tag("List") @Tag("Set") object ListToSet extends Rule {
   val name: String = "List to Set"
 
-  def warning(t: Defn.Val): Warning = Warning(s"The assignment $t creates a useless List") 
+  def message(t: Defn.Val): Message = Message(s"The assignment $t creates a useless List") 
 
   def apply = {
     (collect {
       case t @ Defn.Val(mod, n, None, Term.Select(Term.Apply(Term.Name("List"), l), Term.Name("toSet"))) =>
-        warning(t)
+        message(t)
     } <~
       update {
       case Defn.Val(mod, n, None, Term.Select(Term.Apply(Term.Name("List"), l), Term.Name("toSet"))) =>

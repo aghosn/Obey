@@ -19,7 +19,7 @@ class ObeyPlugin(val global: Global) extends NscPlugin with ObeyPhase {
 
   /**
    * Processes the options for the plugin 
-   * [all]: By default, all rules are used as warning
+   * [all]: By default, all rules are used as Message
    *        ([+-]Tag)* filters the rules
    * [format]: Deactivated by default. To activate put a '++'. 
    *           '--' deactivates the option and dominates any other entry
@@ -61,15 +61,8 @@ class ObeyPlugin(val global: Global) extends NscPlugin with ObeyPhase {
           } else {
             UserOption.report.use = false
           }
-        } else if (o.startsWith("abort")) {
-          
-          val opts = o.substring("abort".length)
-          if(!opts.isEmpty && !opts.contains("--")) {
-            val tags = OptParser.parse(opts.replace("++",""))
-            UserOption.abort.pos ++= tags._1
-            UserOption.abort.neg ++= tags._2
-            UserOption.abort.use = true
-          }
+        } else if (o.equals("-Xfatal-Messages")) {
+            /*TODO Report messages*/
         }
     }
   }

@@ -27,7 +27,7 @@ class GeneralRuleTest extends FunSuite {
   /*This fails for the moment*/
   test("Testing VarInsteadOfVal rule") {
     val rule = VarInsteadOfVal
-    println(VarInsteadOfVal.report(x))
+    println(VarInsteadOfVal.apply(x).result)
   }
 
   test("Annotations only positive filtering") {
