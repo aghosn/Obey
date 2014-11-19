@@ -7,7 +7,7 @@ import scala.obey.tools.Enrichment._
 import scala.obey.tools.Utils._
 
 object Keeper {
-  var rules: Set[Rule] = Set(VarInsteadOfVal, UnusedMember, RenamedDefaultParameter, ListToSet)
+  var rules: Set[Rule] = Set()//Set(VarInsteadOfVal, UnusedMember, RenamedDefaultParameter, ListToSet)
 
   //TODO Still have to rely on the bad trick to get the string
 
