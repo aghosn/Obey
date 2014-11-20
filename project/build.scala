@@ -11,8 +11,7 @@ object build extends Build {
 
 	lazy val commonDependencies = Seq(
 		libraryDependencies <++= (scalaVersion)(sv => Seq(
-			reflect(sv) % "provided",
-			compiler(sv) % "provided", 
+			compiler(sv) % "provided",
 			Dependencies.tql,
 			Dependencies.scalatest
 		)) 
@@ -23,8 +22,8 @@ object build extends Build {
 	lazy val plugin = Project(
 		id = "plugin", 
 		base = file("plugin"), 
-		settings = sharedSettings ++ commonDependencies ++ List(
-			libraryDependencies ++= Seq(Dependencies.scalahost),
+		settings = sharedSettings ++ commonDependencies ++ mergeDependencies ++ List(
+		libraryDependencies ++= Seq(Dependencies.scalahost),
 			resourceDirectory in Compile := baseDirectory.value / "resources"
 		)
 		
