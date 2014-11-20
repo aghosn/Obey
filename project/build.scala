@@ -13,7 +13,8 @@ object build extends Build {
 		libraryDependencies <++= (scalaVersion)(sv => Seq(
 			reflect(sv) % "provided",
 			compiler(sv) % "provided", 
-			Dependencies.tql
+			Dependencies.tql,
+			Dependencies.scalatest
 		)) 
 		//addCompilerPlugin(paradise)
 		//addCompilerPlugin(scalahost)
@@ -23,23 +24,19 @@ object build extends Build {
 		id = "plugin", 
 		base = file("plugin"), 
 		settings = sharedSettings ++ commonDependencies ++ List(
-			libraryDependencies ++= Seq(Dependencies.scalahost, Dependencies.scalatest)
+			libraryDependencies ++= Seq(Dependencies.scalahost)
 		)
 	) dependsOn(model)
 
 	lazy val model = Project(
 		id = "model", 
 		base = file("model"), 
-		settings = sharedSettings ++ commonDependencies ++ List(
-			libraryDependencies ++= Seq(Dependencies.scalahost, Dependencies.scalatest)
-		)
+		settings = sharedSettings ++ commonDependencies 
 	)
 	
 	lazy val tests = Project(
 		id = "tests", 
 		base = file("tests"), 
-		settings = sharedSettings ++ commonDependencies ++ List(
-			libraryDependencies ++= Seq(Dependencies.scalahost, Dependencies.scalatest)
-		) ++ exposeClasspaths("tests")
+		settings = sharedSettings ++ commonDependencies ++ exposeClasspaths("tests")
 	) dependsOn(plugin, model) 
 }
