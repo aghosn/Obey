@@ -24,8 +24,10 @@ object build extends Build {
 		id = "plugin", 
 		base = file("plugin"), 
 		settings = sharedSettings ++ commonDependencies ++ List(
-			libraryDependencies ++= Seq(Dependencies.scalahost)
+			libraryDependencies ++= Seq(Dependencies.scalahost),
+			resourceDirectory in Compile := baseDirectory.value / "resources"
 		)
+		
 	) dependsOn(model)
 
 	lazy val model = Project(
