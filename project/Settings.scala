@@ -5,37 +5,41 @@ import AssemblyKeys._
 import com.typesafe.sbt.pgp.PgpKeys._
 
 object Settings {
-	lazy val languageVersion = "2.11.2"
-	lazy val metaVersion = "0.1.0-SNAPSHOT"
+  lazy val languageVersion = "2.11.2"
+  lazy val metaVersion = "0.1.0-SNAPSHOT"
 
-	lazy val sharedSettings: Seq[sbt.Def.Setting[_]] = Defaults.defaultSettings ++ Seq(
-		scalaVersion := languageVersion, 
-		crossVersion := CrossVersion.full, 
-		version := metaVersion, 
-		organization := "org.scalameta",
-		description := "Code Health compiler plugin for scalameta trees",
-		description := "Test Scala host for scala.meta",
+  lazy val sharedSettings: Seq[sbt.Def.Setting[_]] = Defaults.defaultSettings ++ Seq(
+    scalaVersion := languageVersion,
+    crossVersion := CrossVersion.full,
+    version := metaVersion,
+    organization := "org.scalameta",
+    description := "Code Health compiler plugin for scalameta trees",
+    description := "Test Scala host for scala.meta",
     resolvers += Resolver.sonatypeRepo("snapshots"),
     resolvers += Resolver.sonatypeRepo("releases"),
     scalacOptions ++= Seq("-feature", "-deprecation", "-unchecked"),
     parallelExecution in Test := false, // hello, reflection sync!!
-    logBuffered := false
-		/*scalaHome := {
+    logBuffered := false /*scalaHome := {
       val scalaHome = System.getProperty("scalahost.scala.home") //TODO Change this maybe 
       if (scalaHome != null) {
         println(s"Going for custom scala home at $scalaHome")
         Some(file(scalaHome))
       } else None
-    }*/
-	)
- 
- lazy val flatLayout: Seq[sbt.Def.Setting[_]] = assemblySettings ++ Seq(
+    }*/ )
+
+  lazy val flatLayout: Seq[sbt.Def.Setting[_]] = assemblySettings ++ Seq(
     scalaSource in Compile <<= (baseDirectory in Compile)(base => base),
-    resourceDirectory in Compile <<= (baseDirectory in Compile)(base => base / "resources")
-  )
+    resourceDirectory in Compile <<= (baseDirectory in Compile)(base => base / "resources"))
 
   lazy val mergeDependencies: Seq[sbt.Def.Setting[_]] = assemblySettings ++ Seq(
     test in assembly := {},
+    mergeStrategy in assembly := {
+      //case s if s.endsWith(".class") => MergeStrategy.rename
+      /*case x =>
+        val oldStrategy = (mergeStrategy in assembly).value
+        oldStrategy(x)*/
+      case _ => MergeStrategy.filterDistinctLines
+    },
     logLevel in assembly := Level.Error,
     jarName in assembly := name.value + "_" + scalaVersion.value + "-" + version.value + "-assembly.jar",
     assemblyOption in assembly ~= { _.copy(includeScala = false) },
@@ -53,12 +57,11 @@ object Settings {
       val _ = assembly.value
       IO.copy(List(fatJar -> slimJar), overwrite = true)
       (art, slimJar)
-    }
-  )
+    })
 
   lazy val dontPackage = packagedArtifacts := Map.empty
-	
-	// Thanks Jason for this cool idea (taken from https://github.com/retronym/boxer)
+
+  // Thanks Jason for this cool idea (taken from https://github.com/retronym/boxer)
   // add plugin timestamp to compiler options to trigger recompile of
   // main after editing the plugin. (Otherwise a 'clean' is needed.)
   def usePlugin(plugin: ProjectReference) =
@@ -78,6 +81,5 @@ object Settings {
       val defaultValue = (resourceDirectory in Test).value
       System.setProperty("sbt.paths.tests.resources", defaultValue.getAbsolutePath)
       defaultValue
-    }
-  )
+    })
 }

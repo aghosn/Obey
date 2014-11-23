@@ -6,7 +6,7 @@ import scala.obey.model._
 import scala.obey.tools.Utils._
 
 @Tag("format") @Tag("List") @Tag("Set") object ListToSet extends Rule {
-  val name: String = "List to Set"
+  val name = "List to Set"
 
   def message(t: Defn.Val): Message = Message(s"The assignment $t creates a useless List") 
 

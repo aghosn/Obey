@@ -21,8 +21,16 @@ class GeneralRuleTest extends FunSuite {
     q"""
       val l = Set(1,2,3,4)
       """
+  val z = 
+    q"""
+      List(1,2,3).toSet
+    """
+  val t = 
+    q"""
+      List(1,2,3).toSet()
+    """
   test("Print the tree") {
-    //println(showTree(x))
+    println("The trees \n"+showTree(z)+"\n"+showTree(t))
     //println("\n" + showTree(y))
   }
 
