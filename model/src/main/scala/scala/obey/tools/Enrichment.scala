@@ -22,6 +22,12 @@ object Enrichment {
     /*TODO find how to do that*/
     def isConstructorArg: Boolean = true //tree.parent.map(p => p.isInstanceOf[Member.Ctor]).getOrElse(false)
 
+    /*TODO How do we test for tpe == Unit ?*/
+    def isUnit: Boolean = tree match {
+      case x: Defn.Def => true
+      case _ => true
+    }
+
   }
 
 }

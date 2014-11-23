@@ -1,0 +1,28 @@
+package scala.obey.rules
+
+import scala.meta.syntactic.ast._
+import tqlscalameta.ScalaMetaTraverser._
+import scala.obey.model._
+import scala.obey.tools.Utils._
+import scala.obey.tools.Enrichment._
+
+@Tag("Type") @Tag("Explicit") object ExplicitUnitReturn extends Rule {
+
+  val name = "Ensure explicit Return types"
+
+  def message(t: Defn.Def) = Message(s"$t has no explicit Unit return type")
+
+  def apply = {
+    (collect {
+      case t @ Defn.Def(_, _, _, _, None, _) if t.isUnit =>
+        message(t)
+    } <~
+      update {
+        /*TODO does this works ? Wondering how Type.Name is compared*/
+        case t @ Defn.Def(mods, name, tparams, paramss, None, body) if t.isUnit =>
+          Defn.Def(mods, name, tparams, paramss, Some(Type.Name("Unit")), body)
+      }).down
+  }
+}
+
+//Defn.Def( mods, name, tparams, paramss, decltpe, body)

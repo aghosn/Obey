@@ -29,8 +29,17 @@ class GeneralRuleTest extends FunSuite {
     q"""
       List(1,2,3).toSet()
     """
+  val a = 
+    q"""
+      def boom(loop: List[Int]): Unit = println("coucou")
+    """
+
+  val b = 
+    q"""
+      def boom(loop: List[Int]) = println("coucou")
+    """
   test("Print the tree") {
-    println("The trees \n"+showTree(z)+"\n"+showTree(t))
+    println("The trees \n"+showTree(a)+"\n"+showTree(b))
     //println("\n" + showTree(y))
   }
 

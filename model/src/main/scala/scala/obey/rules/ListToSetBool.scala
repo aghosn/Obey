@@ -5,7 +5,8 @@ import tqlscalameta.ScalaMetaTraverser._
 import scala.obey.model._
 import scala.obey.tools.Utils._
 
-object ListToSetBool extends Rule {
+@Tag("List") @Tag("Set") @Tag("Type") object ListToSetBool extends Rule {
+  
   val name = "List to Set evaluated to Boolean"
 
   /*TODO apply only for val until we talk about it*/

@@ -12,6 +12,11 @@ import scala.obey.model.Keeper
 
 class ObeyPlugin(val global: Global) extends NscPlugin with ObeyPhase {
   import global._
+  
+  val format = "format:"
+  val all = "all:"
+  val report = "report:"
+  val fatal = "-Xfatal-Messages"
 
   val name = "obey"
   val description = """Compiler plugin that checks defined rules against scalameta trees.
@@ -37,32 +42,33 @@ class ObeyPlugin(val global: Global) extends NscPlugin with ObeyPhase {
   override def processOptions(options: List[String], error: String => Unit) {
     options.foreach {
       o =>
+        /*TODO too much repetition here, need to clean that up*/
         /* We process the all attributes
          * The user can use -- to prevent its use*/
-        if (o.startsWith("all:")) {
-          val opts = o.substring("all:".length)
+        if (o.startsWith(all)) {
+          val opts = o.substring(all.length)
           val tags = OptParser.parse(opts)
           UserOption.all.pos ++= tags._1
           UserOption.all.neg ++= tags._2
 
-        } else if (o.startsWith("format:")) {
-          val opts = o.substring("format:".length)
+        } else if (o.startsWith(format)) {
+          val opts = o.substring(format.length)
           if (!opts.isEmpty && !opts.contains("--")) {
             val tags = OptParser.parse(opts.replace("++", ""))
             UserOption.format.pos ++= tags._1
             UserOption.format.neg ++= tags._2
             UserOption.format.use = true
           }
-        } else if (o.startsWith("report:")) {
+        } else if (o.startsWith(report)) {
           if (!o.contains("--")) {
-            val opts = o.substring("report:".length).replace("++", "")
+            val opts = o.substring(report.length).replace("++", "")
             val tags = OptParser.parse(opts)
             UserOption.report.pos ++= tags._1
             UserOption.report.neg ++= tags._2
           } else {
             UserOption.report.use = false
           }
-        } else if (o.equals("-Xfatal-Messages")) {
+        } else if (o.equals(fatal)) {
             /*TODO Report messages*/
         } else if (o.startsWith("addRules:")) {
           val opts = o.substring("addRules:".length)
