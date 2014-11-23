@@ -28,6 +28,9 @@ object Enrichment {
       case _ => true
     }
 
+    /*TODO once we know how to get the type */
+    def getType: Type.Name = Type.Name("Unit")
+
   }
 
 }
