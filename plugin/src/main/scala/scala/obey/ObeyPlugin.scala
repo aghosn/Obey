@@ -72,8 +72,19 @@ class ObeyPlugin(val global: Global) extends NscPlugin with ObeyPhase {
         } else if (o.startsWith("addRules:")) {
           val opts = o.substring("addRules:".length)
           Keeper.rules ++= (new Loader(opts)).rules
+        } else {
+          println("PROBLEMS")
         }
     }
   }
+
+  override val optionsHelp: Option[String] = Some("""
+    | -P:obey:
+    |   all:                Specifies filters for all 
+    |   format:             Specifies filters for format
+    |   addRules:           Specifies user defined rules
+    |   report:             Specifies filter for warnings
+    |   -Xfatal-Messages    Abort on any warning 
+    """)
 
 }

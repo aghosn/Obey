@@ -31,6 +31,9 @@ trait ObeyPhase {
         val messages: List[Message] = resultTree.result ++ messageRules(punit)
         //TODO Handle messages
         //Persist the trees 
+        //TODO testing that it loads the rules correctly
+        println("RULES: --------------------------")
+        Keeper.rules.foreach(println(_))
       }
     }
   }
