@@ -41,7 +41,7 @@ object Settings {
       //case _ => MergeStrategy.filterDistinctLines
     },
     logLevel in assembly := Level.Error,
-    jarName in assembly := name.value + "_" + scalaVersion.value + "-" + version.value + "-assembly.jar",
+    jarName in assembly := "obey_"+name.value + "_" + scalaVersion.value + "-" + version.value + "-assembly.jar",
     assemblyOption in assembly ~= { _.copy(includeScala = false) },
     Keys.`package` in Compile := {
       val slimJar = (Keys.`package` in Compile).value

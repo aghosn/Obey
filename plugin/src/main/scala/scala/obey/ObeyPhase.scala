@@ -15,10 +15,11 @@ trait ObeyPhase {
     val global: self.global.type = self.global
     import global._
 
-    val phaseName: String = "obey"
+    val phaseName = "obey_rules"
     implicit val h = Scalahost[global.type](global)
     /** TODO check that this is correct*/
-    val runsAfter: List[String] = List("typer")
+    override val runsAfter: List[String] = List("typer")
+    override def description = "apply obey rules"
 
     /**TODO will be responsible for calling the loader*/
     def newPhase(prev: Phase): Phase = new StdPhase(prev) {
