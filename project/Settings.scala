@@ -34,7 +34,7 @@ object Settings {
   lazy val mergeDependencies: Seq[sbt.Def.Setting[_]] = assemblySettings ++ Seq(
     test in assembly := {},
     mergeStrategy in assembly := {
-      case "scalac-plugin.xml" => MergeStrategy.concat
+      case "scalac-plugin.xml" => MergeStrategy.first
       case x =>
         val oldStrategy = (mergeStrategy in assembly).value
         oldStrategy(x)

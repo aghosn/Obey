@@ -18,7 +18,7 @@ trait ObeyPhase {
     val phaseName: String = "obey"
     implicit val h = Scalahost[global.type](global)
     /** TODO check that this is correct*/
-    val runsAfter: List[String] = List("persist")
+    val runsAfter: List[String] = List("typer")
 
     /**TODO will be responsible for calling the loader*/
     def newPhase(prev: Phase): Phase = new StdPhase(prev) {
@@ -32,8 +32,9 @@ trait ObeyPhase {
         //TODO Handle messages
         //Persist the trees 
         //TODO testing that it loads the rules correctly
-        println("RULES: --------------------------")
-        Keeper.rules.foreach(println(_))
+        println("HEEEEEEEEEEEEEEEEEEEELLLLLLLLLLLLLLLLLLLLOOOOOOOOOOOOOO")
+        reporter.echo("RULES: --------------------------")
+        Keeper.rules.foreach(i => reporter.echo("A rule "+i))
       }
     }
   }
