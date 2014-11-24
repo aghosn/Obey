@@ -33,13 +33,13 @@ object Settings {
 
   lazy val mergeDependencies: Seq[sbt.Def.Setting[_]] = assemblySettings ++ Seq(
     test in assembly := {},
-    mergeStrategy in assembly := {
+    /*mergeStrategy in assembly := {
       //case s if s.endsWith(".class") => MergeStrategy.rename
       /*case x =>
         val oldStrategy = (mergeStrategy in assembly).value
         oldStrategy(x)*/
       case _ => MergeStrategy.filterDistinctLines
-    },
+    },*/
     logLevel in assembly := Level.Error,
     jarName in assembly := name.value + "_" + scalaVersion.value + "-" + version.value + "-assembly.jar",
     assemblyOption in assembly ~= { _.copy(includeScala = false) },

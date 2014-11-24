@@ -12,7 +12,7 @@ import scala.obey.model.Keeper
 
 class ObeyPlugin(val global: Global) extends NscPlugin with ObeyPhase {
   import global._
-  
+
   val format = "format:"
   val all = "all:"
   val report = "report:"
@@ -24,20 +24,20 @@ class ObeyPlugin(val global: Global) extends NscPlugin with ObeyPhase {
   val components: List[NscPluginComponent] = List[NscPluginComponent](ObeyComponent)
 
   /**
-   * Processes the options for the plugin 
+   * Processes the options for the plugin
    * [all]: By default, all rules are used as Message
    *        ([+-]Tag)* filters the rules
-   * [format]: Deactivated by default. To activate put a '++'. 
+   * [format]: Deactivated by default. To activate put a '++'.
    *           '--' deactivates the option and dominates any other entry
    *           ([+-]Tag)*  will apply these filters on rules selected by 'all'
-   * [report]: Activated by default. 
-   *           '--' deactivates it and dominates. 
+   * [report]: Activated by default.
+   *           '--' deactivates it and dominates.
    *           '++' has no effect.
-   *           All rules are used by default. 
+   *           All rules are used by default.
    *           ([+-]Tag)*  will apply these filters on rules selected by 'all'
    * [abort]: Deactivated by default. To activate put a '++'.
    *          '--' deactivates it and dominates.
-   *          ([+-]Tag)*  will apply these filters on rules selected by 'all'  
+   *          ([+-]Tag)*  will apply these filters on rules selected by 'all'
    */
   override def processOptions(options: List[String], error: String => Unit) {
     options.foreach {
@@ -46,34 +46,34 @@ class ObeyPlugin(val global: Global) extends NscPlugin with ObeyPhase {
         /* We process the all attributes
          * The user can use -- to prevent its use*/
         if (o.startsWith(all)) {
+          
           val opts = o.substring(all.length)
           val tags = OptParser.parse(opts)
-          UserOption.all.pos ++= tags._1
-          UserOption.all.neg ++= tags._2
+          UserOption.addTags(UserOption.all, tags)
 
-        } else if (o.startsWith(format)) {
+        } else if (o.startsWith(format) && !o.contains("--")) {
+          
           val opts = o.substring(format.length)
-          if (!opts.isEmpty && !opts.contains("--")) {
-            val tags = OptParser.parse(opts.replace("++", ""))
-            UserOption.format.pos ++= tags._1
-            UserOption.format.neg ++= tags._2
-            UserOption.format.use = true
-          }
+          val tags = OptParser.parse(opts.replace("++", ""))
+          UserOption.addTags(UserOption.format, tags)
+
         } else if (o.startsWith(report)) {
+          
           if (!o.contains("--")) {
             val opts = o.substring(report.length).replace("++", "")
             val tags = OptParser.parse(opts)
-            UserOption.report.pos ++= tags._1
-            UserOption.report.neg ++= tags._2
+            UserOption.addTags(UserOption.report, tags)
           } else {
             UserOption.report.use = false
           }
+          
         } else if (o.equals(fatal)) {
-            /*TODO Report messages*/
+          /*TODO Report messages*/
         } else if (o.startsWith("addRules:")) {
           val opts = o.substring("addRules:".length)
           Keeper.rules ++= (new Loader(opts)).rules
         }
     }
   }
+
 }

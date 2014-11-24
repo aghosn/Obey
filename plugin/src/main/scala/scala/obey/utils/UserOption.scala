@@ -28,4 +28,9 @@ object UserOption {
   def getFormat: Set[Rule] = getRules(format)
   /* Avoids traversing the tree twice for format and warnings*/
   def getReport: Set[Rule] = getRules(report) -- getFormat
+
+  def addTags(hld: holder, tags: (Set[Tag], Set[Tag])) = {
+    hld.pos ++= tags._1
+    hld.neg ++= tags._2
+  }
 }

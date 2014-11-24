@@ -29,7 +29,8 @@ trait ObeyPhase {
         val messageRules = UserOption.getReport.map(_.apply).reduce((r1, r2) => r1 +> r2)
         val resultTree = formattingRules(punit)
         val messages: List[Message] = resultTree.result ++ messageRules(punit)
-        
+        //TODO Handle messages
+        //Persist the trees 
       }
     }
   }
