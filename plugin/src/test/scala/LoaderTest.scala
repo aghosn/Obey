@@ -12,4 +12,9 @@ class LoaderTest extends FunSuite {
     assert(loader.rules.size == 2)
   }
 
+  test("From other project") {
+    val loader = new Loader("/home/aghosn/Documents/Programs/Scala/IObey/rules/target/scala-2.11/classes")
+    loader.rules.foreach(r => println("a rule "+r))
+  }
+
 }

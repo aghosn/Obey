@@ -26,14 +26,17 @@ trait ObeyPhase {
       def apply(unit: CompilationUnit) {
         /** TODO implement the meat here*/
         val punit = h.toPalladium(unit.body, classOf[scala.meta.Source])
-        val formattingRules = UserOption.getFormat.map(_.apply).reduce((r1, r2) => r1 + r2)
-        val messageRules = UserOption.getReport.map(_.apply).reduce((r1, r2) => r1 +> r2)
-        val resultTree = formattingRules(punit)
-        val messages: List[Message] = resultTree.result ++ messageRules(punit)
-        //TODO Handle messages
-        //Persist the trees 
-        //TODO testing that it loads the rules correctly
-        println("HEEEEEEEEEEEEEEEEEEEELLLLLLLLLLLLLLLLLLLLOOOOOOOOOOOOOO")
+        val messageRules = UserOption.getReport
+        val formattingRules = UserOption.getFormat
+        var warnings: List[Message] = Nil 
+        if(!messageRules.isEmpty)
+            warnings ++= messageRules.map(_.apply).reduce((r1, r2) => r1 +> r2)(punit)
+        var res: MatcherResult[List[Message]] = null
+        if(!formattingRules.isEmpty) {
+            res = formattingRules.map(_.apply).reduce((r1, r2) => r1 + r2)(punit)
+            warnings ++= res.result
+        }
+
         reporter.echo("RULES: --------------------------")
         Keeper.rules.foreach(i => reporter.echo("A rule "+i))
       }

@@ -12,7 +12,7 @@ object Settings {
     scalaVersion := languageVersion,
     crossVersion := CrossVersion.full,
     version := metaVersion,
-    organization := "org.scalameta",
+    organization := "org.obey",
     description := "Code Health compiler plugin for scalameta trees",
     description := "Test Scala host for scala.meta",
     resolvers += Resolver.sonatypeRepo("snapshots"),

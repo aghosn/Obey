@@ -46,19 +46,19 @@ class ObeyPlugin(val global: Global) extends NscPlugin with ObeyPhase {
         /* We process the all attributes
          * The user can use -- to prevent its use*/
         if (o.startsWith(all)) {
-          
+          println("all filter")
           val opts = o.substring(all.length)
           val tags = OptParser.parse(opts)
           UserOption.addTags(UserOption.all, tags)
 
         } else if (o.startsWith(format) && !o.contains("--")) {
-          
+          println("format filter") 
           val opts = o.substring(format.length)
           val tags = OptParser.parse(opts.replace("++", ""))
           UserOption.addTags(UserOption.format, tags)
 
         } else if (o.startsWith(report)) {
-          
+          println("report filter")
           if (!o.contains("--")) {
             val opts = o.substring(report.length).replace("++", "")
             val tags = OptParser.parse(opts)
@@ -70,6 +70,7 @@ class ObeyPlugin(val global: Global) extends NscPlugin with ObeyPhase {
         } else if (o.equals(fatal)) {
           /*TODO Report messages*/
         } else if (o.startsWith("addRules:")) {
+          println("addRules filter")
           val opts = o.substring("addRules:".length)
           Keeper.rules ++= (new Loader(opts)).rules
         } else {

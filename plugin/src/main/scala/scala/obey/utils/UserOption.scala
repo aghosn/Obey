@@ -18,7 +18,7 @@ object UserOption {
 
   /* Get rules for a holder according to the 'all' filter*/
   def getRules(h: holder): Set[Rule] = {
-  	if(!h.use)
+  	if(!h.use) 
   		return Set()
   	val allRules: Set[Rule] = filterT(all.pos, all.neg)
   	filter(h.pos, h.neg)(allRules)
