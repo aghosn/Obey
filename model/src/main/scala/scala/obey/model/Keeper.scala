@@ -3,7 +3,6 @@ package scala.obey.model
 import scala.reflect.runtime.{ universe => ru }
 import scala.reflect.runtime.{ currentMirror => cm }
 import scala.obey.rules._
-import scala.obey.tools.Enrichment._
 import scala.obey.tools.Utils._
 
 object Keeper {
@@ -13,8 +12,8 @@ object Keeper {
 
   /* Filters the Rules according to the specified sets such that  
    * the pos & rules.annotations non-empty if pos is not the empty set
-   * and neg & rules.annotations emtpy. 
-   * This enables to lazilly ask for all the rules 
+   * and neg & rules.annotations empty.
+   * This enables to lazilpauvy ask for all the rules
    * or to only define the ones we don't want 
    **/
   def filter[T <: Rule](pos: Set[Tag], neg: Set[Tag])(l: Set[T]): Set[T] = {

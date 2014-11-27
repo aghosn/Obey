@@ -1,8 +1,7 @@
 package scala.obey
 
-import scala.tools.nsc.{ Global, Phase, SubComponent }
-import scala.tools.nsc.plugins.{ Plugin => NscPlugin, PluginComponent => NscPluginComponent }
-import scala.meta.internal.hosts.scalacompiler.scalahost.Scalahost
+import scala.tools.nsc.Phase
+import scala.tools.nsc.plugins.{ PluginComponent => NscPluginComponent }
 import scala.obey.model._
 import scala.obey.utils.UserOption
 import tqlscalameta.ScalaMetaTraverser._
@@ -16,29 +15,31 @@ trait ObeyPhase {
     import global._
 
     val phaseName = "obey_rules"
-    implicit val h = Scalahost[global.type](global)
-    /** TODO check that this is correct*/
-    override val runsAfter: List[String] = List("typer")
+    override val runsAfter = List("typer")
+    override val runsRightAfter = Some("persist")
     override def description = "apply obey rules"
 
-    /**TODO will be responsible for calling the loader*/
     def newPhase(prev: Phase): Phase = new StdPhase(prev) {
+      
       def apply(unit: CompilationUnit) {
-        /** TODO implement the meat here*/
-        val punit = h.toPalladium(unit.body, classOf[scala.meta.Source])
+        
+        val punit = unit.body.metadata("scalameta").asInstanceOf[scala.meta.Tree]
         val messageRules = UserOption.getReport
         val formattingRules = UserOption.getFormat
-        var warnings: List[Message] = Nil 
-        if(!messageRules.isEmpty)
-            warnings ++= messageRules.map(_.apply).reduce((r1, r2) => r1 +> r2)(punit)
+        var warnings: List[Message] = Nil
+        
+        if (!messageRules.isEmpty)
+          warnings ++= messageRules.map(_.apply).reduce((r1, r2) => r1 +> r2)(punit)
+        
         var res: MatcherResult[List[Message]] = null
-        if(!formattingRules.isEmpty) {
-            res = formattingRules.map(_.apply).reduce((r1, r2) => r1 + r2)(punit)
-            warnings ++= res.result
+        
+        if (!formattingRules.isEmpty) {
+          res = formattingRules.map(_.apply).reduce((r1, r2) => r1 + r2)(punit)
+          warnings ++= res.result
         }
 
         reporter.echo("RULES: --------------------------")
-        Keeper.rules.foreach(i => reporter.echo("A rule "+i))
+        Keeper.rules.foreach(i => reporter.echo("A rule " + i))
       }
     }
   }

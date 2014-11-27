@@ -5,12 +5,15 @@
  */
 package scala.obey
 
-import scala.tools.nsc.{ Global, Phase, SubComponent }
+import org.scalameta.ast.internal
+
+import scala.meta.internal.hosts.scalacompiler.PluginBase
+import scala.tools.nsc.Global
 import scala.tools.nsc.plugins.{ Plugin => NscPlugin, PluginComponent => NscPluginComponent }
 import scala.obey.utils._
 import scala.obey.model.Keeper
 
-class ObeyPlugin(val global: Global) extends NscPlugin with ObeyPhase {
+class ObeyPlugin(val global: Global) extends PluginBase with ObeyPhase {
   import global._
 
   val format = "format:"
@@ -19,9 +22,9 @@ class ObeyPlugin(val global: Global) extends NscPlugin with ObeyPhase {
   val fatal = "-Xfatal-Messages"
 
   val name = "obey"
-  val description = """Compiler plugin that checks defined rules against scalameta trees.
-  http://github.com/aghosn/Obey for more informations."""
-  val components = List[NscPluginComponent](ObeyComponent)
+  val description = """Compiler plugin that checks defined rules against scala meta trees.
+  http://github.com/aghosn/Obey for more information."""
+  val components = List[NscPluginComponent](RenumberComponent, PersistenceComponent, ObeyComponent)
 
   /**
    * Processes the options for the plugin
@@ -42,7 +45,7 @@ class ObeyPlugin(val global: Global) extends NscPlugin with ObeyPhase {
   override def processOptions(options: List[String], error: String => Unit) {
     options.foreach {
       o =>
-        /*TODO too much repetition here, need to clean that up*/
+      
         /* We process the all attributes
          * The user can use -- to prevent its use*/
         if (o.startsWith(all)) {
@@ -63,9 +66,9 @@ class ObeyPlugin(val global: Global) extends NscPlugin with ObeyPhase {
             val opts = o.substring(report.length).replace("++", "")
             val tags = OptParser.parse(opts)
             UserOption.addTags(UserOption.report, tags)
-          } else {
+          } else 
             UserOption.report.use = false
-          }
+          
           
         } else if (o.equals(fatal)) {
           /*TODO Report messages*/
