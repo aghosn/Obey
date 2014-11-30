@@ -38,6 +38,11 @@ class GeneralRuleTest extends FunSuite {
     q"""
       def boom(loop: List[Int]) = println("coucou")
     """
+  val c = 
+    q"""
+      val c: Option[String] = Some("bla")
+      c.get
+    """
   test("Print the tree") {
     println("The trees \n"+showTree(a)+"\n"+showTree(b))
     //println("\n" + showTree(y))
@@ -61,4 +66,8 @@ class GeneralRuleTest extends FunSuite {
     assert(!Keeper.filterT(Set(), Set(new Tag("Var"))).contains(VarInsteadOfVal));
   }
 
+  test("Want to see what an option looks like") {
+    println("----------------------")
+    println(showTree(c))
+  }
 }

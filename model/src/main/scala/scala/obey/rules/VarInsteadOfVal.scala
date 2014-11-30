@@ -6,7 +6,7 @@ import scala.obey.model._
 import scala.obey.tools.Utils._
 import scala.language.reflectiveCalls
 
-@Tag("Var") @Tag("format") object VarInsteadOfVal extends Rule {
+@Tag("Var") @Tag("Val") object VarInsteadOfVal extends Rule {
   val name = "Var Instead of Val"
 
   def message(t: Tree): Message = Message(s"The 'var' $t was never reassigned and should therefore be a 'val'")
