@@ -38,8 +38,16 @@ trait ObeyPhase {
           warnings ++= res.result
         }
 
-        reporter.echo("RULES: --------------------------")
-        Keeper.rules.foreach(i => reporter.echo("A rule " + i))
+        println("-----------------------------------------------")
+        println("Resume of what happened:")
+        println("The keeper has those rules: ")
+        Keeper.rules.foreach(x => println(x))
+        println(s"We selected to report ${UserOption.getReport}")
+        println(s"We selected to format ${UserOption.getFormat}")
+        println("The warnings we get")
+        warnings.foreach(w => println(w))
+        println(s"res is ${res}")
+        
       }
     }
   }

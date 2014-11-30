@@ -9,13 +9,6 @@ object Keeper {
   var rules: Set[Rule] = Set(VarInsteadOfVal, ListToSet)
 
   //TODO Still have to rely on the bad trick to get the string
-
-  /* Filters the Rules according to the specified sets such that  
-   * the pos & rules.annotations non-empty if pos is not the empty set
-   * and neg & rules.annotations empty.
-   * This enables to lazilpauvy ask for all the rules
-   * or to only define the ones we don't want 
-   **/
   def filter[T <: Rule](pos: Set[Tag], neg: Set[Tag])(l: Set[T]): Set[T] = {
     val posSet: Set[String] = pos.map(_.tag)
     val negSet: Set[String] = neg.map(_.tag)

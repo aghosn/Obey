@@ -5,8 +5,6 @@
  */
 package scala.obey
 
-import org.scalameta.ast.internal
-
 import scala.meta.internal.hosts.scalacompiler.PluginBase
 import scala.tools.nsc.Global
 import scala.tools.nsc.plugins.{ Plugin => NscPlugin, PluginComponent => NscPluginComponent }
