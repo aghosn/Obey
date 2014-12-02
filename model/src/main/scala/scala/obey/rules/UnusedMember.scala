@@ -8,7 +8,7 @@ import scala.obey.tools.Utils._
 import scala.language.reflectiveCalls
 
 @Tag("DCE", "Var") object UnusedMember extends Rule {
-  val name = "Unused Member"
+  val name = "UnusedMember: members are defined but never used"
 
   def message(t: Term.Name): Message = Message(s"${t} is not used")
 

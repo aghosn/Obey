@@ -9,7 +9,7 @@ import scala.language.reflectiveCalls
 
 @Tag("Option", "Option#get") object OptionGet extends Rule {
 
-  val name = "Option#fold instead of get"
+  val name = "OptionGet: use Option#fold instead of get"
 
   def message(t: Term.Select) = Message(s"${t} should use Option#fold instead of Option#get")
 

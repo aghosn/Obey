@@ -7,7 +7,7 @@ import scala.obey.tools.Utils._
 import scala.language.reflectiveCalls
 
 @Tag("Var", "Val") object VarInsteadOfVal extends Rule {
-  val name = "Var Instead of Val"
+  val name = "VarInsteadOfVal: var assigned only once should be val"
 
   def message(t: Tree): Message = Message(s"The 'var' $t was never reassigned and should therefore be a 'val'")
 

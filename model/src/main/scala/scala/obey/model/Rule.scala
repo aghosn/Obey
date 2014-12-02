@@ -11,11 +11,13 @@ import tqlscalameta.ScalaMetaTraverser._
 
 trait Rule {
   import scala.obey.tools.Utils._
-  /* Identifier to pretty print and identity the rule*/
+  /* Identifier to pretty print and identity the rule
+   * usage: "name: description"
+   */
   val name: String
 
   def apply: Matcher[List[Message]]
 
-  override def toString: String = name
+  override def toString: String = s"rule $name"
   
 }
