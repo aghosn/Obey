@@ -12,7 +12,6 @@ import scala.obey.utils._
 import scala.obey.model.Keeper
 
 class ObeyPlugin(val global: Global) extends PluginBase with ObeyPhase {
-  import global._
 
   val format = "format:"
   val all = "all:"

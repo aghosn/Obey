@@ -6,7 +6,7 @@ import scala.obey.model._
 import scala.obey.tools.Utils._
 import scala.obey.tools.Enrichment._
 
-@Tag("Type") @Tag("Explicit") object ExplicitUnitReturn extends Rule {
+@Tag("Type", "Explicit") object ExplicitUnitReturn extends Rule {
 
   val name = "Ensure explicit Return types"
 

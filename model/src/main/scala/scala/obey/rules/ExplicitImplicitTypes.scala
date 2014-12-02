@@ -6,7 +6,7 @@ import scala.obey.model._
 import scala.obey.tools.Utils._
 import scala.obey.tools.Enrichment._
 
-@Tag("Type") @Tag("Explicit") object ExplicitImplicitTypes extends Rule {
+@Tag("Type", "Explicit") object ExplicitImplicitTypes extends Rule {
 
   val name = "Explicit types in Val & Def"
 

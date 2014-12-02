@@ -7,7 +7,7 @@ import scala.obey.tools.Utils._
 import scala.obey.tools.Enrichment._
 import scala.language.reflectiveCalls
 
-object OptionGet extends Rule {
+@Tag("Option", "Option#get") object OptionGet extends Rule {
 
   val name = "Option#fold instead of get"
 
