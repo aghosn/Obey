@@ -53,7 +53,7 @@ trait ObeyPhase {
         warnings.foreach(w => println(w))
         println(s"res is ${res}")
         //println("HARDCORE method "+VarInsteadOfVal.apply(punit).result)
-        println(s"Show the punit \n${punit}\n${showTree(punit)}")
+        //println(s"Show the punit \n${punit}\n${showTree(punit)}")
 
         /*Reporting the errors*/
         warnings.foreach(m => reporter.warning(NoPosition, m.message))
