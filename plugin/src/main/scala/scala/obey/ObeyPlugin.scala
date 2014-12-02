@@ -16,7 +16,6 @@ class ObeyPlugin(val global: Global) extends PluginBase with ObeyPhase {
   val format = "format:"
   val all = "all:"
   val report = "report:"
-  val fatal = "-Xfatal-Messages"
 
   val name = "obey"
   val description = """Compiler plugin that checks defined rules against scala meta trees.
@@ -64,17 +63,14 @@ class ObeyPlugin(val global: Global) extends PluginBase with ObeyPhase {
             val tags = OptParser.parse(opts)
             UserOption.addTags(UserOption.report, tags)
           } else 
-            UserOption.report.use = false
-          
-          
-        } else if (o.equals(fatal)) {
-          /*TODO Report messages*/
+            UserOption.report.use = false 
         } else if (o.startsWith("addRules:")) {
           println("addRules filter")
           val opts = o.substring("addRules:".length)
           Keeper.rules ++= (new Loader(opts)).rules
         } else {
           println("PROBLEMS")
+          /*TODO report bad option*/
         }
     }
   }
@@ -85,7 +81,5 @@ class ObeyPlugin(val global: Global) extends PluginBase with ObeyPhase {
     |   format:             Specifies filters for format
     |   addRules:           Specifies user defined rules
     |   report:             Specifies filter for warnings
-    |   -Xfatal-Messages    Abort on any warning 
     """)
-
 }

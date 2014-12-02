@@ -8,7 +8,6 @@ import scala.obey.tools.Utils._
 import scala.obey.tools.Enrichment._
 import tqlscalameta.ScalaMetaTraverser._
 
-
 class GeneralRuleTest extends FunSuite {
 
   def showTree(x: scala.meta.Tree) = scala.meta.syntactic.show.ShowOps(x).show[syntactic.show.Raw]
@@ -21,30 +20,47 @@ class GeneralRuleTest extends FunSuite {
     q"""
       val l = Set(1,2,3,4)
       """
-  val z = 
+  val z =
     q"""
       List(1,2,3).toSet
     """
-  val t = 
+  val t =
     q"""
       List(1,2,3).toSet()
     """
-  val a = 
+  val a =
     q"""
       def boom(loop: List[Int]): Unit = println("coucou")
     """
 
-  val b = 
+  val b =
     q"""
       def boom(loop: List[Int]) = println("coucou")
     """
-  val c = 
+  val c =
     q"""
       val c: Option[String] = Some("bla")
       c.get
     """
+  val treeComplete =
+    q"""
+
+  object Propaganda {
+
+    def main(args: Array[String]) {
+      println("Starting the Propaganda!")
+
+      var c = 3
+      val v = List(1,2,3).toSet
+      val h = new Hanoi(new Tower(0), new Tower(1), new Tower(2))
+      h.init
+      println("Initial "+h)
+      h.solve
+      println("Result "+h)
+    }
+  }"""
   test("Print the tree") {
-    println("The trees \n"+showTree(a)+"\n"+showTree(b))
+    println("The trees \n" + showTree(a) + "\n" + showTree(b))
     //println("\n" + showTree(y))
   }
 
@@ -62,12 +78,20 @@ class GeneralRuleTest extends FunSuite {
   }
 
   test("Annotations only negative filtering") {
-    assert(Keeper.filterT(Set(), Set(new Tag("Set"))).size == Keeper.rules.size -1)
+    assert(Keeper.filterT(Set(), Set(new Tag("Set"))).size == Keeper.rules.size - 1)
     assert(!Keeper.filterT(Set(), Set(new Tag("Var"))).contains(VarInsteadOfVal));
   }
 
   test("Want to see what an option looks like") {
     println("----------------------")
     println(showTree(c))
+  }
+
+  test("More complicated tree") {
+    val res = VarInsteadOfVal.apply(treeComplete).result
+    assert(res.size == 1)
+    val res2 = ListToSet.apply(treeComplete).result
+    assert(res2.size == 1)
+    println(s"${res}, ${res2}")
   }
 }
