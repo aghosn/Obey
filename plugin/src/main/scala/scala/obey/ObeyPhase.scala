@@ -1,12 +1,15 @@
 package scala.obey
 
-import scala.tools.nsc.Phase
-import scala.tools.nsc.plugins.{ PluginComponent => NscPluginComponent }
-import scala.obey.model._
-import scala.obey.utils.UserOption
-import tqlscalameta.ScalaMetaTraverser._
 import scala.obey.tools.Utils._
 import scala.obey.rules.VarInsteadOfVal
+import scala.obey.utils._
+import scala.obey.model._
+import scala.obey.utils.UserOption
+
+import scala.tools.nsc.Phase
+import scala.tools.nsc.plugins.{ PluginComponent => NscPluginComponent }
+import tqlscalameta.ScalaMetaTraverser._
+
 import scala.meta.syntactic.ast._
 import scala.meta._
 
@@ -29,7 +32,7 @@ trait ObeyPhase {
     def newPhase(prev: Phase): Phase = new StdPhase(prev) {
       
       def apply(unit: CompilationUnit) {
-        
+        val path = unit.source.path
         val punit = unit.body.metadata("scalameta").asInstanceOf[scala.meta.Tree]
         val messageRules = UserOption.getReport
         val formattingRules = UserOption.getFormat
@@ -42,19 +45,20 @@ trait ObeyPhase {
         
         if (!formattingRules.isEmpty) {
           res = formattingRules.map(_.apply).reduce((r1, r2) => r1 + r2)(punit)
-          warnings ++= res.result
+          if(res.tree.isDefined){
+            Persist.archive(path)
+            Persist.persist(path, res.tree.get.toString)
+            warnings ++= res.result.map(m => Message("CORRECTED: "+m.message))
+          }else {
+            warnings ++= res.result
+          }    
         }
 
         /*TODO Debugging */
-        println("-----------------------------------------------")
+       /* println("-----------------------------------------------")
         println(s"We selected to report ${UserOption.getReport}")
-        println(s"We selected to format ${UserOption.getFormat}")
-        println("The warnings we get")
-        warnings.foreach(w => println(w))
-        println(s"res is ${res}")
-        //println("HARDCORE method "+VarInsteadOfVal.apply(punit).result)
-        //println(s"Show the punit \n${punit}\n${showTree(punit)}")
-
+        println(s"We selected to format ${UserOption.getFormat}")*/
+        
         /*Reporting the errors*/
         warnings.foreach(m => reporter.warning(NoPosition, m.message))
 
