@@ -20,7 +20,7 @@ class ObeyPlugin(val global: Global) extends PluginBase with ObeyPhase {
   val name = "obey"
   val description = """Compiler plugin that checks defined rules against scala meta trees.
   http://github.com/aghosn/Obey for more information."""
-  val components = List[NscPluginComponent](RenumberComponent, PersistenceComponent, ObeyComponent)
+  val components = List[NscPluginComponent](ConvertComponent, ObeyComponent)
 
   /**
    * Processes the options for the plugin

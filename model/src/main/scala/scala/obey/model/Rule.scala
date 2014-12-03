@@ -4,7 +4,7 @@
  */
 package scala.obey.model
 
-import scala.meta.syntactic.ast._
+import scala.meta.internal.ast._
 import scala.reflect.runtime.{ universe => ru }
 import scala.obey.tools.Enrichment._
 import tqlscalameta.ScalaMetaTraverser._

@@ -1,6 +1,6 @@
 package scala.obey.rules
 
-import scala.meta.syntactic.ast._
+import scala.meta.internal.ast._
 import scala.obey.model._
 import scala.obey.tools.Utils._
 

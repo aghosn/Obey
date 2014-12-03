@@ -1,5 +1,5 @@
 import org.scalatest.FunSuite
-import scala.meta.syntactic.ast._
+import scala.meta.internal.ast._
 import scala.meta._
 import scala.obey.rules._
 import scala.obey.model._

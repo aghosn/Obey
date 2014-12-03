@@ -10,8 +10,9 @@ import scala.tools.nsc.Phase
 import scala.tools.nsc.plugins.{ PluginComponent => NscPluginComponent }
 import tqlscalameta.ScalaMetaTraverser._
 
-import scala.meta.syntactic.ast._
+import scala.meta.internal.ast._
 import scala.meta._
+import org.scalameta.reflection._
 
 trait ObeyPhase {
   self: ObeyPlugin =>
@@ -22,7 +23,7 @@ trait ObeyPhase {
 
     val phaseName = "obey_rules"
     override val runsAfter = List("typer")
-    override val runsRightAfter = Some("persist")
+    override val runsRightAfter = Some("convert")
     override def description = "apply obey rules"
 
     def showTree(x: scala.meta.Tree) = scala.meta.syntactic.show.ShowOps(x).show[syntactic.show.Raw]
