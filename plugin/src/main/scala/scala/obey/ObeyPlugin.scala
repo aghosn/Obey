@@ -7,7 +7,7 @@ package scala.obey
 
 import scala.meta.internal.hosts.scalac.PluginBase
 import scala.tools.nsc.Global
-import scala.tools.nsc.plugins.{PluginComponent => NscPluginComponent }
+import scala.tools.nsc.plugins.{ PluginComponent => NscPluginComponent }
 import scala.obey.utils._
 import scala.obey.model.Keeper
 
@@ -41,31 +41,27 @@ class ObeyPlugin(val global: Global) extends PluginBase with ObeyPhase {
   override def processOptions(options: List[String], error: String => Unit) {
     options.foreach {
       o =>
-      
+
         /* We process the all attributes
          * The user can use -- to prevent its use*/
         if (o.startsWith(all)) {
-          println("all filter")
           val opts = o.substring(all.length)
           val tags = OptParser.parse(opts)
           UserOption.addTags(UserOption.all, tags)
 
         } else if (o.startsWith(format) && !o.contains("--")) {
-          println("format filter") 
           val opts = o.substring(format.length)
           val tags = OptParser.parse(opts.replace("++", ""))
           UserOption.addTags(UserOption.format, tags)
-
+          UserOption.format.use = true
         } else if (o.startsWith(report)) {
-          println("report filter")
           if (!o.contains("--")) {
             val opts = o.substring(report.length).replace("++", "")
             val tags = OptParser.parse(opts)
             UserOption.addTags(UserOption.report, tags)
-          } else 
-            UserOption.report.use = false 
+          } else
+            UserOption.report.use = false
         } else if (o.startsWith("addRules:")) {
-          println("addRules filter")
           val opts = o.substring("addRules:".length)
           Keeper.rules ++= (new Loader(opts)).rules
         } else {
