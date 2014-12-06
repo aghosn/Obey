@@ -6,5 +6,9 @@ object Utils {
   case class Message(message: String)
 
   /*  Represents the tags used to handle the rule filtering*/
-  case class Tag(val tag: String, val tags: String*) extends StaticAnnotation
+  case class Tag(val tag: String, val tags: String*) extends StaticAnnotation {
+    override def toString = {
+      "Tag("+(tag::tags.toList).mkString(",")+")"
+    }
+  }
 }
