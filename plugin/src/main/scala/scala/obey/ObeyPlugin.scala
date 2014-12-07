@@ -16,7 +16,7 @@ class ObeyPlugin(val global: Global) extends PluginBase with ObeyPhase {
   import global._
   val format = "format:"
   val all = "all:"
-  val report = "report:"
+  val report = "warn:"
 
   val name = "obey"
   val description = """Compiler plugin that checks defined rules against scala meta trees.
@@ -30,14 +30,11 @@ class ObeyPlugin(val global: Global) extends PluginBase with ObeyPhase {
    * [format]: Deactivated by default. To activate put a '++'.
    *           '--' deactivates the option and dominates any other entry
    *           ([+-]Tag)*  will apply these filters on rules selected by 'all'
-   * [report]: Activated by default.
+   * [warn]: Activated by default.
    *           '--' deactivates it and dominates.
    *           '++' has no effect.
    *           All rules are used by default.
    *           ([+-]Tag)*  will apply these filters on rules selected by 'all'
-   * [abort]: Deactivated by default. To activate put a '++'.
-   *          '--' deactivates it and dominates.
-   *          ([+-]Tag)*  will apply these filters on rules selected by 'all'
    */
   override def processOptions(options: List[String], error: String => Unit) {
     
@@ -86,6 +83,6 @@ class ObeyPlugin(val global: Global) extends PluginBase with ObeyPhase {
     |   all:                Specifies filters for all 
     |   format:             Specifies filters for format
     |   addRules:           Specifies user defined rules
-    |   report:             Specifies filter for warnings
+    |   warn:             Specifies filter for warnings
     """)
 }

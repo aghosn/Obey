@@ -34,4 +34,8 @@ object build extends Build {
     base = file("tests"),
     settings = sharedSettings ++ commonDependencies ++ exposeClasspaths("tests")) dependsOn (plugin, model)
 
+  lazy val sbtPlug = Project(
+    id = "sbt-plugin",
+    base = file("sbt-plugin"),
+    settings = Defaults.defaultSettings ++ List(sbtPlugin := true, name := "sbt-obeyPlugin"))
 }
