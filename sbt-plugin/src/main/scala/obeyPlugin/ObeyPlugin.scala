@@ -3,7 +3,7 @@ package obeyPlugin
 import sbt._
 import Keys._
 
-object ObeyPlugin extends AutoPlugin {
+object ObeyPlugin extends sbt.AutoPlugin {
   val obeyFormatPos = settingKey[Seq[String]]("List of tags for rules to use for format.")
   val obeyFormatNeg = settingKey[Seq[String]]("List of tags for rules to avoid for format.")
   val obeyWarnPos = settingKey[Seq[String]]("List of tags for rules to use for report.")
