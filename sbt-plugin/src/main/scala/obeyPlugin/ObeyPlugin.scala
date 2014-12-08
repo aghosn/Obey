@@ -16,7 +16,7 @@ object ObeyPlugin extends sbt.AutoPlugin {
     obeyWarnPos := Seq.empty,
     obeyWarnNeg := Seq.empty,
     obeyRules := Seq.empty,
-
+    
     scalacOptions ++= Seq("-Xplugin:/home/aghosn/.ivy2/local/org.obey/plugin_2.11.2/0.1.0-SNAPSHOT/jars/plugin_2.11.2.jar")
     ) ++ inScope(Global)(Seq(
       derive(scalacOptions ++= obeyFormatPos.value.distinct map (w => s"-P:obey:format:+${w}")),

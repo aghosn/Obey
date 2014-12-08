@@ -1,9 +1,11 @@
+import sbtrelease._
+import sbtrelease.ReleasePlugin._
+import ReleaseKeys._
+import sbtrelease.ReleaseStateTransformations._
+import com.typesafe.sbt.pgp.PgpKeys._
+import sbtassembly.Plugin._
 import sbt._
 import Keys._
-import sbtassembly.Plugin._
-import AssemblyKeys._
-
-import complete.DefaultParsers._
 
 object build extends Build {
   import Dependencies._
@@ -34,8 +36,8 @@ object build extends Build {
     base = file("tests"),
     settings = sharedSettings ++ commonDependencies ++ exposeClasspaths("tests")) dependsOn (plugin, model)
 
-  lazy val sbtPlug = Project(
+  lazy val sbtPlug: Project = Project(
     id = "sbt-plugin",
     base = file("sbt-plugin"),
-    settings = Defaults.defaultSettings ++ List(sbtPlugin := true, name := "sbt-obeyPlugin"))
+    settings = List(sbtPlugin := true, name := "sbt-obeyplugin"))
 }
