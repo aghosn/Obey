@@ -10,6 +10,7 @@ import Keys._
 object build extends Build {
   import Dependencies._
   import Settings._
+  import PublishSettings._
 
   lazy val commonDependencies = Seq(
     libraryDependencies <++= (scalaVersion)(sv => Seq(
@@ -22,14 +23,14 @@ object build extends Build {
   lazy val plugin = Project(
     id = "plugin",
     base = file("plugin"),
-    settings = sharedSettings ++ commonDependencies ++ mergeDependencies ++ List(
+    settings = sharedSettings ++ publishableSettings ++ commonDependencies ++ mergeDependencies ++ List(
       libraryDependencies ++= Seq(Dependencies.scalahost),
       resourceDirectory in Compile := baseDirectory.value / "resources")) dependsOn (model)
 
   lazy val model = Project(
     id = "model",
     base = file("model"),
-    settings = sharedSettings ++ commonDependencies)
+    settings = sharedSettings ++ publishableSettings ++ commonDependencies)
 
   lazy val tests = Project(
     id = "tests",
@@ -39,5 +40,5 @@ object build extends Build {
   lazy val sbtPlug: Project = Project(
     id = "sbt-plugin",
     base = file("sbt-plugin"),
-    settings = List(sbtPlugin := true, name := "sbt-obeyplugin"))
+    settings = publishableSettings ++ List(sbtPlugin := true, name := "sbt-obeyplugin"))
 }
