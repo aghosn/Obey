@@ -8,6 +8,8 @@ package object obeyplugin {
   val obeyWarnNeg = settingKey[Seq[String]]("List of tags for rules to avoid for report.")
   val obeyRules = settingKey[Seq[String]]("Path to .class defined by the user.")
 
+  val dep = "com.github.aghosn" % "plugin_2.11.2" % "0.1.0-SNAPSHOT"
+
   lazy val obeySettings: Seq[sbt.Def.Setting[_]] = Seq(
     obeyFormatPos := Seq.empty,
     obeyFormatNeg := Seq.empty,
@@ -15,7 +17,8 @@ package object obeyplugin {
     obeyWarnNeg := Seq.empty,
     obeyRules := Seq.empty,
 
-    scalacOptions ++= Seq("-Xplugin:/home/aghosn/.ivy2/local/org.obey/plugin_2.11.2/0.1.0-SNAPSHOT/jars/plugin_2.11.2.jar")) ++ inScope(Global)(Seq(
+    addCompilerPlugin("com.github.aghosn" % "plugin_2.11.2" % "0.1.0-SNAPSHOT")
+    ) ++ inScope(Global)(Seq(
       derive(scalacOptions ++= obeyFormatPos.value.distinct map (w => s"-P:obey:format:+${w}")),
       derive(scalacOptions ++= obeyFormatNeg.value.distinct map (w => s"-P:obey:format:-${w}")),
       derive(scalacOptions ++= obeyWarnPos.value.distinct filterNot (obeyFormatPos.value contains _) map (w => s"-P:obey:warn:+${w}")),

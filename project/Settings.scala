@@ -25,7 +25,7 @@ object Settings {
         println(s"Going for custom scala home at $scalaHome")
         Some(file(scalaHome))
       } else None
-    }*/ )
+    }*/ ) ++ PublishSettings.publishSettings
 
   lazy val flatLayout: Seq[sbt.Def.Setting[_]] = assemblySettings ++ Seq(
     scalaSource in Compile <<= (baseDirectory in Compile)(base => base),
