@@ -37,12 +37,13 @@ class ObeyPlugin(val global: Global) extends PluginBase with ObeyPhase {
    *           ([+-]Tag)*  will apply these filters on rules selected by 'all'
    */
   override def processOptions(options: List[String], error: String => Unit) {
-    
-    case class h(pos: Set[Tag], neg:Set[Tag]) {
+
+    case class h(pos: Set[Tag], neg: Set[Tag]) {
       override def toString = {
-        "+"+pos.mkString("(",",", ")")+"-"+neg.mkString("(", ",", ")")
+        "+" + pos.mkString("(", ",", ")") + "-" + neg.mkString("(", ",", ")")
       }
     }
+
     def conv(x: (Set[Tag], Set[Tag])) = h(x._1, x._2)
 
     options.foreach {
@@ -53,27 +54,29 @@ class ObeyPlugin(val global: Global) extends PluginBase with ObeyPhase {
           val opts = o.substring(all.length)
           val tags = OptParser.parse(opts)
           UserOption.addTags(UserOption.all, tags)
-          reporter.info(NoPosition, "Obey all filters: "+conv(tags), true)
+          reporter.info(NoPosition, "Obey all filters: " + conv(tags), true)
         } else if (o.startsWith(format) && !o.contains("--")) {
           val opts = o.substring(format.length)
           val tags = OptParser.parse(opts.replace("++", ""))
           UserOption.addTags(UserOption.format, tags)
           UserOption.format.use = true
-          reporter.info(NoPosition, "Obey format filters: "+conv(tags), true)
+          reporter.info(NoPosition, "Obey format filters: " + conv(tags), true)
         } else if (o.startsWith(report)) {
           if (!o.contains("--")) {
             val opts = o.substring(report.length).replace("++", "")
             val tags = OptParser.parse(opts)
             UserOption.addTags(UserOption.report, tags)
-            reporter.info(NoPosition, "Obey report filters: "+conv(tags), true)
+            reporter.info(NoPosition, "Obey report filters: " + conv(tags), true)
           } else
             UserOption.report.use = false
         } else if (o.startsWith("addRules:")) {
           val opts = o.substring("addRules:".length)
-          Keeper.rules ++= (new Loader(opts)).rules
-          reporter.info(NoPosition, "Obey add rules from: "+opts, true)
+          if(!opts.isEmpty) {
+            Keeper.rules ++= (new Loader(opts)).rules
+            reporter.info(NoPosition, "Obey add rules from: " + opts, true)
+          }
         } else {
-          reporter.error(NoPosition, "Bad option for obey plugin: '"+o+"'")
+          reporter.error(NoPosition, "Bad option for obey plugin: '" + o + "'")
         }
     }
   }

@@ -21,5 +21,5 @@ package object obeyplugin {
     scalacOptions ++= Seq(
       "-P:obey:format:" + obeyFormatPos.value.map("+" + _).mkString + obeyFormatNeg.value.map("-" + _).mkString,
       "-P:obey:warn:" + obeyWarnPos.value.filterNot(x => obeyFormatPos.value.contains(x)).map("+" + _).mkString + obeyWarnNeg.value.map("-" + _).mkString,
-      "-P:obey:addRules:" + obeyRules.value))
+      "-P:obey:addRules:" + obeyRules.value).filterNot(x => x.endsWith(":")))
 }
