@@ -6,7 +6,7 @@ package object obeyplugin {
   val obeyFormatNeg = settingKey[Seq[String]]("List of tags for rules to avoid for format.")
   val obeyWarnPos = settingKey[Seq[String]]("List of tags for rules to use for report.")
   val obeyWarnNeg = settingKey[Seq[String]]("List of tags for rules to avoid for report.")
-  val obeyRules = settingKey[Seq[String]]("Path to .class defined by the user.")
+  val obeyRules = settingKey[String]("Path to .class defined by the user.")
 
   val dep = "com.github.aghosn" % "plugin_2.11.2" % "0.1.0-SNAPSHOT"
 
@@ -15,24 +15,11 @@ package object obeyplugin {
     obeyFormatNeg := Seq.empty,
     obeyWarnPos := Seq.empty,
     obeyWarnNeg := Seq.empty,
-    obeyRules := Seq.empty,
+    obeyRules := "",
 
-    addCompilerPlugin("com.github.aghosn" % "plugin_2.11.2" % "0.1.0-SNAPSHOT")
-    ) ++ inScope(Global)(Seq(
-      derive(scalacOptions ++= obeyFormatPos.value.distinct map (w => s"-P:obey:format:+${w}")),
-      derive(scalacOptions ++= obeyFormatNeg.value.distinct map (w => s"-P:obey:format:-${w}")),
-      derive(scalacOptions ++= obeyWarnPos.value.distinct filterNot (obeyFormatPos.value contains _) map (w => s"-P:obey:warn:+${w}")),
-      derive(scalacOptions ++= obeyWarnNeg.value.distinct map (w => s"-P:obey:warn:-${w}")),
-      derive(scalacOptions ++= obeyRules.value.distinct map (w => s"-P:obey:addRules:${w}"))))
-
-  def derive[T](s: Setting[T]): Setting[T] = {
-    try {
-      Def derive s
-    } catch {
-      case _: LinkageError =>
-        import scala.language.reflectiveCalls
-        Def.asInstanceOf[{ def derive[T](setting: Setting[T], allowDynamic: Boolean, filter: Scope => Boolean, trigger: AttributeKey[_] => Boolean, default: Boolean): Setting[T] }]
-          .derive(s, false, _ => true, _ => true, false)
-    }
-  }
+    addCompilerPlugin("com.github.aghosn" % "plugin_2.11.2" % "0.1.0-SNAPSHOT"),
+    scalacOptions ++= Seq(
+      "-P:obey:format:" + obeyFormatPos.value.map("+" + _).mkString + obeyFormatNeg.value.map("-" + _).mkString,
+      "-P:obey:warn:" + obeyWarnPos.value.filterNot(x => obeyFormatPos.value.contains(x)).map("+" + _).mkString + obeyWarnNeg.value.map("-" + _).mkString,
+      "-P:obey:addRules:" + obeyRules.value))
 }
