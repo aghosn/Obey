@@ -1,7 +1,7 @@
 import sbt._
 import Keys._
 
-package object obeyplugin {
+object obeyplugin extends AutoPlugin {
   val obeyFix = settingKey[String]("List of tags to filter rewritting rules.")
   val obeyWarn = settingKey[String]("List of tags to filter warning rules.")
   val obeyRules = settingKey[String]("Path to .class defined by the user.")
@@ -12,7 +12,7 @@ package object obeyplugin {
       state
     }
 
-  lazy val obeySettings: Seq[sbt.Def.Setting[_]] = Seq(
+  override lazy val projectSettings: Seq[sbt.Def.Setting[_]] = Seq(
     obeyFix := "",
     obeyWarn := "",
     obeyRules := "",
