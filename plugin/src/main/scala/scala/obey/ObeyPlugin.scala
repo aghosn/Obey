@@ -50,7 +50,9 @@ class ObeyPlugin(val global: Global) extends PluginBase with ObeyPhase {
       o =>
         /* We process the all attributes
          * The user can use -- to prevent its use*/
-        if (o.startsWith(all)) {
+        if(o.endsWith(":")) {
+          //Nothing to do 
+        } else if (o.startsWith(all)) {
           val opts = o.substring(all.length)
           val tags = OptParser.parse(opts)
           UserOption.addTags(UserOption.all, tags)

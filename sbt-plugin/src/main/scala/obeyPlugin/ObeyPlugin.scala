@@ -1,4 +1,4 @@
-package obeyplugin 
+/*package obeyplugin 
 import sbt._
 
 object ObeyPlugin extends AutoPlugin {
@@ -10,4 +10,4 @@ object ObeyPlugin extends AutoPlugin {
   }
 
   override lazy val projectSettings = obeyplugin.obeySettings
-}
+}*/
