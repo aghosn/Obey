@@ -26,7 +26,7 @@ object UserOption {
   def getReport: Set[Rule] = getRules(report) -- getFormat
 
   /* Supposed to be called when opts has a valid prefix*/
-  def addTags(opts: String): Unit = opts match {
+  /*def addTags(opts: String): Unit = opts match {
     case x if x.contains("--") =>
       val opt = optMap.find(e => opts.startsWith(e._1)).get
       opt._2.use = false
@@ -36,6 +36,17 @@ object UserOption {
       val tags = OptParser.parse(opts.substring(opt._1.length))
       opt._2.pos ++= tags._1
       opt._2.neg ++= tags._2
+    case _ => /*Nothing to do*/
+  }*/
+
+  def addTags(opts: String): Unit = optMap.find(e => opts.startsWith(e._1)) match {
+    case Some((_, h)) if opts.contains("--") => 
+      h.use = false
+    case Some((_, h)) if opts.contains("++") => addTags(opts.replace("++", ""))
+    case Some((s, h)) if !opts.endsWith(":") => 
+      val tags = OptParser.parse(opts.substring(s.length))
+      h.pos ++= tags._1
+      h.neg ++= tags._2
     case _ => /*Nothing to do*/
   }
 }
