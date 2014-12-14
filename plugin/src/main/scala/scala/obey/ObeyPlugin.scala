@@ -34,15 +34,6 @@ class ObeyPlugin(val global: Global) extends PluginBase with ObeyPhase {
    *           ([+-]Tag)*  will apply these filters on rules selected by 'all'
    */
   override def processOptions(options: List[String], error: String => Unit) {
-
-    case class h(pos: Set[Tag], neg: Set[Tag]) {
-      override def toString = {
-        "+" + pos.mkString("(", ",", ")") + "-" + neg.mkString("(", ",", ")")
-      }
-    }
-
-    def conv(x: (Set[Tag], Set[Tag])) = h(x._1, x._2)
-
     options.foreach {
       o =>
         /* We process the all attributes
