@@ -35,19 +35,17 @@ class ObeyPlugin(val global: Global) extends PluginBase with ObeyPhase {
    */
   override def processOptions(options: List[String], error: String => Unit) {
     options.foreach {
-      o =>
-        /* We process the all attributes
-         * The user can use -- to prevent its use*/
-        if (o.endsWith(":")) {
+      opt =>
+        if (opt.endsWith(":")) {
           //Nothing to do 
-        } else if (o.startsWith("addRules:")) {
-          val opts = o.substring("addRules:".length)
+        } else if (opt.startsWith("addRules:")) {
+          val opts = opt.substring("addRules:".length)
           Keeper.rules ++= (new Loader(opts)).rules
           reporter.info(NoPosition, "Obey add rules from: " + opts, true)
-        } else if (UserOption.optMap.keys.exists(s => o.startsWith(s))) {
-          UserOption.addTags(o)
+        } else if (UserOption.optMap.keys.exists(s => opt.startsWith(s))) {
+          UserOption.addTags(opt)
         } else {
-          reporter.error(NoPosition, "Bad option for obey plugin: '" + o + "'")
+          reporter.error(NoPosition, "Bad option for obey plugin: '" + opt + "'")
         }
     }
   }
