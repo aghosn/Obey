@@ -7,8 +7,8 @@ object obeyplugin extends AutoPlugin {
   val obeyRules = settingKey[String]("Path to .class defined by the user.")
 
   lazy val helloCommand =
-    Command.command("hello") { (state: State) =>
-      println("Hi!")
+    Command.single("hello") { (state: State, s: String) =>
+      println("Hi! "+s)
       state
     }
 
