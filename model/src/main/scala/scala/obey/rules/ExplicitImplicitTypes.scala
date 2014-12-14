@@ -10,7 +10,7 @@ import scala.obey.tools.Enrichment._
 
   val name = "ExplicitImplicitTypes: Explicit types in Val & Def"
 
-  def message(t: Defn, tpe: Type.Name) = Message(s"Implicit type $tpe in $t")
+  def message(t: Defn, tpe: Type.Name) = Message(s"Implicit type $tpe in $t", t)
 
   def apply = {
     (collect {

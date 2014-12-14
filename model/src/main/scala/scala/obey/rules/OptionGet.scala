@@ -11,7 +11,7 @@ import scala.language.reflectiveCalls
 
   val name = "OptionGet: use Option#fold instead of get"
 
-  def message(t: Term.Select) = Message(s"${t} should use Option#fold instead of Option#get")
+  def message(t: Term.Select) = Message(s"${t} should use Option#fold instead of Option#get", t)
 
   /*TODO Implement this*/
   def isOption(t: Type.Name): Boolean = true

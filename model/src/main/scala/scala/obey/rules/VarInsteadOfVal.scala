@@ -9,7 +9,7 @@ import scala.language.reflectiveCalls
 @Tag("Var", "Val") object VarInsteadOfVal extends Rule {
   val name = "VarInsteadOfVal: var assigned only once should be val"
 
-  def message(n: Tree, t: Tree): Message = Message(s"The 'var' $n from ${t} was never reassigned and should therefore be a 'val'")
+  def message(n: Tree, t: Tree): Message = Message(s"The 'var' $n from ${t} was never reassigned and should therefore be a 'val'", t)
 
   def apply: Matcher[List[Message]] = {
     collectIn[Set] {

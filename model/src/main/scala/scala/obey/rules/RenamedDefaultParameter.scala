@@ -7,7 +7,7 @@ import scala.obey.tools.Utils._
 @Tag("Overriding") object RenamedDefaultParameter extends Rule {
   val name = "RenamedDefaultParameter: renaming a default parameter"
 
-  def message(t: Tree): Message = Message(s"Renaming parameters $t can lead to unexpected behavior")
+  def message(t: Tree): Message = Message(s"Renaming parameters $t can lead to unexpected behavior", t)
 
   //TODO 
   def apply = ???

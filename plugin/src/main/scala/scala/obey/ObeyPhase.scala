@@ -1,6 +1,7 @@
 package scala.obey
 
 import scala.obey.tools.Utils._
+import scala.obey.tools.Enrichment._
 import scala.obey.rules.VarInsteadOfVal
 import scala.obey.utils._
 import scala.obey.model._
@@ -47,7 +48,7 @@ trait ObeyPhase {
           if (res.tree.isDefined && !res.result.isEmpty) {
             Persist.archive(path)
             Persist.persist(path, res.tree.get.toString)
-            warnings ++= res.result.map(m => Message("CORRECTED: " + m.message))
+            warnings ++= res.result.map(m => Message("CORRECTED: " + m.message, m.tree))
           } else {
             warnings ++= res.result
           }
@@ -59,8 +60,7 @@ trait ObeyPhase {
         println(s"We selected to format ${UserOption.getFormat}")*/
 
         /*Reporting the errors*/
-        warnings.foreach(m => reporter.warning(NoPosition, m.message))
-
+        warnings.foreach(m => reporter.warning(m.position, m.message))
         /*TODO implement persistence for reformatting*/
       }
     }

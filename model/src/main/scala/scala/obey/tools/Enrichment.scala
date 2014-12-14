@@ -5,6 +5,7 @@ import scala.obey.model._
 import scala.language.implicitConversions
 
 import scala.annotation.StaticAnnotation
+import scala.reflect.internal.util.NoPosition
 
 object Enrichment {
 
@@ -31,6 +32,17 @@ object Enrichment {
     /*TODO once we know how to get the type */
     def getType: Type.Name = Type.Name("Unit")
 
+  }
+
+  def getPos(t: scala.meta.Tree): scala.reflect.internal.util.Position = {
+    try {
+      import scala.language.reflectiveCalls
+      val scratchpads = t.asInstanceOf[{ def internalScratchpads: Map[_, _] }].internalScratchpads
+      val associatedGtree = scratchpads.values.toList.head.asInstanceOf[List[_]].collect { case gtree: scala.reflect.internal.SymbolTable#Tree => gtree }.head
+      associatedGtree.pos
+    } catch {
+      case e: Exception => NoPosition
+    }
   }
 
 }

@@ -10,7 +10,7 @@ import scala.obey.tools.Enrichment._
 
   val name = "ExplicitUnitReturn: Ensure explicit Return types"
 
-  def message(t: Defn.Def) = Message(s"$t has no explicit Unit return type")
+  def message(t: Defn.Def) = Message(s"$t has no explicit Unit return type", t)
 
   def apply = {
     (collect {

@@ -9,6 +9,7 @@ object obeyplugin extends AutoPlugin {
   lazy val helloCommand =
     Command.single("hello") { (state: State, s: String) =>
       println("Hi! "+s)
+      compile
       state
     }
 
