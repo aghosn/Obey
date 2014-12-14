@@ -10,6 +10,7 @@ object obeyplugin extends AutoPlugin {
     Command.single("hello") { (state: State, s: String) =>
       println("Hi! "+s)
       compile
+      println("After compile")
       state
     }
 
