@@ -6,22 +6,18 @@ import scala.obey.model.utils._
 
 object UserOption {
 
-  case class holder(var pos: Set[Tag], var neg: Set[Tag], var use: Boolean)
+  private val all = Holder(Set(), Set(), true)
+  private val format = Holder(Set(), Set(), false)
+  private val report = Holder(Set(), Set(), true)
 
-  val all: holder = holder(Set(), Set(), true)
-  val format: holder = holder(Set(), Set(), false)
-  val report: holder = holder(Set(), Set(), true) 
-
-  def filterFormat: Set[Rule] = filterT(all.pos ++ format.pos, all.neg ++ format.neg)
-
-  def filterReport: Set[Rule] = filterT(all.pos ++ report.pos, all.neg ++ report.neg)
+  val optMap: Map[String, Holder] = Map("all:" -> all, "fix:" -> format, "warn:" -> report)
 
   /* Get rules for a holder according to the 'all' filter*/
-  def getRules(h: holder): Set[Rule] = {
-  	if(!h.use) 
-  		return Set()
-  	val allRules: Set[Rule] = filterT(all.pos, all.neg)
-  	filter(h.pos, h.neg)(allRules)
+  def getRules(h: Holder): Set[Rule] = {
+    if (!h.use)
+      return Set()
+    val allRules: Set[Rule] = filterT(all.pos, all.neg)
+    filter(h.pos, h.neg)(allRules)
   }
 
   /* All methods to get the correct rules to apply*/
@@ -29,8 +25,17 @@ object UserOption {
   /* Avoids traversing the tree twice for format and warnings*/
   def getReport: Set[Rule] = getRules(report) -- getFormat
 
-  def addTags(hld: holder, tags: (Set[Tag], Set[Tag])) = {
-    hld.pos ++= tags._1
-    hld.neg ++= tags._2
+  /* Supposed to be called when opts has a valid prefix*/
+  def addTags(opts: String): Unit = opts match {
+    case x if x.contains("--") =>
+      val opt = optMap.find(e => opts.startsWith(e._1)).get
+      opt._2.use = false
+    case x if x.contains("++") => addTags(x.replace("++", ""))
+    case o if !o.endsWith(":") =>
+      val opt = optMap.find(e => opts.startsWith(e._1)).get
+      val tags = OptParser.parse(opts.substring(opt._1.length))
+      opt._2.pos ++= tags._1
+      opt._2.neg ++= tags._2
+    case _ => /*Nothing to do*/
   }
 }

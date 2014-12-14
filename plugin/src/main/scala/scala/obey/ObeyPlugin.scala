@@ -9,15 +9,11 @@ import scala.obey.model.Keeper
 import scala.obey.model.utils._
 import scala.obey.tools._
 import scala.tools.nsc.Global
-import scala.tools.nsc.plugins.{PluginComponent => NscPluginComponent}
+import scala.tools.nsc.plugins.{ PluginComponent => NscPluginComponent }
 import scala.meta.internal.hosts.scalac.PluginBase
-
 
 class ObeyPlugin(val global: Global) extends PluginBase with ObeyPhase {
   import global._
-  val format = "format:"
-  val all = "all:"
-  val report = "warn:"
 
   val name = "obey"
   val description = """Compiler plugin that checks defined rules against scala meta trees.
@@ -51,33 +47,14 @@ class ObeyPlugin(val global: Global) extends PluginBase with ObeyPhase {
       o =>
         /* We process the all attributes
          * The user can use -- to prevent its use*/
-        if(o.endsWith(":")) {
+        if (o.endsWith(":")) {
           //Nothing to do 
-        } else if (o.startsWith(all)) {
-          val opts = o.substring(all.length)
-          val tags = OptParser.parse(opts)
-          UserOption.addTags(UserOption.all, tags)
-          reporter.info(NoPosition, "Obey all filters: " + conv(tags), true)
-        } else if (o.startsWith(format) && !o.contains("--")) {
-          val opts = o.substring(format.length)
-          val tags = OptParser.parse(opts.replace("++", ""))
-          UserOption.addTags(UserOption.format, tags)
-          UserOption.format.use = true
-          reporter.info(NoPosition, "Obey format filters: " + conv(tags), true)
-        } else if (o.startsWith(report)) {
-          if (!o.contains("--")) {
-            val opts = o.substring(report.length).replace("++", "")
-            val tags = OptParser.parse(opts)
-            UserOption.addTags(UserOption.report, tags)
-            reporter.info(NoPosition, "Obey report filters: " + conv(tags), true)
-          } else
-            UserOption.report.use = false
         } else if (o.startsWith("addRules:")) {
           val opts = o.substring("addRules:".length)
-          if(!opts.isEmpty) {
-            Keeper.rules ++= (new Loader(opts)).rules
-            reporter.info(NoPosition, "Obey add rules from: " + opts, true)
-          }
+          Keeper.rules ++= (new Loader(opts)).rules
+          reporter.info(NoPosition, "Obey add rules from: " + opts, true)
+        } else if (UserOption.optMap.keys.exists(s => o.startsWith(s))) {
+          UserOption.addTags(o)
         } else {
           reporter.error(NoPosition, "Bad option for obey plugin: '" + o + "'")
         }

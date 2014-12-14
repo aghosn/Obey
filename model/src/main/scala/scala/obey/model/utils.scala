@@ -4,6 +4,9 @@ import scala.annotation.StaticAnnotation
 import scala.reflect.internal.util.NoPosition
 
 package object utils {
+
+  case class Holder(var pos: Set[Tag], var neg: Set[Tag], var use: Boolean)
+
   /* Message type*/
   case class Message(message: String, tree: scala.meta.Tree) {
     val position = getPos(tree)
