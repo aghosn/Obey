@@ -1,9 +1,10 @@
 package scala.obey.rules
 
-import scala.meta.internal.ast._
 import tqlscalameta.ScalaMetaTraverser._
+
+import scala.meta.internal.ast._
 import scala.obey.model._
-import scala.obey.tools.Utils._
+import scala.obey.model.utils._
 
 @Tag("List", "Set") object ListToSet extends Rule {
   val name = "ListToSet: defining List.toSet is defining a Set"

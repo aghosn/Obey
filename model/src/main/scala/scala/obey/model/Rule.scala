@@ -4,13 +4,10 @@
  */
 package scala.obey.model
 
-import scala.meta.internal.ast._
-import scala.reflect.runtime.{ universe => ru }
-import scala.obey.tools.Enrichment._
 import tqlscalameta.ScalaMetaTraverser._
 
 trait Rule {
-  import scala.obey.tools.Utils._
+  import scala.obey.model.utils._
   /* Identifier to pretty print and identity the rule
    * usage: "name: description"
    */

@@ -1,8 +1,6 @@
 import org.scalatest.FunSuite
-import scala.obey.utils._
-import scala.obey.tools.Utils._
-import scala.tools.nsc._
-import scala.tools.nsc.reporters.ConsoleReporter
+
+import scala.obey.tools._
 
 class LoaderTest extends FunSuite {
 

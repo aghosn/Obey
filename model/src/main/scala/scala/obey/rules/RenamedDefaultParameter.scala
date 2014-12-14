@@ -2,7 +2,7 @@ package scala.obey.rules
 
 import scala.meta.internal.ast._
 import scala.obey.model._
-import scala.obey.tools.Utils._
+import scala.obey.model.utils._
 
 @Tag("Overriding") object RenamedDefaultParameter extends Rule {
   val name = "RenamedDefaultParameter: renaming a default parameter"

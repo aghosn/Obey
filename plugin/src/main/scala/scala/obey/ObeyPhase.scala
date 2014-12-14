@@ -1,19 +1,12 @@
 package scala.obey
 
-import scala.obey.tools.Utils._
-import scala.obey.tools.Enrichment._
-import scala.obey.rules.VarInsteadOfVal
-import scala.obey.utils._
-import scala.obey.model._
-import scala.obey.utils.UserOption
-
-import scala.tools.nsc.Phase
-import scala.tools.nsc.plugins.{ PluginComponent => NscPluginComponent }
 import tqlscalameta.ScalaMetaTraverser._
 
-import scala.meta.internal.ast._
 import scala.meta._
-import org.scalameta.reflection._
+import scala.obey.model.utils._
+import scala.obey.tools.{UserOption, _}
+import scala.tools.nsc.Phase
+import scala.tools.nsc.plugins.{PluginComponent => NscPluginComponent}
 
 trait ObeyPhase {
   self: ObeyPlugin =>

@@ -1,12 +1,11 @@
 import org.scalatest.FunSuite
-import scala.meta.internal.ast._
-import scala.meta._
-import scala.obey.rules._
-import scala.obey.model._
-import scala.reflect.runtime.{ universe => ru }
-import scala.obey.tools.Utils._
-import scala.obey.tools.Enrichment._
 import tqlscalameta.ScalaMetaTraverser._
+
+import scala.meta._
+import scala.obey.model._
+import scala.obey.model.utils._
+import scala.obey.rules._
+import scala.reflect.runtime.{universe => ru}
 
 class GeneralRuleTest extends FunSuite {
 

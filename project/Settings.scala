@@ -1,8 +1,7 @@
+import sbt.Keys._
 import sbt._
-import Keys._
+import sbtassembly.Plugin.AssemblyKeys._
 import sbtassembly.Plugin._
-import AssemblyKeys._
-import com.typesafe.sbt.pgp.PgpKeys._
 
 object Settings {
   lazy val languageVersion = "2.11.2"

@@ -1,6 +1,6 @@
-package scala.obey.utils
+package scala.obey.tools
 
-import java.io.{FileWriter, IOException, File, BufferedWriter}
+import java.io.{BufferedWriter, File, FileWriter, IOException}
 
 object Persist {
 

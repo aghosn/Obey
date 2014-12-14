@@ -1,6 +1,7 @@
 import org.scalatest.FunSuite
+
 import scala.meta._
-import syntactic._
+import scala.meta.syntactic._
 
 class PrintTreeTest extends FunSuite {
 

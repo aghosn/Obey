@@ -1,9 +1,8 @@
 package scala.obey.model
 
-import scala.reflect.runtime.{ universe => ru }
-import scala.reflect.runtime.{ currentMirror => cm }
+import scala.obey.model.utils._
 import scala.obey.rules._
-import scala.obey.tools.Utils._
+import scala.reflect.runtime.{currentMirror => cm, universe => ru}
 
 object Keeper {
   var rules: Set[Rule] = Set(VarInsteadOfVal, ListToSet)

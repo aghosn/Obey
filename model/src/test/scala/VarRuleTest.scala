@@ -1,12 +1,9 @@
 import org.scalatest.FunSuite
-import scala.meta.internal.ast._
+import tqlscalameta.ScalaMetaTraverser._
+
 import scala.meta._
 import scala.obey.rules._
-import scala.obey.model._
-import scala.reflect.runtime.{ universe => ru }
-import scala.obey.tools.Utils._
-import scala.obey.tools.Enrichment._
-import tqlscalameta.ScalaMetaTraverser._
+import scala.reflect.runtime.{universe => ru}
 
 class VarRuleTest extends FunSuite {
   def showTree(x: scala.meta.Tree) = scala.meta.syntactic.show.ShowOps(x).show[syntactic.show.Raw]

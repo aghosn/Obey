@@ -1,16 +1,10 @@
-import sbtrelease._
-import sbtrelease.ReleasePlugin._
-import ReleaseKeys._
-import sbtrelease.ReleaseStateTransformations._
-import com.typesafe.sbt.pgp.PgpKeys._
-import sbtassembly.Plugin._
+import sbt.Keys._
 import sbt._
-import Keys._
 
 object build extends Build {
   import Dependencies._
-  import Settings._
   import PublishSettings._
+  import Settings._
 
   lazy val commonDependencies = Seq(
     libraryDependencies <++= (scalaVersion)(sv => Seq(

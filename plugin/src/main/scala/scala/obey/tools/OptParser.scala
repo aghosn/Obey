@@ -1,10 +1,11 @@
-package scala.obey.utils
+package scala.obey.tools
 
+import java.io.StringReader
+
+import scala.language.implicitConversions
+import scala.obey.model.utils._
 import scala.util.parsing.combinator.syntactical.StandardTokenParsers
 import scala.util.parsing.input._
-import java.io.StringReader
-import scala.obey.tools.Utils._
-import scala.language.implicitConversions
 
 object OptParser extends StandardTokenParsers {
   lexical.delimiters ++= List("+", "-")
@@ -16,7 +17,7 @@ object OptParser extends StandardTokenParsers {
     val PLUS, MINUS  = Value
   }
 
-  import Op._
+  import scala.obey.tools.OptParser.Op._
 
   case class Element(o: Op, t: Tag)
 

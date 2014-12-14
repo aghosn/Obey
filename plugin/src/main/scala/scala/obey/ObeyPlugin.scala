@@ -5,12 +5,13 @@
  */
 package scala.obey
 
-import scala.meta.internal.hosts.scalac.PluginBase
-import scala.tools.nsc.Global
-import scala.tools.nsc.plugins.{ PluginComponent => NscPluginComponent }
-import scala.obey.utils._
 import scala.obey.model.Keeper
-import scala.obey.tools.Utils._
+import scala.obey.model.utils._
+import scala.obey.tools._
+import scala.tools.nsc.Global
+import scala.tools.nsc.plugins.{PluginComponent => NscPluginComponent}
+import scala.meta.internal.hosts.scalac.PluginBase
+
 
 class ObeyPlugin(val global: Global) extends PluginBase with ObeyPhase {
   import global._

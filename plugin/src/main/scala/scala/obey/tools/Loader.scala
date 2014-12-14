@@ -1,7 +1,8 @@
-package scala.obey.utils
+package scala.obey.tools
 
 import java.io._
 import java.net._
+
 import scala.obey.model.Rule
 
 class Loader(val folder: String) {

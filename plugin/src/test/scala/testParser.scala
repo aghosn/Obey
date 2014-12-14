@@ -1,6 +1,6 @@
 import org.scalatest.FunSuite
-import scala.obey.utils._
-import scala.obey.tools.Utils._
+
+import scala.obey.tools._
 
 class testParser extends FunSuite {
 

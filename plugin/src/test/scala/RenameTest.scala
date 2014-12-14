@@ -1,6 +1,8 @@
-import scala.obey.utils._
-import org.scalatest.FunSuite
 import java.io._
+
+import org.scalatest.FunSuite
+
+import scala.obey.tools._
 
 
 class RenameTest extends FunSuite {
