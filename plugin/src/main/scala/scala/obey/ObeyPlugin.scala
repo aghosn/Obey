@@ -20,19 +20,7 @@ class ObeyPlugin(val global: Global) extends PluginBase with ObeyPhase {
   http://github.com/aghosn/Obey for more information."""
   val components = List[NscPluginComponent](ConvertComponent, ObeyComponent)
 
-  /**
-   * Processes the options for the plugin
-   * [all]: By default, all rules are used as Message
-   *        ([+-]Tag)* filters the rules
-   * [format]: Deactivated by default. To activate put a '++'.
-   *           '--' deactivates the option and dominates any other entry
-   *           ([+-]Tag)*  will apply these filters on rules selected by 'all'
-   * [warn]: Activated by default.
-   *           '--' deactivates it and dominates.
-   *           '++' has no effect.
-   *           All rules are used by default.
-   *           ([+-]Tag)*  will apply these filters on rules selected by 'all'
-   */
+  /* Processes the options for the plugin*/
   override def processOptions(options: List[String], error: String => Unit) {
     options.foreach {
       opt =>

@@ -21,7 +21,7 @@ object obeyplugin extends AutoPlugin {
     commands += helloCommand,
     addCompilerPlugin("com.github.aghosn" % "plugin_2.11.2" % "0.1.0-SNAPSHOT"),
     scalacOptions ++= Seq(
-      "-P:obey:format:" + obeyFix.value,
+      "-P:obey:fix:" + obeyFix.value,
       "-P:obey:warn:" + obeyWarn.value,
       "-P:obey:addRules:" + obeyRules.value).filterNot(x => x.endsWith(":")))
 }
