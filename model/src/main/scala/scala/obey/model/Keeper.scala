@@ -7,16 +7,36 @@ import scala.reflect.runtime.{currentMirror => cm, universe => ru}
 object Keeper {
   var rules: Set[Rule] = Set(VarInsteadOfVal, ListToSet)
 
+  /*Enables to efficiently handle the tags*/
+  case class TagFilter(full: Set[String], start: Set[String], end: Set[String], contains: Set[String]) {
+
+    def isEmpty: Boolean = full.isEmpty && start.isEmpty && end.isEmpty && contains.isEmpty
+
+    def &(s: Set[String]): Set[String] = {
+      val s1 = (s & full) ++ (s.filter(t => start.exists(t1 => t.startsWith(t1))))
+      val s2 = (s.filter(t => end.exists(t1 => t.endsWith(t1)))) ++ (s.filter(t => contains.exists(t1 => t.contains(t1))))
+      s1 ++ s2 
+    } 
+  }
   //TODO Still have to rely on the bad trick to get the string
   def filter[T <: Rule](pos: Set[Tag], neg: Set[Tag])(l: Set[T]): Set[T] = {
-    val posSet: Set[String] = pos.map(_.tag)
-    val negSet: Set[String] = neg.map(_.tag)
+    val posSet = getTagFilter(pos.map(_.tag.toLowerCase))
+    val negSet = getTagFilter(neg.map(_.tag.toLowerCase))
     l.filter {
       x =>
         val annot = cm.classSymbol(x.getClass).annotations.filter(a => a.tree.tpe =:= ru.typeOf[Tag]).flatMap(_.tree.children.tail)
         val annotSet: Set[String] = annot.map(y => ru.show(y).toString).map(_.replaceAll("\"", "")).toSet
-        (!(annotSet & posSet).isEmpty || posSet.isEmpty) && (annotSet & negSet).isEmpty
+        (posSet.isEmpty || !(posSet & annotSet).isEmpty) && (negSet & annotSet).isEmpty
     }
+  }
+
+  /*Generate a tag filter according to the set of string*/
+  def getTagFilter(s: Set[String]): TagFilter = {
+    val (full, comp) = s.partition(_.contains("*"))
+    val start = comp.filter(t => t.startsWith("*") && !t.endsWith("*")).map(_.replace("*", "").toLowerCase)
+    val end = comp.filter(t => !t.startsWith("*") && t.endsWith("*")).map(_.replace("*", "").toLowerCase)
+    val contains = comp.filter(t => t.startsWith("*") && t.endsWith("*")).map(_.replace("*","").toLowerCase)
+    TagFilter(full.map(_.toLowerCase), start, end, contains)
   }
 
   def filterT(pos: Set[Tag], neg: Set[Tag]): Set[Rule] = {

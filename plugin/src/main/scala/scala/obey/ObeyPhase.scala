@@ -41,7 +41,7 @@ trait ObeyPhase {
           if (res.tree.isDefined && !res.result.isEmpty) {
             Persist.archive(path)
             Persist.persist(path, res.tree.get.toString)
-            warnings ++= res.result.map(m => Message("CORRECTED: " + m.message, m.tree))
+            warnings ++= res.result.map(m => Message("[CORRECTED]" + m.message, m.tree))
           } else {
             warnings ++= res.result
           }
