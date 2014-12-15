@@ -7,7 +7,7 @@ import scala.obey.model.utils._
 import scala.util.parsing.combinator.syntactical.StandardTokenParsers
 import scala.util.parsing.input._
 
-object OptParser extends StandardTokenParsers {
+object SetParser extends StandardTokenParsers {
   lexical.delimiters ++= List("+", "-", "*", ",", "{","}")
 
   implicit def trad(s: String): Tag = new Tag(s)
@@ -19,8 +19,6 @@ object OptParser extends StandardTokenParsers {
 
   import scala.obey.tools.OptParser.Op._
 
-  case class Element(o: Op, t: Tag)
-
   def tag: Parser[Tag] = (
     "*".? ~ ident ~ "*".? ^^ {
       case None ~ e ~ None => e
@@ -29,20 +27,28 @@ object OptParser extends StandardTokenParsers {
       case None ~e~Some(_) => e + "*" 
     })
 
-  def elem: Parser[Element] = (
-    ("+" | "-") ~ tag ^^ {
-      case "+" ~ tag => Element(PLUS, tag)
-      case "-" ~ tag => Element(MINUS, tag)
+  def tags: Parser[Set[Tag]] = (
+      tag ~ (","~> tag).* ^^ {
+      case e ~ Nil => Set(e)
+      case e ~ e1 => Set(e) ++ e1.toSet
+
     })
 
-  def list: Parser[List[Element]] = elem.*
+  def set: Parser[(Set[Tag], Boolean)] = (
+    "+" ~> tags ^^ { case e => (e, true)}
+    |"-" ~> tags ^^ {case e => (e, false)}
+    )
+
+  def res: Parser[List[(Set[Tag], Boolean)]] = set.*
 
   def parse(str: String): (Set[Tag], Set[Tag]) = {
     val tokens = new lexical.Scanner(StreamReader(new StringReader(str)))
-    phrase(list)(tokens) match {
+    phrase(res)(tokens) match {
       case Success(t, _) => 
-        val part = t.partition(_.o == PLUS)
-        (part._1.map(_.t).toSet, part._2.map(_.t).toSet)
+        val (pos, neg) = t.partition(_._2 == true)
+        val posSet = pos.map(_._1).fold(Set())((x, y) => x ++ y)
+        val negSet = neg.map(_._1).fold(Set())((x, y) => x ++ y)
+        (posSet, negSet)
       case e => println(e); (Set(), Set())
     }
   }
