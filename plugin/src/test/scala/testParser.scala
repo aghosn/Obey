@@ -1,6 +1,7 @@
 import org.scalatest.FunSuite
 
 import scala.obey.tools._
+import scala.obey.model.utils._
 
 class testParser extends FunSuite {
 
@@ -9,6 +10,11 @@ class testParser extends FunSuite {
     assert(res._1.size == 2 && res._2.size == 1)
     assert(res._1.contains(Tag("Var")))
     assert(res._2.contains(Tag("DCE")))
+  }
+
+  test("Parsing set and filtering") {
+    UserOption.addTags("fix:+{List*}")
+    println(UserOption.getFormat)
   }
 }
 

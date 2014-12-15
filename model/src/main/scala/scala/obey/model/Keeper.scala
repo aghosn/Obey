@@ -32,9 +32,9 @@ object Keeper {
 
   /*Generate a tag filter according to the set of string*/
   def getTagFilter(s: Set[String]): TagFilter = {
-    val (full, comp) = s.partition(_.contains("*"))
-    val start = comp.filter(t => t.startsWith("*") && !t.endsWith("*")).map(_.replace("*", "").toLowerCase)
-    val end = comp.filter(t => !t.startsWith("*") && t.endsWith("*")).map(_.replace("*", "").toLowerCase)
+    val (comp, full) = s.partition(_.contains("*"))
+    val end = comp.filter(t => t.startsWith("*") && !t.endsWith("*")).map(_.replace("*", "").toLowerCase)
+    val start = comp.filter(t => !t.startsWith("*") && t.endsWith("*")).map(_.replace("*", "").toLowerCase)
     val contains = comp.filter(t => t.startsWith("*") && t.endsWith("*")).map(_.replace("*","").toLowerCase)
     TagFilter(full.map(_.toLowerCase), start, end, contains)
   }

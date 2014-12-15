@@ -32,10 +32,14 @@ object UserOption {
       h.use = true
       addTags(opts.replace("++", ""))
     case Some((s, h)) if !opts.endsWith(":") => 
-      val tags = OptParser.parse(opts.substring(s.length))
+      val tags = SetParser.parse(opts.substring(s.length))
       h.pos ++= tags._1
       h.neg ++= tags._2
       h.use = true
     case _ => /*Nothing to do*/
+  }
+
+  override def toString = {
+    optMap.mkString("\n")
   }
 }

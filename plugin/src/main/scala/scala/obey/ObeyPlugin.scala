@@ -32,6 +32,7 @@ class ObeyPlugin(val global: Global) extends PluginBase with ObeyPhase {
           reporter.info(NoPosition, "Obey add rules from: " + opts, true)
         } else if (UserOption.optMap.keys.exists(s => opt.startsWith(s))) {
           UserOption.addTags(opt)
+          reporter.info(NoPosition, UserOption.toString, true)
         } else {
           reporter.error(NoPosition, "Bad option for obey plugin: '" + opt + "'")
         }
