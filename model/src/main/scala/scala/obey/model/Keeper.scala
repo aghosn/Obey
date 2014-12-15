@@ -25,7 +25,7 @@ object Keeper {
     l.filter {
       x =>
         val annot = cm.classSymbol(x.getClass).annotations.filter(a => a.tree.tpe =:= ru.typeOf[Tag]).flatMap(_.tree.children.tail)
-        val annotSet: Set[String] = annot.map(y => ru.show(y).toString).map(_.replaceAll("\"", "")).toSet + x.getClass.getName.split("\\$").last
+        val annotSet = annot.map(y => ru.show(y).toString).map(_.replaceAll("\"", "").toLowerCase).toSet + x.getClass.getName.split("\\$").last.toLowerCase
         (posSet.isEmpty || !(posSet & annotSet).isEmpty) && (negSet & annotSet).isEmpty
     }
   }
