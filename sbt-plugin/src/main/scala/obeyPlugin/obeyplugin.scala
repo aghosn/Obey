@@ -6,11 +6,17 @@ object obeyplugin extends AutoPlugin {
   val obeyWarn = settingKey[String]("List of tags to filter warning rules.")
   val obeyRules = settingKey[String]("Path to .class defined by the user.")
 
-  lazy val helloCommand =
-    Command.single("hello") { (state: State, s: String) =>
-      println("Hi! "+s)
-      compile
-      println("After compile")
+  lazy val obeyFixCmd =
+    Command.single("obey-fix") { (state: State, s: String) =>
+      Project.evaluateTask(Keys.compile in Compile, 
+        (Project extract state).append(Seq(obeyFix := s, obeyWarn := "--"), state))
+      state
+    }
+
+  lazy val obeyCheckCmd = 
+    Command.single("obey-check") { (state: State, s: String) => 
+      Project.evaluateTask(Keys.compile in Compile, 
+        (Project extract state).append(Seq(obeyFix := "--", obeyWarn := s), state))
       state
     }
 
@@ -18,7 +24,7 @@ object obeyplugin extends AutoPlugin {
     obeyFix := "",
     obeyWarn := "",
     obeyRules := "",
-    commands += helloCommand,
+    commands ++= Seq(obeyCheckCmd, obeyFixCmd),
     addCompilerPlugin("com.github.aghosn" % "plugin_2.11.2" % "0.1.0-SNAPSHOT"),
     scalacOptions ++= Seq(
       "-P:obey:fix:" + obeyFix.value,
