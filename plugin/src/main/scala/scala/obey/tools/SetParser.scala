@@ -8,7 +8,7 @@ import scala.util.parsing.combinator.syntactical.StandardTokenParsers
 import scala.util.parsing.input._
 
 object SetParser extends StandardTokenParsers {
-  lexical.delimiters ++= List("+", "-", "*", ",", "{","}")
+  lexical.delimiters ++= List("+", "-", "*", ",", "{","}", ";")
 
   implicit def trad(s: String): Tag = new Tag(s)
 
@@ -28,7 +28,7 @@ object SetParser extends StandardTokenParsers {
     })
 
   def tags: Parser[Set[Tag]] = (
-      "{" ~> tag ~ (","~> tag).* <~ "}" ^^ {
+      "{" ~> tag ~ (";"~> tag).* <~ "}" ^^ {
       case e ~ Nil => Set(e)
       case e ~ e1 => Set(e) ++ e1.toSet
 

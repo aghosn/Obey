@@ -16,5 +16,10 @@ class testParser extends FunSuite {
     UserOption.addTags("fix:+{List*}")
     println(UserOption.getFormat)
   }
+
+  test("Parsing multiple arguments") {
+    val res = SetParser.parse("+{List;Var}")
+    println(s"$res from the set Parser")
+  }
 }
 
