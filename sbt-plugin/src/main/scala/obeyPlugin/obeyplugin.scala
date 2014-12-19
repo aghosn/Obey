@@ -8,15 +8,29 @@ object obeyplugin extends AutoPlugin {
 
   lazy val obeyFixCmd =
     Command.single("obey-fix") { (state: State, s: String) =>
-      Project.evaluateTask(Keys.compile in Compile, 
+      Project.evaluateTask(Keys.compile in Compile,
         (Project extract state).append(Seq(obeyFix := s, obeyWarn := "--", scalacOptions ++= Seq("-Ystop-after:obey")), state))
       state
     }
 
-  lazy val obeyCheckCmd = 
-    Command.single("obey-check") { (state: State, s: String) => 
-      Project.evaluateTask(Keys.compile in Compile, 
-        (Project extract state).append(Seq(obeyFix := "--", obeyWarn := s, scalacOptions++= Seq("-Ystop-after:obey")), state))
+  lazy val obeyFixDef =
+    Command.command("obey-fix") { state: State =>
+      Project.evaluateTask(Keys.compile in Compile,
+        (Project extract state).append(Seq(obeyWarn := "--", scalacOptions ++= Seq("-Ystop-after:obey")), state))
+      state
+    }
+
+  lazy val obeyCheckCmd =
+    Command.single("obey-check") { (state: State, s: String) =>
+      Project.evaluateTask(Keys.compile in Compile,
+        (Project extract state).append(Seq(obeyFix := "--", obeyWarn := s, scalacOptions ++= Seq("-Ystop-after:obey")), state))
+      state
+    }
+
+  lazy val obeyCheckDef =
+    Command.command("obey-check") { state: State =>
+      Project.evaluateTask(Keys.compile in Compile,
+        (Project extract state).append(Seq(obeyFix := "--", scalacOptions ++= Seq("-Ystop-after:obey")), state))
       state
     }
 
@@ -24,7 +38,7 @@ object obeyplugin extends AutoPlugin {
     obeyFix := "",
     obeyWarn := "",
     obeyRules := "",
-    commands ++= Seq(obeyCheckCmd, obeyFixCmd),
+    commands ++= Seq(obeyCheckCmd, obeyFixCmd, obeyFixDef, obeyCheckDef),
     addCompilerPlugin("com.github.aghosn" % "plugin_2.11.2" % "0.1.0-SNAPSHOT"),
     scalacOptions ++= Seq(
       "-P:obey:fix:" + obeyFix.value,
