@@ -9,14 +9,14 @@ object obeyplugin extends AutoPlugin {
   lazy val obeyFixCmd =
     Command.single("obey-fix") { (state: State, s: String) =>
       Project.evaluateTask(Keys.compile in Compile, 
-        (Project extract state).append(Seq(obeyFix := s, obeyWarn := "--"), state))
+        (Project extract state).append(Seq(obeyFix := s, obeyWarn := "--", scalacOptions ++= Seq("-Ystop-after:obey")), state))
       state
     }
 
   lazy val obeyCheckCmd = 
     Command.single("obey-check") { (state: State, s: String) => 
       Project.evaluateTask(Keys.compile in Compile, 
-        (Project extract state).append(Seq(obeyFix := "--", obeyWarn := s), state))
+        (Project extract state).append(Seq(obeyFix := "--", obeyWarn := s, scalacOptions++= Seq("-Ystop-after:obey")), state))
       state
     }
 

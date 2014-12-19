@@ -15,7 +15,7 @@ trait ObeyPhase {
     val global: self.global.type = self.global
     import global._
 
-    val phaseName = "obey_rules"
+    val phaseName = "obey"
     override val runsAfter = List("typer")
     override val runsRightAfter = Some("convert")
     override def description = "apply obey rules"
