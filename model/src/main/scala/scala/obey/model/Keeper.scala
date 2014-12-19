@@ -5,7 +5,7 @@ import scala.obey.rules._
 import scala.reflect.runtime.{currentMirror => cm, universe => ru}
 
 object Keeper {
-  var rules: Set[Rule] = Set(VarInsteadOfVal, ListToSet)
+  var rules: Set[Rule] = Set(VarInsteadOfVal, ListToSet, ListToSetBool)
 
   /*Enables to efficiently handle the tags*/
   case class TagFilter(full: Set[String], start: Set[String], end: Set[String], contains: Set[String]) {
