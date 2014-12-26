@@ -5,6 +5,7 @@
 package scala.obey.model
 
 import tqlscalameta.ScalaMetaTraverser._
+import scala.obey.model.utils._
 
 trait Rule {
   import scala.obey.model.utils._
@@ -14,6 +15,10 @@ trait Rule {
 
   def apply: Matcher[List[Message]]
 
-  override def toString: String = s"rule $description"
+  override def toString = {
+    lazy val annots = getAnnotations(this)
+    lazy val name = this.getClass.getName.split("\\$").last.split('.').last
+    name + "("+description+", Tags:("+annots.mkString(",")+"))"
+  }
   
 }

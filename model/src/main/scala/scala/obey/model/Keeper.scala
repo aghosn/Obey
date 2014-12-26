@@ -20,8 +20,7 @@ object Keeper {
     val tags = TagFilter(pos.map(_.tag.r.pattern), neg.map(_.tag.r.pattern))
     l.filter {
       x =>
-        val annot = cm.classSymbol(x.getClass).annotations.filter(a => a.tree.tpe =:= ru.typeOf[Tag]).flatMap(_.tree.children.tail)
-        val annotSet = annot.map(y => ru.show(y).toString).map(_.replaceAll("\"", "")).toSet + x.getClass.getName.split("\\$").last
+        val annotSet = getAnnotations(x) + x.getClass.getName.split("\\$").last
         tags.matches(annotSet)
     }
   }

@@ -2,6 +2,7 @@ package scala.obey.model
 
 import scala.annotation.StaticAnnotation
 import scala.reflect.internal.util.NoPosition
+import scala.reflect.runtime.{currentMirror => cm, universe => ru}
 
 package object utils {
 
@@ -28,5 +29,10 @@ package object utils {
     } catch {
       case e: Exception => NoPosition
     }
+  }
+
+  def getAnnotations(x: Rule): Set[String] = {
+    val annot = cm.classSymbol(x.getClass).annotations.filter(a => a.tree.tpe =:= ru.typeOf[Tag]).flatMap(_.tree.children.tail)
+    annot.map(y => ru.show(y).toString).map(_.replaceAll("\"", "")).toSet 
   }
 }
