@@ -8,7 +8,7 @@ import scala.obey.model._
 import scala.obey.model.utils._
 
 @Tag("Var", "Val") object VarInsteadOfVal extends Rule {
-  val name = "VarInsteadOfVal: var assigned only once should be val"
+  val description = "var assigned only once should be val"
 
   def message(n: Tree, t: Tree): Message = Message(s"The 'var' $n from ${t} was never reassigned and should therefore be a 'val'", t)
 

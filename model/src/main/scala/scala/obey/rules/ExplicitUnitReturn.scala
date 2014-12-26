@@ -9,7 +9,7 @@ import scala.obey.tools.Enrichment._
 
 @Tag("Type", "Explicit") object ExplicitUnitReturn extends Rule {
 
-  val name = "ExplicitUnitReturn: Ensure explicit Return types"
+  val description = "ExplicitUnitReturn: Ensure explicit Return types"
 
   def message(t: Defn.Def) = Message(s"$t has no explicit Unit return type", t)
 

@@ -34,11 +34,18 @@ object obeyplugin extends AutoPlugin {
       state
     }
 
+  lazy val obeyListRules = 
+    Command.command("obey-list") { state: State => 
+      Project.evaluateTask(Keys.compile in Compile, 
+        (Project extract state).append(Seq(scalacOptions ++= Seq("-Ystop-after:obey", "-P:obey:ListRules")), state))
+      state
+    }
+    
   override lazy val projectSettings: Seq[sbt.Def.Setting[_]] = Seq(
     obeyFix := "",
     obeyWarn := "",
     obeyRules := "",
-    commands ++= Seq(obeyCheckCmd, obeyFixCmd/*, obeyFixDef, obeyCheckDef*/),
+    commands ++= Seq(obeyCheckCmd, obeyFixCmd, obeyListRules/*, obeyFixDef, obeyCheckDef*/),
     addCompilerPlugin("com.github.aghosn" % "plugin_2.11.2" % "0.1.0-SNAPSHOT"),
     scalacOptions ++= Seq(
       "-P:obey:fix:" + obeyFix.value,

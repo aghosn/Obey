@@ -4,6 +4,6 @@ import scala.obey.model._
 
 object MySecondRule extends Rule {
 
-  val name = " My second rule"
+  val description = " My second rule"
   def apply = ???
 }

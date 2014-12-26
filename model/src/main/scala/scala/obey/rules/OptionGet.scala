@@ -10,7 +10,7 @@ import scala.obey.tools.Enrichment._
 
 @Tag("Option", "Option#get") object OptionGet extends Rule {
 
-  val name = "OptionGet: use Option#fold instead of get"
+  val description = "use Option#fold instead of get"
 
   def message(t: Term.Select) = Message(s"${t} should use Option#fold instead of Option#get", t)
 

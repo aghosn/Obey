@@ -2,7 +2,7 @@ import scala.obey.model._
 
 class MyRule extends Rule {
 
-  val name = "My Rule"
+  val description = "My Rule"
 
   def apply = ???
 }

@@ -33,6 +33,10 @@ class ObeyPlugin(val global: Global) extends PluginBase with ObeyPhase {
         } else if (UserOption.optMap.keys.exists(s => opt.startsWith(s))) {
           UserOption.addTags(opt)
           reporter.info(NoPosition, UserOption.toString, true)
+        } else if (opt.equals("ListRules")){
+          UserOption.disallow
+          reporter.info(NoPosition, "List of Rules available", true)
+          Keeper.rules.foreach(r => reporter.info(NoPosition, r.toString, true))
         } else {
           reporter.error(NoPosition, "Bad option for obey plugin: '" + opt + "'")
         }

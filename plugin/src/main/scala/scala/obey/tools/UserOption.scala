@@ -42,4 +42,10 @@ object UserOption {
   override def toString = {
     optMap.mkString("\n")
   }
+
+  def disallow: Unit = {
+    all.use = false
+    report.use = false
+    format.use = false
+  }
 }

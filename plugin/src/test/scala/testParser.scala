@@ -18,7 +18,7 @@ class testParser extends FunSuite {
   }
 
   test("Parsing multiple arguments") {
-    val res = SetParser.parse("+{List;Var}")
+    val res = SetParser.parse("+{List; Var}")
     println(s"$res from the set Parser")
   }
 }

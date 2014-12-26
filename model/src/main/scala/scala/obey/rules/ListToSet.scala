@@ -7,7 +7,7 @@ import scala.obey.model._
 import scala.obey.model.utils._
 
 @Tag("List", "Set") object ListToSet extends Rule {
-  val name = "ListToSet: defining List.toSet is defining a Set"
+  val description = "defining List.toSet is defining a Set"
 
   def message(t: Defn.Val): Message = Message(s"The assignment $t creates a useless List", t) 
 
