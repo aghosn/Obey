@@ -1,5 +1,6 @@
 import sbt._
 import Keys._
+import complete.DefaultParsers._
 
 object obeyplugin extends AutoPlugin {
   val obeyFix = settingKey[String]("List of tags to filter rewritting rules.")
@@ -13,13 +14,6 @@ object obeyplugin extends AutoPlugin {
       state
     }
 
-  lazy val obeyFixDef =
-    Command.command("obey-fix") { state: State =>
-      Project.evaluateTask(Keys.compile in Compile,
-        (Project extract state).append(Seq(obeyWarn := "--", scalacOptions ++= Seq("-Ystop-after:obey")), state))
-      state
-    }
-
   lazy val obeyCheckCmd =
     Command.single("obey-check") { (state: State, s: String) =>
       Project.evaluateTask(Keys.compile in Compile,
@@ -27,25 +21,18 @@ object obeyplugin extends AutoPlugin {
       state
     }
 
-  lazy val obeyCheckDef =
-    Command.command("obey-check") { state: State =>
+  lazy val obeyListRules =
+    Command.command("obey-list") { state: State =>
       Project.evaluateTask(Keys.compile in Compile,
-        (Project extract state).append(Seq(obeyFix := "--", scalacOptions ++= Seq("-Ystop-after:obey")), state))
-      state
-    }
-
-  lazy val obeyListRules = 
-    Command.command("obey-list") { state: State => 
-      Project.evaluateTask(Keys.compile in Compile, 
         (Project extract state).append(Seq(scalacOptions ++= Seq("-Ystop-after:obey", "-P:obey:ListRules")), state))
       state
     }
-    
+
   override lazy val projectSettings: Seq[sbt.Def.Setting[_]] = Seq(
     obeyFix := "",
     obeyWarn := "",
     obeyRules := "",
-    commands ++= Seq(obeyCheckCmd, obeyFixCmd, obeyListRules/*, obeyFixDef, obeyCheckDef*/),
+    commands ++= Seq(obeyCheckCmd, obeyFixCmd, obeyListRules),
     addCompilerPlugin("com.github.aghosn" % "plugin_2.11.2" % "0.1.0-SNAPSHOT"),
     scalacOptions ++= Seq(
       "-P:obey:fix:" + obeyFix.value,
