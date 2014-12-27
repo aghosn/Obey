@@ -28,10 +28,32 @@ object obeyplugin extends AutoPlugin {
       state
     }
 
+  val packageToMoodle = InputKey[Unit]("obey-check-def", "Obey checking with default")
+
+  val packageToMoodleTask: Setting[InputTask[Unit]] = packageToMoodle <<= inputTask { (argTask: TaskKey[Seq[String]]) =>
+    (argTask) map { (args: Seq[String]) =>
+      Def.setting {
+        (state: State) =>
+          if (args.length == 0) {
+            println("No arguments")
+            Project.evaluateTask(Keys.compile in Compile, state)
+          }
+          else if(args.length == 1){
+            println("Yo many arguments " + args.length)
+            Project.evaluateTask(Keys.compile in Compile,
+          (Project extract state).append(Seq(obeyFix := "--", obeyWarn := args.mkString, scalacOptions ++= Seq("-Ystop-after:obey")), state))
+          }else {
+            println("Wrong number of arguments")
+          }
+      }.evaluate _
+    }
+  }
+
   override lazy val projectSettings: Seq[sbt.Def.Setting[_]] = Seq(
     obeyFix := "",
     obeyWarn := "",
     obeyRules := "",
+    packageToMoodleTask,
     commands ++= Seq(obeyCheckCmd, obeyFixCmd, obeyListRules),
     addCompilerPlugin("com.github.aghosn" % "plugin_2.11.2" % "0.1.0-SNAPSHOT"),
     scalacOptions ++= Seq(
