@@ -6,7 +6,12 @@ import scala.reflect.runtime.{currentMirror => cm, universe => ru}
 
 package object utils {
 
-  case class Holder(var pos: Set[Tag], var neg: Set[Tag], var use: Boolean)
+  case class Holder(var pos: Set[Tag], var neg: Set[Tag], var use: Boolean) {
+
+    override def toString: String = {
+      s"+{${pos.mkString(",")}} - {${neg.mkString(",")}}"
+    }
+  }
 
   /* Message type*/
   case class Message(message: String, tree: scala.meta.Tree) {
