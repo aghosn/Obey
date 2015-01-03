@@ -38,7 +38,6 @@ class ObeyPlugin(val global: Global) extends PluginBase with ObeyPhase {
           UserOption.disallow
           reporter.info(NoPosition, "List of Rules available:\n"+Keeper.rules.mkString("\n"), true)
         } else if (opt.equals("ListRules")){
-          UserOption.disallow
           reporter.info(NoPosition, "List of selected Rules:", true)
           val reports = UserOption.getReport
           val fixes = UserOption.getFormat
@@ -46,6 +45,7 @@ class ObeyPlugin(val global: Global) extends PluginBase with ObeyPhase {
             reporter.info(NoPosition,"Warn Rules:\n"+reports.mkString("\n"), true)
           if(!fixes.isEmpty)
             reporter.info(NoPosition,"Fix Rules:\n"+fixes.mkString("\n"), true)
+          UserOption.disallow
         } else {
           reporter.error(NoPosition, "Bad option for obey plugin: '" + opt + "'")
         }
