@@ -32,7 +32,7 @@ class ObeyPlugin(val global: Global) extends PluginBase with ObeyPhase {
           reporter.info(NoPosition, "Obey add rules from: " + opts, true)
         } else if (UserOption.optMap.keys.exists(s => opt.startsWith(s))) {
           UserOption.addTags(opt)
-          reporter.info(NoPosition, UserOption.toString, true)
+          reporter.info(NoPosition, "Tag Filters:\n"+UserOption.toString, true)
         } else if (opt.equals("ListRules")){
           UserOption.disallow
           reporter.info(NoPosition, "List of Rules available", true)

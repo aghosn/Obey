@@ -31,12 +31,15 @@ trait ObeyPhase {
         val formattingRules = UserOption.getFormat
         var warnings: List[Message] = Nil
 
-        if (!messageRules.isEmpty)
+        if (!messageRules.isEmpty){
+          reporter.info(NoPosition, "Warn Rules:\n"+messageRules.mkString("\n"), true)
           warnings ++= messageRules.map(_.apply).reduce((r1, r2) => r1 +> r2)(punit)
+        }
 
         var res: MatcherResult[List[Message]] = null
 
         if (!formattingRules.isEmpty) {
+          reporter.info(NoPosition, "Fix Rules:\n"+formattingRules.mkString("\n"), true)
           res = formattingRules.map(_.apply).reduce((r1, r2) => r1 + r2)(punit)
           if (res.tree.isDefined && !res.result.isEmpty) {
             Persist.archive(path)
@@ -46,15 +49,7 @@ trait ObeyPhase {
             warnings ++= res.result
           }
         }
-
-        /*TODO Debugging */
-        /*println("-----------------------------------------------")
-        println(s"We selected to report ${UserOption.getReport}")
-        println(s"We selected to format ${UserOption.getFormat}")*/
-
-        /*Reporting the errors*/
         warnings.foreach(m => reporter.warning(m.position, m.message))
-        /*TODO implement persistence for reformatting*/
       }
     }
   }
