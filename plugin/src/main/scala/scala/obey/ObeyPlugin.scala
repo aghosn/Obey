@@ -34,10 +34,10 @@ class ObeyPlugin(val global: Global) extends PluginBase with ObeyPhase {
         } else if (UserOption.optMap.keys.exists(s => opt.startsWith(s))) {
           UserOption.addTags(opt)
           reporter.info(NoPosition, "Tag Filters:\n"+UserOption.toString, true)
-        } else if (opt.equals("ListRules")){
+        } else if (regexp.matcher(opt).matches){
           UserOption.disallow
           reporter.info(NoPosition, "List of Rules available:\n"+Keeper.rules.mkString("\n"), true)
-        } else if (regexp.matcher(opt).matches){
+        } else if (opt.equals("ListRules")){
           UserOption.disallow
           reporter.info(NoPosition, "List of selected Rules:", true)
           val reports = UserOption.getReport
