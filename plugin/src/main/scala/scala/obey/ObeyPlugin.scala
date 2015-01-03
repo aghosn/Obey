@@ -15,6 +15,7 @@ import scala.meta.internal.hosts.scalac.PluginBase
 class ObeyPlugin(val global: Global) extends PluginBase with ObeyPhase {
   import global._
 
+  val regexp = "ListRules:\\W*-all\\W*".r.pattern
   val name = "obey"
   val description = """Compiler plugin that checks defined rules against scala meta trees.
   http://github.com/aghosn/Obey for more information."""
@@ -35,8 +36,16 @@ class ObeyPlugin(val global: Global) extends PluginBase with ObeyPhase {
           reporter.info(NoPosition, "Tag Filters:\n"+UserOption.toString, true)
         } else if (opt.equals("ListRules")){
           UserOption.disallow
-          reporter.info(NoPosition, "List of Rules available", true)
-          Keeper.rules.foreach(r => reporter.info(NoPosition, r.toString, true))
+          reporter.info(NoPosition, "List of Rules available:\n"+Keeper.rules.mkString("\n"), true)
+        } else if (regexp.matcher(opt).matches){
+          UserOption.disallow
+          reporter.info(NoPosition, "List of selected Rules:", true)
+          val reports = UserOption.getReport
+          val fixes = UserOption.getFormat
+          if(!reports.isEmpty)
+            reporter.info(NoPosition,"Warn Rules:\n"+reports.mkString("\n"), true)
+          if(!fixes.isEmpty)
+            reporter.info(NoPosition,"Fix Rules:\n"+fixes.mkString("\n"), true)
         } else {
           reporter.error(NoPosition, "Bad option for obey plugin: '" + opt + "'")
         }

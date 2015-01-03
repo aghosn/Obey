@@ -32,14 +32,14 @@ trait ObeyPhase {
         var warnings: List[Message] = Nil
 
         if (!messageRules.isEmpty){
-          reporter.info(NoPosition, "Warn Rules:\n"+messageRules.mkString("\n"), true)
+          //reporter.info(NoPosition, "Warn Rules:\n"+messageRules.mkString("\n"), true)
           warnings ++= messageRules.map(_.apply).reduce((r1, r2) => r1 +> r2)(punit)
         }
 
         var res: MatcherResult[List[Message]] = null
 
         if (!formattingRules.isEmpty) {
-          reporter.info(NoPosition, "Fix Rules:\n"+formattingRules.mkString("\n"), true)
+          //reporter.info(NoPosition, "Fix Rules:\n"+formattingRules.mkString("\n"), true)
           res = formattingRules.map(_.apply).reduce((r1, r2) => r1 + r2)(punit)
           if (res.tree.isDefined && !res.result.isEmpty) {
             Persist.archive(path)

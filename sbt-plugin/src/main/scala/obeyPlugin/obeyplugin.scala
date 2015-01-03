@@ -8,9 +8,14 @@ object obeyplugin extends AutoPlugin {
   val obeyRules = settingKey[String]("Path to .class defined by the user.")
 
   lazy val obeyListRules =
-    Command.command("obey-list") { state: State =>
+    Command.args("obey-list", "<args>") { (state: State, args) =>
+      if(args.isEmpty){
       Project.evaluateTask(Keys.compile in Compile,
         (Project extract state).append(Seq(scalacOptions ++= Seq("-Ystop-after:obey", "-P:obey:ListRules")), state))
+      } else {
+        Project.evaluateTask(Keys.compile in Compile, 
+          (Project extract state).append(Seq(scalacOptions ++= Seq("-Ystop-after:obey", "-P:obey:ListRules:"+args.mkString)), state))
+      }
       state
     }
 
