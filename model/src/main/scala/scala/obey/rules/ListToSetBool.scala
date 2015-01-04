@@ -1,6 +1,6 @@
 package scala.obey.rules
 
-import scala.meta.tql.ScalaMetaTraverser._
+import scala.meta.tql.ScalaMetaFusionTraverser._
 
 import scala.meta.internal.ast._
 import scala.obey.model._

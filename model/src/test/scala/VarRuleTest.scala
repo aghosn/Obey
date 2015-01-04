@@ -1,5 +1,5 @@
 import org.scalatest.FunSuite
-import scala.meta.tql.ScalaMetaTraverser._
+import scala.meta.tql.ScalaMetaFusionTraverser._
 
 import scala.meta._
 import scala.obey.rules._

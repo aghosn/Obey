@@ -4,7 +4,7 @@
  */
 package scala.obey.model
 
-import scala.meta.tql.ScalaMetaTraverser._
+import scala.meta.tql.ScalaMetaFusionTraverser._
 
 trait Rule {
   import scala.obey.model.utils._
