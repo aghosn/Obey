@@ -23,7 +23,7 @@ object SetParser extends RegexParsers {
   def tag: Parser[Tag] = """[\w\*]+""".r  ^^ {case e => e.replace("*", ".*") }
 
   def tags: Parser[Set[Tag]] = (
-      "{" ~> tag ~ (";" ~> tag).* <~ "}" ^^ {
+      "{" ~> tag ~ ("[;,]" ~> tag).* <~ "}" ^^ {
       case e ~ Nil => Set(e)
       case e ~ e1 => Set(e) ++ e1.toSet
 

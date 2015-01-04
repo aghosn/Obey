@@ -58,6 +58,8 @@ class ObeyPlugin(val global: Global) extends PluginBase with ObeyPhase {
     |   fix:                Specifies filters for format
     |   warn:               Specifies filter for warnings
     |   addRules:           Specifies user defined rules
+    |   ListRules           Lists the rules to be used in the plugin
+    |   ListRules: -all     Lists all the rules available
     |   
     """)
 }

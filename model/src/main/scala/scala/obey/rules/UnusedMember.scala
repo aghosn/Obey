@@ -1,6 +1,6 @@
 package scala.obey.rules
 
-import tqlscalameta.ScalaMetaTraverser._
+import scala.meta.tql.ScalaMetaTraverser._
 
 import scala.language.reflectiveCalls
 import scala.meta.internal.ast._
@@ -16,7 +16,7 @@ import scala.obey.tools.Enrichment._
   def ignore(d: Defn): Boolean = d.isMain && d.isValueParameter && d.isConstructorArg
 
   def apply = {
-    collectIn[Set] {
+    collect[Set] {
       case t: Defn.Def if (!ignore(t)) => t.name
     }.down feed { defs =>
       collect {

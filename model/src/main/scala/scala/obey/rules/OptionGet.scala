@@ -1,6 +1,6 @@
 package scala.obey.rules
 
-import tqlscalameta.ScalaMetaTraverser._
+import scala.meta.tql.ScalaMetaTraverser._
 
 import scala.language.reflectiveCalls
 import scala.meta.internal.ast._
@@ -18,7 +18,7 @@ import scala.obey.tools.Enrichment._
   def isOption(t: Type.Name): Boolean = true
 
   def apply = {
-    collectIn[Set] {
+    collect[Set] {
       /*TODO Maybe check decltype then rhs or t*/
       case t @ Defn.Val(_, List(n @ Term.Name(v)), _, rhs) if isOption(t.getType) => n
     }.down feed { options =>
@@ -28,4 +28,5 @@ import scala.obey.tools.Enrichment._
       }).down
     }
   }
+
 }

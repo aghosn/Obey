@@ -1,6 +1,6 @@
 package scala.obey.rules
 
-import tqlscalameta.ScalaMetaTraverser._
+import scala.meta.tql.ScalaMetaTraverser._
 
 import scala.meta.internal.ast._
 import scala.obey.model._
@@ -14,13 +14,9 @@ import scala.obey.model.utils._
   def message(t: Term.Apply): Message = Message(s"$t gets evaluated to a boolean !", t)
 
   def apply = {
-    (collect {
-      case t @ Term.Apply(Term.Select(Term.Apply(Term.Name("List"), _), Term.Name("toSet")), _) => 
-        message(t)
-    } <~
-      update{
-        case Term.Apply(t @ Term.Select(Term.Apply(Term.Name("List"), _), Term.Name("toSet")), _) => 
-          t
+    (transform{
+      case tt @ Term.Apply(t @ Term.Select(Term.Apply(Term.Name("List"), _), Term.Name("toSet")), _) =>
+        t andCollect message(tt)
       }).down
   }
 } 

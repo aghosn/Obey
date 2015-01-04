@@ -1,6 +1,6 @@
 package scala.obey
 
-import tqlscalameta.ScalaMetaTraverser._
+import scala.meta.tql.ScalaMetaTraverser._
 
 import scala.meta._
 import scala.obey.model.utils._
@@ -36,7 +36,7 @@ trait ObeyPhase {
           warnings ++= messageRules.map(_.apply).reduce((r1, r2) => r1 +> r2)(punit)
         }
 
-        var res: MatcherResult[List[Message]] = null
+        var res: MatchResult[List[Message]] = null
 
         if (!formattingRules.isEmpty) {
           //reporter.info(NoPosition, "Fix Rules:\n"+formattingRules.mkString("\n"), true)
