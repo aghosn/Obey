@@ -38,6 +38,6 @@ package object utils {
 
   def getAnnotations(x: Rule): Set[String] = {
     val annot = cm.classSymbol(x.getClass).annotations.filter(a => a.tree.tpe =:= ru.typeOf[Tag]).flatMap(_.tree.children.tail)
-    annot.map(y => ru.show(y).toString).map(_.replaceAll("\"", "")).toSet 
+    annot.map(y => ru.show(y).toString).map(_.replaceAll("\"", "").toLowerCase).toSet 
   }
 }
