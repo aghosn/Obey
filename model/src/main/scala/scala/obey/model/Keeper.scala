@@ -20,7 +20,7 @@ object Keeper {
     val tags = TagFilter(pos.map(_.tag.toLowerCase.r.pattern), neg.map(_.tag.toLowerCase.r.pattern))
     l.filter {
       x =>
-        val annotSet = getAnnotations(x) + x.getClass.getName.split("\\$").last
+        val annotSet = getAnnotations(x) + x.getClass.getName.split("\\$").last.toLowerCase
         tags.matches(annotSet)
     }
   }
