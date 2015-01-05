@@ -17,7 +17,7 @@ object Keeper {
   }
   //TODO Still have to rely on the bad trick to get the string
   def filter[T <: Rule](pos: Set[Tag], neg: Set[Tag])(l: Set[T]): Set[T] = {
-    val tags = TagFilter(pos.map(_.tag.r.pattern), neg.map(_.tag.r.pattern))
+    val tags = TagFilter(pos.map(_.tag.toLowerCase.r.pattern), neg.map(_.tag.toLowerCase.r.pattern))
     l.filter {
       x =>
         val annotSet = getAnnotations(x) + x.getClass.getName.split("\\$").last

@@ -59,7 +59,7 @@ class GeneralRuleTest extends FunSuite {
     }
   }"""
   test("Print the tree") {
-    println("The trees \n" + showTree(a) + "\n" + showTree(b))
+    println("The trees \n" + showTree(t) + "\n" + showTree(t))
     //println("\n" + showTree(y))
   }
 
@@ -93,4 +93,5 @@ class GeneralRuleTest extends FunSuite {
     assert(res2.size == 1)
     println(s"${res}, ${res2}")
   }
+
 }
