@@ -9,12 +9,12 @@ import scala.obey.model.utils._
 @Tag("List", "Set") object ListToSet extends Rule {
   val description = "defining List.toSet is defining a Set"
 
-  def message(t: Defn.Val): Message = Message(s"The assignment $t creates a useless List", t)
+  def message(t: Term.Select): Message = Message(s"The assignment $t creates a useless List", t)
 
   def apply = {
     (transform {
-      case t @ Defn.Val(mod, n, None, Term.Select(Term.Apply(Term.Name("List"), l), Term.Name("toSet"))) =>
-        Defn.Val(mod, n, None, Term.Apply(Term.Name("Set"), l)) andCollect message(t)
+      case t @ Term.Select(Term.Apply(Term.Name("List"), l), Term.Name("toSet")) =>
+        Term.Apply(Term.Name("Set"), l) andCollect message(t)
     }).down
   }
 }
