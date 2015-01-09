@@ -4,12 +4,12 @@ import scala.meta.tql.ScalaMetaFusionTraverser._
 
 import scala.meta.internal.ast._
 import scala.obey.model._
-import scala.obey.model.utils._
+import scala.obey.model._
 import scala.obey.tools.Enrichment._
 
 @Tag("Type", "Explicit") object ExplicitUnitReturn extends Rule {
 
-  val description = "ExplicitUnitReturn: Ensure explicit Return types"
+  def description = "ExplicitUnitReturn: Ensure explicit Return types"
 
   def message(t: Defn.Def) = Message(s"$t has no explicit Unit return type", t)
 

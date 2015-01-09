@@ -5,10 +5,10 @@ import scala.meta.tql.ScalaMetaFusionTraverser._
 import scala.language.reflectiveCalls
 import scala.meta.internal.ast._
 import scala.obey.model._
-import scala.obey.model.utils._
+import scala.obey.model._
 
 @Tag("Var", "Val") object VarInsteadOfVal extends Rule {
-  val description = "var assigned only once should be val"
+  def description = "var assigned only once should be val"
 
   def message(n: Tree, t: Tree): Message = Message(s"The 'var' $n from ${t} was never reassigned and should therefore be a 'val'", t)
 

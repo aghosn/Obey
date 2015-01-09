@@ -1,6 +1,6 @@
 package scala.obey.model
 
-import scala.obey.model.utils._
+import scala.obey.model._
 import scala.obey.rules._
 import scala.reflect.runtime.{currentMirror => cm, universe => ru}
 import java.util.regex.Pattern

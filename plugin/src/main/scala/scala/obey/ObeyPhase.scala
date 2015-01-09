@@ -3,7 +3,7 @@ package scala.obey
 import scala.meta.tql.ScalaMetaFusionTraverser._
 
 import scala.meta._
-import scala.obey.model.utils._
+import scala.obey.model._
 import scala.obey.tools.{UserOption, _}
 import scala.tools.nsc.Phase
 import scala.tools.nsc.plugins.{PluginComponent => NscPluginComponent}

@@ -2,7 +2,7 @@ package scala.obey.tools
 
 import scala.obey.model.Keeper._
 import scala.obey.model.Rule
-import scala.obey.model.utils._
+import scala.obey.model._
 
 object UserOption {
 

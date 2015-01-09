@@ -1,7 +1,7 @@
 import org.scalatest.FunSuite
 
 import scala.obey.tools._
-import scala.obey.model.utils._
+import scala.obey.model._
 
 class testParser extends FunSuite {
 
@@ -20,6 +20,11 @@ class testParser extends FunSuite {
   test("Parsing multiple arguments") {
     val res = SetParser.parse("+{List; Var}")
     println(s"$res from the set Parser")
+  }
+
+  test("Parsing with SetParser") {
+    val res = SetParser.parse("+{List, Var} - {Dotty}")
+    assert(res._1.size == 2 && res._2.size == 1)
   }
 }
 

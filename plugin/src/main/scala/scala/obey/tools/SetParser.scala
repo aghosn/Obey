@@ -3,7 +3,7 @@ package scala.obey.tools
 import java.io.StringReader
 
 import scala.language.implicitConversions
-import scala.obey.model.utils._
+import scala.obey.model._
 import scala.util.parsing.combinator.syntactical.StandardTokenParsers
 import scala.util.parsing.combinator.RegexParsers
 import scala.util.parsing.input._
@@ -23,7 +23,7 @@ object SetParser extends RegexParsers {
   def tag: Parser[Tag] = """[\w\*]+""".r  ^^ {case e => e.replace("*", ".*") }
 
   def tags: Parser[Set[Tag]] = (
-      "{" ~> tag ~ ("[;,]" ~> tag).* <~ "}" ^^ {
+      "{" ~> tag ~ ("[;,]".r ~> tag).* <~ "}" ^^ {
       case e ~ Nil => Set(e)
       case e ~ e1 => Set(e) ++ e1.toSet
 

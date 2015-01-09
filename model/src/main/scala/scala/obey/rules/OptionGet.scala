@@ -5,12 +5,12 @@ import scala.meta.tql.ScalaMetaFusionTraverser._
 import scala.language.reflectiveCalls
 import scala.meta.internal.ast._
 import scala.obey.model._
-import scala.obey.model.utils._
+import scala.obey.model._
 import scala.obey.tools.Enrichment._
 
 @Tag("Option", "Option#get") object OptionGet extends Rule {
 
-  val description = "use Option#fold instead of get"
+  def description = "use Option#fold instead of get"
 
   def message(t: Term.Select) = Message(s"${t} should use Option#fold instead of Option#get", t)
 

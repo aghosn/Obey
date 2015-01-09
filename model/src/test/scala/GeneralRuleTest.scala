@@ -3,7 +3,7 @@ import scala.meta.tql.ScalaMetaFusionTraverser._
 
 import scala.meta._
 import scala.obey.model._
-import scala.obey.model.utils._
+import scala.obey.model._
 import scala.obey.rules._
 import scala.reflect.runtime.{universe => ru}
 

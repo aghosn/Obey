@@ -1,10 +1,10 @@
-package scala.obey.model
+package scala.obey
 
 import scala.annotation.StaticAnnotation
 import scala.reflect.internal.util.NoPosition
 import scala.reflect.runtime.{currentMirror => cm, universe => ru}
 
-package object utils {
+package object model {
 
   case class Holder(var pos: Set[Tag], var neg: Set[Tag], var use: Boolean) {
 
@@ -19,9 +19,9 @@ package object utils {
   }
 
   /* Represents the tags used to handle the rule filtering*/
-  case class Tag(val tag: String, val tags: String*) extends StaticAnnotation {
+  case class Tag(tag: String, others: String*) extends StaticAnnotation {
     override def toString = {
-      (tag :: tags.toList).mkString(",")
+      (tag :: others.toList).mkString(",")
     }
   }
 

@@ -6,7 +6,7 @@
 package scala.obey
 
 import scala.obey.model.Keeper
-import scala.obey.model.utils._
+import scala.obey.model._
 import scala.obey.tools._
 import scala.tools.nsc.Global
 import scala.tools.nsc.plugins.{ PluginComponent => NscPluginComponent }

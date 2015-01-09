@@ -3,7 +3,7 @@ package scala.obey.tools
 import java.io.StringReader
 
 import scala.language.implicitConversions
-import scala.obey.model.utils._
+import scala.obey.model._
 import scala.util.parsing.combinator.syntactical.StandardTokenParsers
 import scala.util.parsing.input._
 

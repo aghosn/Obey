@@ -7,10 +7,10 @@ package scala.obey.model
 import scala.meta.tql.ScalaMetaFusionTraverser._
 
 trait Rule {
-  import scala.obey.model.utils._
+  import scala.obey.model._
   /* Identifier to pretty print and identity the rule
    */
-  val description: String
+  def description: String
 
   def apply: Matcher[List[Message]]
 
