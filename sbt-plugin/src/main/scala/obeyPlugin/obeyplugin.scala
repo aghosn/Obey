@@ -26,7 +26,7 @@ object obeyplugin extends AutoPlugin {
           (Project extract state).append(Seq(obeyFix := "--", scalacOptions ++= Seq("-Ystop-after:obey")), state))
       } else {
         Project.evaluateTask(Keys.compile in Compile,
-          (Project extract state).append(Seq(obeyWarn := args.mkString, obeyFix := "--", scalacOptions ++= Seq("-Ystop-after:obey")), state))
+          (Project extract state).append(Seq(obeyWarn := args.mkString.replace(",", ";"), obeyFix := "--", scalacOptions ++= Seq("-Ystop-after:obey")), state))
       }
       state
     }
@@ -38,7 +38,7 @@ object obeyplugin extends AutoPlugin {
           (Project extract state).append(Seq(obeyWarn := "--", scalacOptions ++= Seq("-Ystop-after:obey")), state))
       } else {
         Project.evaluateTask(Keys.compile in Compile,
-          (Project extract state).append(Seq(obeyFix := args.mkString, obeyWarn := "--", scalacOptions ++= Seq("-Ystop-after:obey")), state))
+          (Project extract state).append(Seq(obeyFix := args.mkString.replace(",", ";"), obeyWarn := "--", scalacOptions ++= Seq("-Ystop-after:obey")), state))
       }
       state
     }
