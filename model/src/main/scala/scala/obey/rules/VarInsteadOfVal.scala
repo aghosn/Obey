@@ -5,7 +5,6 @@ import scala.meta.tql.ScalaMetaFusionTraverser._
 import scala.language.reflectiveCalls
 import scala.meta.internal.ast._
 import scala.obey.model._
-import scala.obey.model._
 
 @Tag("Var", "Val") object VarInsteadOfVal extends Rule {
   def description = "var assigned only once should be val"

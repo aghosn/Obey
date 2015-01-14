@@ -4,7 +4,6 @@ import scala.meta.tql.ScalaMetaFusionTraverser._
 
 import scala.meta.internal.ast._
 import scala.obey.model._
-import scala.obey.model._
 
 @Tag("List", "Set") object ListToSet extends Rule {
   def description = "defining List.toSet is defining a Set"
