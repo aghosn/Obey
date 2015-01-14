@@ -14,7 +14,7 @@ object Enrichment {
       case _ => false
     }
 
-    def isValueParameter: Boolean = tree.parent.map(p => p.isInstanceOf[Member.Method]).getOrElse(false)
+    def isValueParameter: Boolean = true //tree.parent.map(p => p.isInstanceOf[Member.Method]).getOrElse(false)
 
     /*TODO find how to do that*/
     def isConstructorArg: Boolean = true //tree.parent.map(p => p.isInstanceOf[Member.Ctor]).getOrElse(false)

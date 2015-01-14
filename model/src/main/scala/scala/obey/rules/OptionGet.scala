@@ -21,11 +21,11 @@ import scala.obey.tools.Enrichment._
     collect[Set] {
       /*TODO Maybe check decltype then rhs or t*/
       case t @ Defn.Val(_, List(n @ Term.Name(v)), _, rhs) if isOption(t.getType) => n
-    }.down feed { options =>
+    }.topDown feed { options =>
       (collect {
         case t @ Term.Select(n @ Term.Name(v), Term.Name("get")) if options.contains(n) =>
           message(t)
-      }).down
+      }).topDown
     }
   }
 

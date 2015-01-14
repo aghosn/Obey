@@ -15,11 +15,11 @@ import scala.obey.model._
   def apply = {
     collect[Set] {
       case Term.Assign(b: Term.Name, _) => b
-    }.down feed { assign =>
+    }.topDown feed { assign =>
       (transform {
         case t @ Defn.Var(a, (b: Term.Name) :: Nil, c, Some(d)) if (!assign.contains(b)) =>
           Defn.Val(a, b :: Nil, c, d) andCollect message(b, t)
-      }).down
+      }).topDown
     }
   }
 }

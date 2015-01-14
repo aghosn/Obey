@@ -19,6 +19,6 @@ import scala.obey.tools.Enrichment._
         Defn.Val(mods, pats, Some(t.getType), rhs) andCollect message(t, t.getType)
       case t @ Defn.Def(mods, name, tparams, paramss, None, body) =>
         Defn.Def(mods, name, tparams, paramss, Some(t.getType), body) andCollect message(t, t.getType)
-    }).down
+    }).topDown
   }
 }

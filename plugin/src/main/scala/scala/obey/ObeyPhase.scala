@@ -20,7 +20,6 @@ trait ObeyPhase {
     override val runsRightAfter = Some("convert")
     override def description = "apply obey rules"
 
-    def showTree(x: scala.meta.Tree) = scala.meta.syntactic.show.ShowOps(x).show[syntactic.show.Raw]
 
     def newPhase(prev: Phase): Phase = new StdPhase(prev) {
 

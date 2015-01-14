@@ -18,10 +18,10 @@ import scala.obey.tools.Enrichment._
   def apply = {
     collect[Set] {
       case t: Defn.Def if (!ignore(t)) => t.name
-    }.down feed { defs =>
+    }.topDown feed { defs =>
       collect {
         case Term.Assign(b: Term.Name, _) if (defs.contains(b)) => message(b)
-      }.down
+      }.topDown
     }
   }
 }

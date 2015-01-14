@@ -17,6 +17,6 @@ import scala.obey.model._
     (transform {
       case tt @ Term.Apply(t @ Term.Select(Term.Apply(Term.Name("List"), _), Term.Name("toSet")), _) =>
         t andCollect message(tt)
-    }).down
+    }).topDown
   }
 }

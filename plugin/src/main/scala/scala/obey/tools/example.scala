@@ -1,4 +1,4 @@
-package scala.obey.tools 
+/*package scala.obey.tools 
 
 import scala.meta.internal.ast._
 
@@ -17,3 +17,4 @@ class Example(global: scala.tools.nsc.Global) {
     })
   }
 }
+*/

@@ -17,7 +17,7 @@ import scala.obey.tools.Enrichment._
     (transform {
       case t @ Defn.Def(mods, name, tparams, paramss, None, body) if t.isUnit =>
         Defn.Def(mods, name, tparams, paramss, Some(Type.Name("Unit")), body) andCollect message(t)
-    }).down
+    }).topDown
   }
 }
 
