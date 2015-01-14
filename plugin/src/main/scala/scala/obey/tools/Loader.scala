@@ -7,8 +7,6 @@ import scala.obey.model.Rule
 
 class Loader(val folder: String) {
 
-  // TODO Try to pass the folder as System var okay ? 
-  //Using System.setProperty("path", "/.../") ?
   val root = new File(folder)
   val cl = new URLClassLoader(Array(root.toURI.toURL), getClass.getClassLoader)
 
