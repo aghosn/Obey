@@ -26,11 +26,6 @@ object build extends Build {
     base = file("model"),
     settings = sharedSettings ++ publishableSettings ++ commonDependencies)
 
-  lazy val tests = Project(
-    id = "tests",
-    base = file("tests"),
-    settings = sharedSettings ++ commonDependencies ++ exposeClasspaths("tests")) dependsOn (plugin, model)
-
   lazy val sbtPlug: Project = Project(
     id = "sbt-plugin",
     base = file("sbt-plugin"),
