@@ -19,7 +19,7 @@ import scala.obey.model._
 
   def apply = {
       (collect {
-        case get: Term.Ref if get == termOf("Option.get") =>
+        case get: Term.Ref if get == typeOf[Some[_]].defs("get").ref =>
           message(get)
       }).topDown
   }

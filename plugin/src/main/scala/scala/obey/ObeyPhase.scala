@@ -14,6 +14,8 @@ trait ObeyPhase {
 
   object ObeyComponent extends NscPluginComponent {
     val global: self.global.type = self.global
+    implicit val context =  scala.meta.internal.hosts.scalac.Scalahost.mkSemanticContext(global)
+
     import global._
 
     val phaseName = "obey"
@@ -27,6 +29,7 @@ trait ObeyPhase {
       def apply(unit: CompilationUnit) {
         val path = unit.source.path
         val punit = unit.body.metadata("scalameta").asInstanceOf[scala.meta.Tree]
+        Keeper.instantiate
         val messageRules = UserOption.getReport
         val formattingRules = UserOption.getFormat
         var warnings: List[Message] = Nil
