@@ -13,10 +13,10 @@ import scala.meta.semantic._
   def message(t: Tree, tpe: Type) = Message(s"$t has inferred return type $tpe", t)
 
   def apply = transform {
-    case t @ Defn.Val(mods, pats, None, rhs) if mods.exists(_.isInstanceOf[Mod.Implicit]) =>
-      Defn.Val(mods, pats, Some(rhs.tpe), rhs) andCollect message(t, rhs.tpe)
+    case t @ Defn.Val(mods, (name: Term.Name) :: Nil, None, rhs) if name.isImplicit =>
+      Defn.Val(mods, (name: Term.Name) :: Nil, Some(rhs.tpe), rhs) andCollect message(t, rhs.tpe)
 
-    case t @ Defn.Def(mods, name, tparams, paramss, None, body) if mods.exists(_.isInstanceOf[Mod.Implicit]) =>
+    case t @ Defn.Def(mods, name, tparams, paramss, None, body) if name.isImplicit =>
       Defn.Def(mods, name, tparams, paramss, Some(body.tpe), body) andCollect message(t, body.tpe)
   }.topDown
 }
