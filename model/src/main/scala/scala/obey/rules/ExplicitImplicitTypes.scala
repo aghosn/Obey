@@ -27,9 +27,14 @@ import scala.meta.semantic._
       case t @ Defn.Def(mods, name, tparams, paramss, None, body) if mods.exists(_.isInstanceOf[Mod.Implicit]) =>
         Defn.Def(mods, name, tparams, paramss, Some(body.tpe), body) andCollect message(t, body.tpe)
 
-      case t@ Ctor.Primary(mods, paramss) => 
+      case Ctor.Primary(mods, paramss) => 
         val res = toExplicit(paramss)
         Ctor.Primary(mods, res.tree.get) andCollect res.result
+
+      case Ctor.Secondary(mods, paramss, primaryCtor, stats) => 
+        val res1 = toExplicit(paramss)
+        val res2 = toExplicit(primaryCtor)
+        Ctor.Secondary(mods, res1.tree.get, res2.tree.get, stats) andCollect res1.result ++ res2.result
 
     }).topDown
   }
