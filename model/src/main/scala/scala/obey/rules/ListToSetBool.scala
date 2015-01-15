@@ -9,7 +9,6 @@ import scala.obey.model._
 
   def description = "List to Set evaluated to Boolean"
 
-  /*TODO apply only for val until we talk about it*/
   def message(t: Term.Apply): Message = Message(s"$t gets evaluated to a boolean !", t)
 
   def apply = {

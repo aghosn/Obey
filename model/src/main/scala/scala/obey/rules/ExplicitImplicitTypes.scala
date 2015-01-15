@@ -5,17 +5,12 @@ import scala.meta.tql.ScalaMetaFusionTraverser._
 import scala.meta.internal.ast._
 import scala.obey.model._
 import scala.meta.semantic._
-import scala.language.implicitConversions
 
-@Tag("Type", "Explicit") class ExplicitImplicitTypes(implicit c: Context) extends Rule {
+@Tag("Type", "Explicit", "Dotty") class ExplicitImplicitTypes(implicit c: Context) extends Rule {
 
+  def description = "Type inference for return types of implicit vals and defs isn't supported in Dotty"
 
-  def description = "Explicit types in implicit Val & Def"
-
-  def message(t: Defn, tpe: scala.meta.Type) = Message(s"Implicit type $tpe in $t", t)
-
-  implicit def toType(t: scala.meta.Type) = t.asInstanceOf[scala.meta.internal.ast.Type]
-  implicit def toType2(t: scala.meta.Type): scala.meta.internal.ast.Type.Arg = t.asInstanceOf[scala.meta.internal.ast.Type.Arg]
+  def message(t: Tree, tpe: Type) = Message(s"$t has inferred return type $tpe", t)
 
   def apply = transform {
     case t @ Defn.Val(mods, pats, None, rhs) if mods.exists(_.isInstanceOf[Mod.Implicit]) =>
@@ -23,8 +18,5 @@ import scala.language.implicitConversions
 
     case t @ Defn.Def(mods, name, tparams, paramss, None, body) if mods.exists(_.isInstanceOf[Mod.Implicit]) =>
       Defn.Def(mods, name, tparams, paramss, Some(body.tpe), body) andCollect message(t, body.tpe)
-
-    case tree @ Term.Param(mods, name, None, Some(t)) if mods.exists(_.isInstanceOf[Mod.Implicit]) =>
-      Term.Param(mods, name, Some(toType2(t.tpe)), Some(t)) andCollect Message(s"Implicit type ${t.tpe} in $tree", tree)
   }.topDown
 }
