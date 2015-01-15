@@ -9,5 +9,10 @@ import scala.meta.semantic._
 @Tag("Dotty") object EarlyToLateInitializer extends Rule {
   def description = "Early initializers should be transformed into normal ones"
 
-  def apply = ???
+  def apply = {
+    collect {
+      case t @ Templ(early, _, _, _) if !early.isEmpty => 
+        Message(s"Early initializer ${t} should be transformed into normal one", t)
+    }
+  }
 }

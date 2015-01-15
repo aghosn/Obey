@@ -2,7 +2,7 @@ package scala.obey
 
 import scala.annotation.StaticAnnotation
 import scala.reflect.internal.util.NoPosition
-import scala.reflect.runtime.{currentMirror => cm, universe => ru}
+import scala.reflect.runtime.{ currentMirror => cm, universe => ru }
 
 package object model {
 
@@ -28,8 +28,10 @@ package object model {
   def getPos(t: scala.meta.Tree): scala.reflect.internal.util.Position = {
     try {
       import scala.language.reflectiveCalls
-      val scratchpads = t.asInstanceOf[{ def internalScratchpads: Map[_, _] }].internalScratchpads
-      val associatedGtree = scratchpads.values.toList.head.asInstanceOf[List[_]].collect { case gtree: scala.reflect.internal.SymbolTable#Tree => gtree }.head
+      //val scratchpads = t.asInstanceOf[{ def internalScratchpads: Map[_, _] }].internalScratchpads
+      //val associatedGtree = scratchpads.values.toList.head.asInstanceOf[List[_]].collect { case gtree: scala.reflect.internal.SymbolTable#Tree => gtree }.head
+      val scratchpad = t.asInstanceOf[{ def internalScratchpad: Seq[Any] }].internalScratchpad
+      val associatedGtree = scratchpad.collect { case gtree: scala.reflect.internal.SymbolTable#Tree => gtree }.head
       associatedGtree.pos
     } catch {
       case e: Exception => NoPosition
@@ -38,6 +40,6 @@ package object model {
 
   def getAnnotations(x: Rule): Set[String] = {
     val annot = cm.classSymbol(x.getClass).annotations.filter(a => a.tree.tpe =:= ru.typeOf[Tag]).flatMap(_.tree.children.tail)
-    annot.map(y => ru.show(y).toString).map(_.replaceAll("\"", "").toLowerCase).toSet 
+    annot.map(y => ru.show(y).toString).map(_.replaceAll("\"", "").toLowerCase).toSet
   }
 }

@@ -11,14 +11,15 @@ import scala.obey.model._
 
   def message(n: Tree, t: Tree): Message = Message(s"The 'var' $n from ${t} was never reassigned and should therefore be a 'val'", t)
 
+  def allAssign = collect[Set] { case Term.Assign(b: Term.Name, _) => b }.topDown
+
   def apply = {
-    collect[Set] {
-      case Term.Assign(b: Term.Name, _) => b
-    }.topDown feed { assign =>
-      (transform {
+    allAssign feed { assign =>
+      
+      transform {
         case t @ Defn.Var(a, (b: Term.Name) :: Nil, c, Some(d)) if (!assign.contains(b)) =>
           Defn.Val(a, b :: Nil, c, d) andCollect message(b, t)
-      }).topDown
+      }.topDown
     }
   }
 }

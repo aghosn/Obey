@@ -35,7 +35,15 @@ class Loader(val folder: String) {
   val rules = ruleClasses.map{ c => 
     val instance = {
       try c.getDeclaredField("MODULE$").get(null)
-      catch{ case ex: NoSuchFieldException => c.newInstance }
+      catch{
+        case ex:NoSuchFieldException =>
+         // try {
+             c.newInstance()
+         /* } catch{
+            case ee: Exception =>
+              ???
+          }*/
+      }
     }
     instance.asInstanceOf[Rule]
   }
