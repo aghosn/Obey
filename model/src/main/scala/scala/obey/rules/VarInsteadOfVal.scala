@@ -6,6 +6,7 @@ import scala.language.reflectiveCalls
 import scala.meta.internal.ast._
 import scala.obey.model._
 
+//TODO: test if the var is public, maybe shouldn't modify it if so. 
 @Tag("Var", "Val") object VarInsteadOfVal extends Rule {
   def description = "var assigned only once should be val"
 
@@ -13,13 +14,10 @@ import scala.obey.model._
 
   def allAssign = collect[Set] { case Term.Assign(b: Term.Name, _) => b }.topDown
 
-  def apply = {
-    allAssign feed { assign =>
-      
-      transform {
-        case t @ Defn.Var(a, (b: Term.Name) :: Nil, c, Some(d)) if (!assign.contains(b)) =>
-          Defn.Val(a, b :: Nil, c, d) andCollect message(b, t)
-      }.topDown
-    }
-  }
+  def transformVar(s: Set[Term.Name]) = transform {
+    case t @ Defn.Var(a, (b: Term.Name) :: Nil, c, Some(d)) if (!s.contains(b)) =>
+      Defn.Val(a, b :: Nil, c, d) andCollect message(b, t)
+  }.topDown
+
+  def apply = allAssign feed transformVar 
 }
