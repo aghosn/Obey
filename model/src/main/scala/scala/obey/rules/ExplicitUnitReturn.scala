@@ -5,8 +5,8 @@ import scala.meta.tql.ScalaMetaFusionTraverser._
 import scala.meta.internal.ast._
 import scala.obey.model._
 import scala.meta.semantic._
-/*
-@Tag("Type", "Explicit") class ExplicitUnitReturn(implicit c: Context) extends Rule {
+
+/*@Tag("Type", "Explicit") class ExplicitUnitReturn(implicit c: Context) extends Rule {
 
   def description = "ExplicitUnitReturn: Ensure explicit Return types"
 
