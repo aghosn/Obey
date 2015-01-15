@@ -13,9 +13,9 @@ import scala.meta.semantic._
   def message(t: Defn.Def) = Message(s"$t uses unsupported procedure syntax", t)
 
   def apply = {
-    (transform {
-      case t @ Defn.Def(mods, name, tparams, paramss, None, body) if body.tpe == typeOf[Unit] =>
+    transform {
+      case t @ Defn.Def(mods, name, tparams, paramss, _, body) if body.tpe == typeOf[Unit] =>
         Defn.Def(mods, name, tparams, paramss, Some(typeOf[Unit]), body) andCollect message(t)
-    }).topDown
+    }.topDown
   }
 }

@@ -8,6 +8,7 @@ import scala.obey.tools.{UserOption, _}
 import scala.tools.nsc.Phase
 import scala.tools.nsc.plugins.{PluginComponent => NscPluginComponent}
 import scala.meta.dialects.Dotty
+import scala.meta.ui._
 
 trait ObeyPhase {
   self: ObeyPlugin =>
@@ -46,8 +47,8 @@ trait ObeyPhase {
           res = formattingRules.map(_.apply).reduce((r1, r2) => r1 + r2)(punit)
           if (res.tree.isDefined && !res.result.isEmpty) {
             Persist.archive(path)
-            Persist.persist(path, res.tree.get.toString)
-            //Persist.persist(path, res.tree.get.show[Code])
+            //Persist.persist(path, res.tree.get.toString)
+            Persist.persist(path, res.tree.get.show[Code])
             warnings ++= res.result.map(m => Message("[CORRECTED]" + m.message, m.tree))
           } else {
             warnings ++= res.result
