@@ -16,7 +16,7 @@ import scala.meta.semantic._
     case t @ Defn.Val(mods, (name: Term.Name) :: Nil, None, rhs) if name.isImplicit =>
       Defn.Val(mods, (name: Term.Name) :: Nil, Some(rhs.tpe), rhs) andCollect message(t, rhs.tpe)
 
-    case t @ Defn.Def(mods, name, tparams, paramss, None, body) if name.isImplicit =>
+    case t @ Defn.Def(mods, name, tparams, paramss, None, body) if t.isImplicit =>
       Defn.Def(mods, name, tparams, paramss, Some(body.tpe), body) andCollect message(t, body.tpe)
   }.topDown
 }
