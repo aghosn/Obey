@@ -8,7 +8,7 @@ import scala.meta.semantic.Context
 
 object Keeper {
   
-  val basicRules: Set[Rule] = Set(VarInsteadOfVal, ListToSet, ListToSetBool)
+  val basicRules: Set[Rule] = Set(VarInsteadOfVal, ListToSet, ListToSetBool/*, EarlyInitializer*/)
 
   var loadedRules: Set[Rule] = Set()
 
@@ -38,7 +38,7 @@ object Keeper {
   }
 
   def instantiate(implicit c: Context) {
-    instantiatedRules = Set(new ExplicitImplicitTypes() )
+    instantiatedRules = Set(new ExplicitImplicitTypes(), new ExplicitUnitReturn())
   }
 
 }
