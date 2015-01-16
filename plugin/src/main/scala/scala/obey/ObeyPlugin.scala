@@ -14,6 +14,7 @@ import scala.meta.internal.hosts.scalac.PluginBase
 
 class ObeyPlugin(val global: Global) extends PluginBase with ObeyPhase {
   import global._
+  implicit val context = scala.meta.internal.hosts.scalac.Scalahost.mkSemanticContext(global) 
 
   val regexp = "ListRules:\\W*-all\\W*".r.pattern
   val name = "obey"
@@ -36,9 +37,12 @@ class ObeyPlugin(val global: Global) extends PluginBase with ObeyPhase {
           reporter.info(NoPosition, "Tag Filters:\n"+UserOption.toString, true)
         } else if (regexp.matcher(opt).matches){
           UserOption.disallow
-          reporter.info(NoPosition, "List of Rules available:\n"+Keeper.rules.mkString("\n"), true)
+          reporter.info(NoPosition, "List of Rules available:",true)
+          Keeper.instantiate
+          reporter.info(NoPosition, Keeper.rules.mkString("\n"), true)
         } else if (opt.equals("ListRules")){
           reporter.info(NoPosition, "List of selected Rules:", true)
+          Keeper.instantiate
           val reports = UserOption.getReport
           val fixes = UserOption.getFormat
           if(!reports.isEmpty)

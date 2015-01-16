@@ -10,16 +10,11 @@ import scala.meta.semantic._
 
   def description = "Procedure syntax isn't supported in Dotty"
 
-  def message(t: Defn.Procedure) = Message(s"$t uses unsupported procedure syntax", t)
+  def message(t: Defn.Procedure) = Message(s"Usage of unsupported procedure syntax", t)
 
-  def apply = {
-    /*transform {
-      case t @ Defn.Def(mods, name, tparams, paramss, _, body) if body.tpe == typeOf[Unit] =>
-        Defn.Def(mods, name, tparams, paramss, Some(typeOf[Unit]), body) andCollect message(t)
-    }.topDown*/
-    transform {
+  def apply = transform {
       case t @ Defn.Procedure(mods, name, tparams, paramss, stats) =>
         Defn.Def(mods, name, tparams, paramss, Some(typeOf[Unit]), Term.Block(t.stats)) andCollect message(t)
     }.topDown
-  }
+  
 }

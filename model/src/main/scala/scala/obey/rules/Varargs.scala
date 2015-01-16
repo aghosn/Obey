@@ -13,5 +13,5 @@ import scala.obey.model._
   def apply = collect {
     case t @ Pat.Bind(_, Pat.Arg.SeqWildcard()) => 
       message(t)
-  }
+  }.topDown
 }

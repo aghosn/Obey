@@ -15,10 +15,9 @@ import scala.obey.model._
 
   val OptionGet = typeOf[Option[_]].defs("get").ref
 
-  def apply = {
-    (collect {
+  def apply = collect{
       case get: Term.Ref if get == OptionGet =>
         message(get)
-    }).topDown
-  }
+    }.topDown
+  
 }

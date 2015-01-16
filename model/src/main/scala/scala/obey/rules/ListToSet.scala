@@ -10,10 +10,9 @@ import scala.obey.model._
 
   def message(t: Term.Select): Message = Message(s"The assignment $t creates a useless List", t)
 
-  def apply = {
-    (transform {
+  def apply = transform {
       case t @ Term.Select(Term.Apply(Term.Name("List"), l), Term.Name("toSet")) =>
         Term.Apply(Term.Name("Set"), l) andCollect message(t)
-    }).topDown
-  }
+    }.topDown
+  
 }

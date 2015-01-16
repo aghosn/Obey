@@ -11,10 +11,9 @@ import scala.obey.model._
 
   def message(t: Term.Apply): Message = Message(s"$t gets evaluated to a boolean !", t)
 
-  def apply = {
-    (transform {
+  def apply = transform{
       case tt @ Term.Apply(t @ Term.Select(Term.Apply(Term.Name("List"), _), Term.Name("toSet")), _) =>
         t andCollect message(tt)
-    }).topDown
-  }
+    }.topDown
+  
 }

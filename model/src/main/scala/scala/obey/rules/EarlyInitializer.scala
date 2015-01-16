@@ -10,10 +10,9 @@ import scala.meta.semantic._
 
   def description = "Early initializers aren't supported in Dotty"
 
-  def apply = {
-    collect {
+  def apply = collect {
       case t @ Templ(early, _, _, _) if early.nonEmpty =>
         Message(s"$t uses unsupported early initializer syntax", t)
-    }
-  }
+    }.topDown
+  
 }

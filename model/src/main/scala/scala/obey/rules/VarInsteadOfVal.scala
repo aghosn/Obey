@@ -20,4 +20,20 @@ import scala.obey.model._
   }.topDown
 
   def apply = allAssigns feed rewriteUnassignedVars
+
+  /*val forbidVarsInMethods = {
+  def checkMethod: Matcher[List[String]] = 
+    visit{case x: Defn.Def => x} feed { method => 
+
+      val warn = collect{
+        case Defn.Var(_, (b: Term.Name):: Nil,_, _) => 
+          b + " should not be defined in " + method.name
+      }
+
+      val rule: Matcher[List[String]] = 
+        checkMethod | warn + rule.children 
+      rule.children
+    }
+  checkMethod.topDownBreak
+}*/
 }
