@@ -12,28 +12,15 @@ import scala.obey.model._
 
   def message(n: Tree, t: Tree): Message = Message(s"The 'var' $n from ${t} was never reassigned and should therefore be a 'val'", t)
 
-  def allAssigns = collect[Set] { case Term.Assign(b: Term.Name, _) => b }.topDown
 
-  def rewriteUnassignedVars(s: Set[Term.Name]) = transform {
-    case t @ Defn.Var(a, (b: Term.Name) :: Nil, c, Some(d)) if !s.contains(b) =>
-      Defn.Val(a, b :: Nil, c, d) andCollect message(b, t)
-  }.topDown
-
-  def apply = allAssigns feed rewriteUnassignedVars
-
-  /*val forbidVarsInMethods = {
-  def checkMethod: Matcher[List[String]] = 
-    visit{case x: Defn.Def => x} feed { method => 
-
-      val warn = collect{
-        case Defn.Var(_, (b: Term.Name):: Nil,_, _) => 
-          b + " should not be defined in " + method.name
-      }
-
-      val rule: Matcher[List[String]] = 
-        checkMethod | warn + rule.children 
-      rule.children
+  def apply = (focus{case _: Defn.Def => true} andThen
+    collect[Set]{
+      case Term.Assign(b: Term.Name, _) => b
+    }.topDown feed { assigns => 
+      transform{
+        case t @ Defn.Var(a, (b: Term.Name) :: Nil, c, Some(d)) if !assigns.contains(b) =>
+          Defn.Val(a, b :: Nil, c, d) andCollect message(b, t)
+      }.topDown
     }
-  checkMethod.topDownBreak
-}*/
+  ).topDown
 }
