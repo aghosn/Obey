@@ -32,19 +32,31 @@ class Loader(val folder: String) {
   val ruleClasses = getClasses(root).filter(c => classOf[Rule].isAssignableFrom(c))
   
   /*Rules can be defined as object or classes*/
-  val rules = ruleClasses.map{ c => 
-    val instance = {
-      try c.getDeclaredField("MODULE$").get(null)
-      catch{
-        case ex:NoSuchFieldException =>
-         // try {
-             c.newInstance()
-         /* } catch{
-            case ee: Exception =>
-              ???
-          }*/
-      }
+ /* val rules = ruleClasses.map{ c =>
+    val instance = try {
+      c.getDeclaredField("MODULE$").get(null)
+    } catch{
+      case ex:NoSuchFieldException => c.newInstance()
     }
     instance.asInstanceOf[Rule]
+  }*/
+
+
+  def rules(implicit context: scala.meta.semantic.Context) = {
+    ruleClasses.map{ c =>
+      val instance = try c.getDeclaredField("MODULE$").get(null)
+      catch{
+        case ex:NoSuchFieldException =>
+          try {
+            c.newInstance()
+          }catch{
+            case ee: Exception =>
+              println("THE CONSTRUCTORS "+c.getConstructors)
+              println("The one selected "+c.getConstructors()(0))
+              c.getConstructors()(0).newInstance(context)
+          }
+      }
+      instance.asInstanceOf[Rule]
+    }
   }
 }
