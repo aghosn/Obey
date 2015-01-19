@@ -10,7 +10,7 @@ import scala.meta.semantic._
 
   def description = "Type inference for return types of implicit vals and defs isn't supported in Dotty"
 
-  def message(t: Tree, tpe: Type) = Message(s"$t has inferred return type $tpe", t)
+  def message(t: Tree, tpe: Type) = Message(s"result type ($tpe) of implicit definition needs to be given explicitly", t)
 
   def apply = transform {
     case t @ Defn.Val(mods, (name: Term.Name) :: Nil, None, rhs) if mods.exists(_.isInstanceOf[Mod.Implicit]) =>
