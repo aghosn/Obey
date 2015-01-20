@@ -42,7 +42,7 @@ class Loader(val folder: String) {
   }*/
 
 
-  def rules(implicit context: scala.meta.semantic.Context) = {
+  def rules(implicit context: scala.meta.semantic.Context): List[Rule] = {
     ruleClasses.map{ c =>
       val instance = try c.getDeclaredField("MODULE$").get(null)
       catch{
@@ -51,8 +51,8 @@ class Loader(val folder: String) {
             c.newInstance()
           }catch{
             case ee: Exception =>
-              println("THE CONSTRUCTORS "+c.getConstructors)
-              println("The one selected "+c.getConstructors()(0))
+              //println("THE CONSTRUCTORS "+c.getConstructors)
+              //println("The one selected "+c.getConstructors()(0))
               c.getConstructors()(0).newInstance(context)
           }
       }

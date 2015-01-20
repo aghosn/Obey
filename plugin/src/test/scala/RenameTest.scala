@@ -5,7 +5,7 @@ import org.scalatest.FunSuite
 import scala.obey.tools._
 
 
-class RenameTest extends FunSuite {
+/*class RenameTest extends FunSuite {
 
   val code = 
     """
@@ -48,4 +48,4 @@ class RenameTest extends FunSuite {
     assert(f.delete())
     assert(!f.exists())
   }
-}
+}*/

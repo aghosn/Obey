@@ -30,6 +30,10 @@ trait ObeyPhase {
       def apply(unit: CompilationUnit) {
         val path = unit.source.path
         val punit = unit.body.metadata("scalameta").asInstanceOf[scala.meta.Tree]
+
+        //TODO this is just a test for the moment
+        //println("Loading ! "+Foo.rules)
+        //TODO remove this once loader works
         Keeper.instantiate
         val messageRules = UserOption.getReport
         val formattingRules = UserOption.getFormat
