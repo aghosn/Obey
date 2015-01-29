@@ -50,14 +50,6 @@ class ObeyPlugin(val global: Global) extends PluginBase with ObeyPhase {
           if (!fixes.isEmpty)
             reporter.info(NoPosition, "Fix Rules:\n" + fixes.mkString("\n"), true)
           UserOption.disallow
-        } else if (opt.startsWith("Testing:")) {
-          UserOption.disallow
-          val paths = opt.substring("Testing:".length).split(":").toList
-          val loader = new Loader2()
-          val rules = loader.printClasses(paths)
-          if(!rules.isEmpty)
-            reporter.info(NoPosition, "The shit "+rules, true)
-
         } else {
           reporter.error(NoPosition, "Bad option for obey plugin: '" + opt + "'")
         }

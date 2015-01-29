@@ -5,7 +5,7 @@ import sbtassembly.Plugin._
 
 object Settings {
   lazy val languageVersion = "2.11.5"
-  lazy val metaVersion = "0.1.0-SNAPSHOT"
+  lazy val metaVersion = "0.0.0-M0"
 
   lazy val sharedSettings: Seq[sbt.Def.Setting[_]] = Defaults.defaultSettings ++ Seq(
     scalaVersion := languageVersion,

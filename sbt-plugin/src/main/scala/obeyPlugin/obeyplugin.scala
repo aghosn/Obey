@@ -6,7 +6,6 @@ object obeyplugin extends AutoPlugin {
   val obeyFix = settingKey[String]("List of tags to filter rewritting rules.")
   val obeyWarn = settingKey[String]("List of tags to filter warning rules.")
   val obeyRules = settingKey[String]("Path to .class defined by the user.")
-  val obeyTesting = settingKey[String]("testing")
 
   def getJars = (fullClasspath in Runtime) map { (cp) =>
     cp.map(_.data).filter(_.name.endsWith(".jar")).mkString(":")
@@ -23,13 +22,6 @@ object obeyplugin extends AutoPlugin {
       }
       state
     }
-
-  lazy val obeyTestingRules =
-    Command.command("obey-testing") { (state: State) =>
-      Project.evaluateTask(Keys.compile in Compile,
-        (Project extract state).append(Seq(scalacOptions ++= Seq("-Ystop-after:obey", "-P:obey:Testing:"+getJars)), state))
-      state
-    }  
 
   lazy val obeyCheckCmd =
     Command.args("obey-check", "<args>") { (state: State, args) =>
@@ -59,7 +51,7 @@ object obeyplugin extends AutoPlugin {
     obeyFix := "",
     obeyWarn := "",
     obeyRules := "",
-    commands ++= Seq(obeyCheckCmd, obeyFixCmd, obeyListRules, obeyTestingRules),
+    commands ++= Seq(obeyCheckCmd, obeyFixCmd, obeyListRules),
     addCompilerPlugin("com.github.aghosn" % "plugin_2.11.5" % "0.1.0-SNAPSHOT"),
     scalacOptions ++= Seq(
       "-P:obey:fix:" + obeyFix.value,
